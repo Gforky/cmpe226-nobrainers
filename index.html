@@ -6,13 +6,21 @@
 </head>
 
 <body>
-    <form action="queryDB.php"
+    <form action="searchProduct.php"
           method="get">
         <fieldset>
-            <legend>Which product?</legend>
-            <p>
-                <label>Product id:</label>
-                <input name="id" type="text" />
+            <legend>Product (product join category)</legend>
+            <p> 
+                <label>Statistics by certification</label>
+                <input type="radio"
+                       name="stats"
+                       value="count" /> product count
+                <input type="radio"
+                       name="stats"
+                       value="max" /> max product price
+                <input type="radio"
+                       name="stats"
+                       value="average" /> average product price
             </p>
             
             <p>
