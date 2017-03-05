@@ -52,7 +52,7 @@
             $con->setAttribute(PDO::ATTR_ERRMODE,
                                PDO::ERRMODE_EXCEPTION);
             
-            $query = "SELECT product.Certification, COUNT(product.ProductID) AS ProductCount 
+            $query1 = "SELECT product.Certification, COUNT(product.ProductID) AS ProductCount 
                       FROM product
                       JOIN category
                       ON product.CategoryID = category.CategoryID
@@ -72,15 +72,20 @@
                        ON product.CategoryID = category.CategoryID
                        GROUP BY product.Certification
                        HAVING COUNT(*) > 1";
+
+            $query4 = "SELECT * FROM product";
             
             if ($stats == "count") {
-                $ps = $con->prepare($query);
+                $ps = $con->prepare($query1);
             }
             else if ($stats == "max") {
                 $ps = $con->prepare($query2);
             }
             else if ($stats == "average") {
                 $ps = $con->prepare($query3);
+            }
+            else {
+                $ps = $con->prepare($query4);
             }
 
             // Fetch the matching row.
