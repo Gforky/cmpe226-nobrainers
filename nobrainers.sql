@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
--- https://www.phpmyadmin.net/
+-- version 4.5.2
+-- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 04, 2017 at 07:29 PM
--- Server version: 10.1.21-MariaDB
--- PHP Version: 5.6.30
+-- Generation Time: Mar 05, 2017 at 01:16 AM
+-- Server version: 10.1.19-MariaDB
+-- PHP Version: 5.6.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -89,14 +89,14 @@ INSERT INTO `customer` (`CustomerID`, `FirstName`, `LastName`, `Email`, `Passwor
 
 CREATE TABLE `customerphone` (
   `Phone` varchar(14) NOT NULL,
-  ` CustomerID` int(2) NOT NULL
+  `CustomerID` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 --
 -- Dumping data for table `customerphone`
 --
 
-INSERT INTO `customerphone` (`Phone`, ` CustomerID`) VALUES
+INSERT INTO `customerphone` (`Phone`, `CustomerID`) VALUES
 ('1-152-350-0853', 2),
 ('1-355-581-5317', 8),
 ('1-408-211-5325', 9),
@@ -338,26 +338,26 @@ CREATE TABLE `order` (
 --
 
 INSERT INTO `order` (`OrderID`, `CustomerID`) VALUES
-(11052, 5),
-(16737, 2),
-(19644, 3),
-(20123, 10),
 (22190, 1),
-(23289, 9),
-(33154, 8),
-(47283, 5),
-(67034, 9),
-(67650, 10),
-(69961, 2),
-(71119, 7),
 (73409, 1),
+(16737, 2),
+(69961, 2),
+(96191, 2),
+(19644, 3),
 (79140, 4),
+(95733, 4),
+(11052, 5),
+(47283, 5),
 (84973, 5),
-(85949, 8),
+(71119, 7),
 (88223, 7),
 (94231, 7),
-(95733, 4),
-(96191, 2);
+(33154, 8),
+(85949, 8),
+(23289, 9),
+(67034, 9),
+(20123, 10),
+(67650, 10);
 
 -- --------------------------------------------------------
 
@@ -487,7 +487,8 @@ ALTER TABLE `customer`
 -- Indexes for table `customerphone`
 --
 ALTER TABLE `customerphone`
-  ADD PRIMARY KEY (`Phone`,` CustomerID`);
+  ADD PRIMARY KEY (`Phone`,`CustomerID`),
+  ADD KEY `CustomerID` (`CustomerID`);
 
 --
 -- Indexes for table `farmer`
@@ -500,43 +501,111 @@ ALTER TABLE `farmer`
 -- Indexes for table `farmerphone`
 --
 ALTER TABLE `farmerphone`
-  ADD PRIMARY KEY (`Phone`,`FarmerID`);
+  ADD PRIMARY KEY (`Phone`,`FarmerID`),
+  ADD KEY `farmerphone_ibfk_1` (`FarmerID`);
 
 --
 -- Indexes for table `iscontained`
 --
 ALTER TABLE `iscontained`
-  ADD PRIMARY KEY (`RecipeName`,`CustomerID`,`ProductID`);
+  ADD PRIMARY KEY (`RecipeName`,`CustomerID`,`ProductID`),
+  ADD KEY `iscontained_ibfk_2` (`CustomerID`),
+  ADD KEY `iscontained_ibfk_3` (`ProductID`);
 
 --
 -- Indexes for table `isincludedproduct`
 --
 ALTER TABLE `isincludedproduct`
-  ADD PRIMARY KEY (`OrderID`,`ProductID`);
+  ADD PRIMARY KEY (`OrderID`,`ProductID`),
+  ADD KEY `isincludedproduct_ibfk_2` (`ProductID`);
 
 --
 -- Indexes for table `isincludedrecipe`
 --
 ALTER TABLE `isincludedrecipe`
-  ADD PRIMARY KEY (`RecipeName`,`CustomerID`,`OrderId`);
+  ADD PRIMARY KEY (`RecipeName`,`CustomerID`,`OrderId`),
+  ADD KEY `isincludedrecipe_ibfk_2` (`CustomerID`),
+  ADD KEY `isincludedrecipe_ibfk_3` (`OrderId`);
 
 --
 -- Indexes for table `order`
 --
 ALTER TABLE `order`
-  ADD PRIMARY KEY (`OrderID`);
+  ADD PRIMARY KEY (`OrderID`),
+  ADD KEY `CustomerID` (`CustomerID`);
 
 --
 -- Indexes for table `product`
 --
 ALTER TABLE `product`
-  ADD PRIMARY KEY (`ProductID`);
+  ADD PRIMARY KEY (`ProductID`),
+  ADD KEY `CategoryID` (`CategoryID`),
+  ADD KEY `FarmerID` (`FarmerID`);
 
 --
 -- Indexes for table `recipe`
 --
 ALTER TABLE `recipe`
-  ADD PRIMARY KEY (`RecipeName`,`CustomerID`);
+  ADD PRIMARY KEY (`RecipeName`,`CustomerID`),
+  ADD KEY `CustomerID` (`CustomerID`);
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `customerphone`
+--
+ALTER TABLE `customerphone`
+  ADD CONSTRAINT `customerphone_ibfk_1` FOREIGN KEY (`CustomerID`) REFERENCES `customer` (`CustomerID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `farmerphone`
+--
+ALTER TABLE `farmerphone`
+  ADD CONSTRAINT `farmerphone_ibfk_1` FOREIGN KEY (`FarmerID`) REFERENCES `farmer` (`FarmerID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `iscontained`
+--
+ALTER TABLE `iscontained`
+  ADD CONSTRAINT `iscontained_ibfk_1` FOREIGN KEY (`RecipeName`) REFERENCES `recipe` (`RecipeName`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `iscontained_ibfk_2` FOREIGN KEY (`CustomerID`) REFERENCES `recipe` (`CustomerID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `iscontained_ibfk_3` FOREIGN KEY (`ProductID`) REFERENCES `product` (`ProductID`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `isincludedproduct`
+--
+ALTER TABLE `isincludedproduct`
+  ADD CONSTRAINT `isincludedproduct_ibfk_1` FOREIGN KEY (`OrderID`) REFERENCES `order` (`OrderID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `isincludedproduct_ibfk_2` FOREIGN KEY (`ProductID`) REFERENCES `product` (`ProductID`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `isincludedrecipe`
+--
+ALTER TABLE `isincludedrecipe`
+  ADD CONSTRAINT `isincludedrecipe_ibfk_1` FOREIGN KEY (`RecipeName`) REFERENCES `recipe` (`RecipeName`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `isincludedrecipe_ibfk_2` FOREIGN KEY (`CustomerID`) REFERENCES `recipe` (`CustomerID`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `isincludedrecipe_ibfk_3` FOREIGN KEY (`OrderId`) REFERENCES `order` (`OrderID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `order`
+--
+ALTER TABLE `order`
+  ADD CONSTRAINT `order_ibfk_1` FOREIGN KEY (`CustomerID`) REFERENCES `customer` (`CustomerID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `product`
+--
+ALTER TABLE `product`
+  ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`CategoryID`) REFERENCES `category` (`CategoryID`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `product_ibfk_2` FOREIGN KEY (`FarmerID`) REFERENCES `farmer` (`FarmerID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `recipe`
+--
+ALTER TABLE `recipe`
+  ADD CONSTRAINT `recipe_ibfk_1` FOREIGN KEY (`CustomerID`) REFERENCES `customer` (`CustomerID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
