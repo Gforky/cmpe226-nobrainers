@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 05, 2017 at 02:36 AM
+-- Generation Time: Mar 05, 2017 at 02:41 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 5.6.28
 
@@ -526,7 +526,7 @@ ALTER TABLE `isincludedproduct`
 ALTER TABLE `isincludedrecipe`
   ADD PRIMARY KEY (`RecipeName`,`CustomerID`,`OrderId`),
   ADD KEY `isincludedrecipe_ibfk_3` (`OrderId`),
-  ADD KEY `CustomerID` (`CustomerID`,`RecipeName`);
+  ADD KEY `isincludedrecipe_ibfk_4` (`CustomerID`,`RecipeName`);
 
 --
 -- Indexes for table `order`
@@ -585,7 +585,7 @@ ALTER TABLE `isincludedproduct`
 --
 ALTER TABLE `isincludedrecipe`
   ADD CONSTRAINT `isincludedrecipe_ibfk_3` FOREIGN KEY (`OrderId`) REFERENCES `order` (`OrderID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `isincludedrecipe_ibfk_4` FOREIGN KEY (`CustomerID`,`RecipeName`) REFERENCES `recipe` (`CustomerID`, `RecipeName`);
+  ADD CONSTRAINT `isincludedrecipe_ibfk_4` FOREIGN KEY (`CustomerID`,`RecipeName`) REFERENCES `recipe` (`CustomerID`, `RecipeName`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `order`
