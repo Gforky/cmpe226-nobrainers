@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 05, 2017 at 01:16 AM
+-- Generation Time: Mar 05, 2017 at 02:36 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 5.6.28
 
@@ -79,7 +79,8 @@ INSERT INTO `customer` (`CustomerID`, `FirstName`, `LastName`, `Email`, `Passwor
 (7, 'Rama', 'Bentley', 'arcu@sem.org', 'VUP16RXS3BJ', '1383 Mauris Street', '538', 'Boston', 'MA', 'WU7 5JM', 'Yemen'),
 (8, 'Quyn', 'Berry', 'ultrices.sit.amet@urnaconvalliserat.ca', 'YFR72QVL9KI', '8096 Nunc Street', '889', 'Toledo', 'Ohio', '13694', 'Bosnia and Herzegovina'),
 (9, 'Kendall', 'Adkins', 'ultrices.iaculis@semperet.ca', 'EGW86QMG7MD', '314-1360 Eu', '', '', '', '', ''),
-(10, 'Leilani', 'Wallace', 'et.rutrum@dictumeueleifend.edu', 'EDJ81KYA5MW', '582-495 Dui Rd.', '898', 'Jefferson City', 'Missouri', '40857', 'Central African Republic');
+(10, 'Leilani', 'Wallace', 'et.rutrum@dictumeueleifend.edu', 'EDJ81KYA5MW', '582-495 Dui Rd.', '898', 'Jefferson City', 'Missouri', '40857', 'Central African Republic'),
+(1016, NULL, NULL, 'luwen.miao@sjsu.edu', '123456', NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -524,8 +525,8 @@ ALTER TABLE `isincludedproduct`
 --
 ALTER TABLE `isincludedrecipe`
   ADD PRIMARY KEY (`RecipeName`,`CustomerID`,`OrderId`),
-  ADD KEY `isincludedrecipe_ibfk_2` (`CustomerID`),
-  ADD KEY `isincludedrecipe_ibfk_3` (`OrderId`);
+  ADD KEY `isincludedrecipe_ibfk_3` (`OrderId`),
+  ADD KEY `CustomerID` (`CustomerID`,`RecipeName`);
 
 --
 -- Indexes for table `order`
@@ -569,9 +570,8 @@ ALTER TABLE `farmerphone`
 -- Constraints for table `iscontained`
 --
 ALTER TABLE `iscontained`
-  ADD CONSTRAINT `iscontained_ibfk_1` FOREIGN KEY (`RecipeName`) REFERENCES `recipe` (`RecipeName`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `iscontained_ibfk_2` FOREIGN KEY (`CustomerID`) REFERENCES `recipe` (`CustomerID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `iscontained_ibfk_3` FOREIGN KEY (`ProductID`) REFERENCES `product` (`ProductID`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `iscontained_ibfk_3` FOREIGN KEY (`ProductID`) REFERENCES `product` (`ProductID`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `iscontained_ibfk_4` FOREIGN KEY (`RecipeName`,`CustomerID`) REFERENCES `recipe` (`RecipeName`, `CustomerID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `isincludedproduct`
@@ -584,9 +584,8 @@ ALTER TABLE `isincludedproduct`
 -- Constraints for table `isincludedrecipe`
 --
 ALTER TABLE `isincludedrecipe`
-  ADD CONSTRAINT `isincludedrecipe_ibfk_1` FOREIGN KEY (`RecipeName`) REFERENCES `recipe` (`RecipeName`) ON DELETE NO ACTION ON UPDATE CASCADE,
-  ADD CONSTRAINT `isincludedrecipe_ibfk_2` FOREIGN KEY (`CustomerID`) REFERENCES `recipe` (`CustomerID`) ON DELETE NO ACTION ON UPDATE CASCADE,
-  ADD CONSTRAINT `isincludedrecipe_ibfk_3` FOREIGN KEY (`OrderId`) REFERENCES `order` (`OrderID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `isincludedrecipe_ibfk_3` FOREIGN KEY (`OrderId`) REFERENCES `order` (`OrderID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `isincludedrecipe_ibfk_4` FOREIGN KEY (`CustomerID`,`RecipeName`) REFERENCES `recipe` (`CustomerID`, `RecipeName`);
 
 --
 -- Constraints for table `order`
