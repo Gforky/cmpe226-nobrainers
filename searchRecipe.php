@@ -7,35 +7,50 @@
 
 <body>
     <?php
-        function constructTable($data)
-        {
-            // We're going to construct an HTML table.
-            print "    <table border='1'>\n";
-                
-            // Construct the HTML table row by row.
-            $doHeader = true;
-            foreach ($data as $row) {
-                    
-                // The header row before the first data row.
-                if ($doHeader) {
-                    print "        <tr>\n";
-                    foreach ($row as $name => $value) {
-                        print "            <th>$name</th>\n";
-                    }
-                    print "        </tr>\n";
-                    $doHeader = false;
-                }
-                    
-                // Data row.
-                print "        <tr>\n";
-                foreach ($row as $name => $value) {
-                    print "            <td>$value</td>\n";
-                }
-                print "        </tr>\n";
-            }
-            
-            print "    </table>\n";
-        }
+    	class Recipe {
+			private $ProductID;
+			private $Price;
+			private $Name;
+			private $Certification;
+			private $FarmerID;
+			private $FirstName;
+			private $LastName;
+
+			public function getProductID() {
+				return $this->ProductID;
+			}
+			public function getPrice() {
+				return $this->Price;
+			}
+			public function getName() {
+				return $this->Name;
+			}
+			public function getCertification() {
+				return $this->Certification;
+			}
+			public function getFarmerID() {
+				return $this->FarmerID;
+			}
+			public function getFirstName() {
+				return $this->FirstName;
+			}
+			public function getLastName() {
+				return $this->LastName;
+			}
+		}
+
+        function constructTable(Recipe $recipe)
+        {             
+            print "        <tr>\n";
+            print "				<td>" . $recipe->getProductID() . "</td>\n";
+            print "				<td>" . $recipe->getPrice() . "</td>\n";
+            print "				<td>" . $recipe->getName() . "</td>\n";
+            print "				<td>" . $recipe->getCertification() . "</td>\n";
+            print "				<td>" . $recipe->getFarmerID() . "</td>\n";
+            print "				<td>" . $recipe->getFirstName() . "</td>\n";
+            print "				<td>" . $recipe->getLastName() . "</td>\n";
+            print "        </tr>\n";
+    	}
     
         $id = filter_input(INPUT_GET, "id");
         $recipe = filter_input(INPUT_GET, "recipe");
@@ -56,31 +71,48 @@
             $con->setAttribute(PDO::ATTR_ERRMODE,
                                PDO::ERRMODE_EXCEPTION);
             
-            $query1 = "SELECT * FROM product WHERE ProductID IN (SELECT ProductID 
-                                                                FROM iscontained
-                                                                WHERE RecipeName = :recipe AND CustomerID = :id
-                                                                )";
-            $query2 = "SELECT FirstName, LastName FROM customer WHERE CustomerID = :id";
+            $query1 = "SELECT concat(FirstName, ' ', LastName) AS name, Type 
+            			FROM customer, recipe WHERE customer.CustomerID = :id AND recipe.CustomerID = :id AND RecipeName = :recipe";
 
             $ps1 = $con->prepare($query1);
-            $ps2 = $con->prepare($query2);
 
             // Fetch the matching row.
             $ps1->execute(array(':id' => $id, ':recipe' => $recipe));
-            $ps2->execute(array(':id' => $id));
-            $data1 = $ps1->fetchAll(PDO::FETCH_ASSOC);
                         
-            // $data is an array.
-            if (count($data1) > 0) {
-                while($data = $ps2->fetch( PDO::FETCH_ASSOC )){ 
-                    print "<h1>Products included in \"".$recipe."\" shared by \"".$data['FirstName']." ".$data['LastName']."\"</h1>\n"; 
-                }
+            $row = $ps1->fetch( PDO::FETCH_ASSOC );
+            if($row['name']) { // check if any result returned
+            	print "<h1>Products included in \"".$recipe."\" shared by ".$row['Type']." \"".$row['name']."\"</h1>\n"; 
+	            // We're going to construct an HTML table.
+	        	print "    <table border='1'>\n";
+	        	
+	        	print "        <tr>\n";
+	            print "				<td>ProductID</td>\n";
+	            print "				<td>Price</td>\n";
+	            print "				<td>Name</td>\n";
+	            print "				<td>Certification</td>\n";
+	            print "				<td>FarmerID</td>\n";
+	            print "				<td>FirstName</td>\n";
+	            print "				<td>LastName</td>\n";
+	            print "        </tr>\n";
 
-                constructTable($data1);
+	            $query2 = "SELECT ProductID, Price, Name, Certification, farmer.FarmerID, FirstName, LastName 
+	                        FROM product, farmer WHERE ProductID IN (SELECT ProductID 
+	                                                                FROM iscontained
+	                                                                WHERE RecipeName = :recipe AND CustomerID = :id
+	                                                                ) AND product.FarmerID = farmer.FarmerID
+	                                                                ORDER BY ProductID";
+
+	        	$ps2 = $con->prepare($query2);
+	        	$ps2->execute(array(':id' => $id, ':recipe' => $recipe));
+	        	$ps2->setFetchMode(PDO::FETCH_CLASS, "Recipe");
+	            while($recipe = $ps2->fetch()) {
+	            	constructTable($recipe);
+	            }
+	            print "    </table>\n";
+            } else {
+            	print "<h3>No Match</h3>";
             }
-            else {
-                print "<h3>(No match.)</h3>\n";
-            }
+
         }
         catch(PDOException $ex) {
             echo 'ERROR: '.$ex->getMessage();
