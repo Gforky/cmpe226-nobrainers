@@ -14,11 +14,13 @@
             private $Price;
             private $Name;
             private $Certification;
+            private $CategoryName;
             
             public function getId()     { return $this->ProductID; }
             public function getPrice()  { return $this->Price; }
             public function getName()   { return $this->Name; }
             public function getCert()   { return $this->Certification; }
+            public function getCat()   { return $this->CategoryName; }
         }
 
         function constructTable(Product $product)
@@ -28,6 +30,7 @@
             print "            <td>" . $product->getPrice()  . "</td>\n";
             print "            <td>" . $product->getName()   . "</td>\n";
             print "            <td>" . $product->getCert()   . "</td>\n";
+            print "            <td>" . $product->getCat()   . "</td>\n";
             print "        </tr>\n";
         }   
 
@@ -41,7 +44,9 @@
             $con->setAttribute(PDO::ATTR_ERRMODE,
                                PDO::ERRMODE_EXCEPTION);
                 
-            $query1 = "SELECT ProductID, Price, Name, Certification FROM product";  
+            $query1 = "SELECT ProductID, Price, Name, Certification, CategoryName 
+                       FROM product p, category c
+                       WHERE p.CategoryID = c.CategoryID"; 
                 
             // Fetch the matching database table rows.
             $data = $con->query($query1);
@@ -63,9 +68,12 @@
 
             // Constrain the query if we got name and cert
             if ((strlen($name) > 0) && (strlen($cert) > 0)) {
-                $query2 = "SELECT ProductID, Price, Name, Certification FROM product 
-                           WHERE Name = :name
-                           AND Certification  = :cert";
+                $query2 = "SELECT ProductID, Price, Name, Certification, CategoryName 
+                           FROM product p, category c
+                           WHERE p.CategoryID = c.CategoryID
+                           AND Name = :name
+                           AND Certification = :cert";
+
                 $ps = $con->prepare($query2);
                 $ps->bindParam(':name', $name);
                 $ps->bindParam(':cert',  $cert);
