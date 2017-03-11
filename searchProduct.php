@@ -2,88 +2,92 @@
 <html lang="en-US">
 <head>
     <meta charset="UTF-8">
-    <title>Assighment 5 by No Brainers</title>
+    <title>Query Results</title>
 </head>
 
 <body>
+    <h1>Query Results</h1>
     <?php
         class Product
         {
-            private $certification;
-            private $count;
-
-            public function getCertification() { return $this->certification; }
-            public function getCount()         { return $this->count; }
-        }
-
-        function constructTable($data)
-        {
-            // We're going to construct an HTML table.
-            print "    <table border='1'>\n";
-                
-            // Construct the HTML table row by row.
-            $doHeader = true;
-            foreach ($data as $row) {
-                    
-                // The header row before the first data row.
-                if ($doHeader) {
-                    print "        <tr>\n";
-                    foreach ($row as $name => $value) {
-                        print "            <th>$name</th>\n";
-                    }
-                    print "        </tr>\n";
-                    $doHeader = false;
-                }
-                    
-                // Data row.
-                print "        <tr>\n";
-                foreach ($row as $name => $value) {
-                    print "            <td>$value</td>\n";
-                }
-                print "        </tr>\n";
-            }
+            private $ProductID;
+            private $Price;
+            private $Name;
+            private $Certification;
             
-            print "    </table>\n";
+            public function getId()     { return $this->ProductID; }
+            public function getPrice()  { return $this->Price; }
+            public function getName()   { return $this->Name; }
+            public function getCert()   { return $this->Certification; }
         }
-    
-        $stats = filter_input(INPUT_GET, "stats");
+
+        function constructTable(Product $product)
+        {
+            print "        <tr>\n";
+            print "            <td>" . $product->getId()     . "</td>\n";
+            print "            <td>" . $product->getPrice()  . "</td>\n";
+            print "            <td>" . $product->getName()   . "</td>\n";
+            print "            <td>" . $product->getCert()   . "</td>\n";
+            print "        </tr>\n";
+        }   
+
+        $name  = filter_input(INPUT_GET, "name");
+        $cert  = filter_input(INPUT_GET, "cert");
         
-        try {   
-            print "<h1>Product count by certification</h1>\n";
-        
+        try {
             // Connect to the database.
             $con = new PDO("mysql:host=localhost;dbname=nobrainers",
                            "nobrainers", "sesame");
             $con->setAttribute(PDO::ATTR_ERRMODE,
                                PDO::ERRMODE_EXCEPTION);
+                
+            $query1 = "SELECT ProductID, Price, Name, Certification FROM product";  
+                
+            // Fetch the matching database table rows.
+            $data = $con->query($query1);
+            $data->setFetchMode(PDO::FETCH_CLASS, "Product");
+                
+            // We're going to construct an HTML table.
+            print "    <table border='1'>\n";
+
+            // Fetch the database field names.
+            $result = $con->query($query1);
+            $row = $result->fetch(PDO::FETCH_ASSOC);
             
-            $query = "SELECT product.Certification, COUNT(product.ProductID) AS ProductCount 
-                      FROM product
-                      JOIN category
-                      ON product.CategoryID = category.CategoryID
-                      GROUP BY product.Certification
-                      HAVING COUNT(*) > 1";
+            // Construct the header row of the HTML table.
+            print "            <tr>\n";
+            foreach ($row as $field => $value) {
+                    print "                <th>$field</th>\n";
+            }
+            print "            </tr>\n";
 
-            $ps = $con->prepare($query);
-
-            // Fetch the matching row.
-            $ps->execute();
-            $ps->setFetchMode(PDO::FETCH_CLASS, "Product");
-                        
-            // $ps is an array.
-            if (count($ps) > 0) {
-                constructTable($ps);
+            // Constrain the query if we got name and cert
+            if ((strlen($name) > 0) && (strlen($cert) > 0)) {
+                $query2 = "SELECT ProductID, Price, Name, Certification FROM product 
+                           WHERE Name = :name
+                           AND Certification  = :cert";
+                $ps = $con->prepare($query2);
+                $ps->bindParam(':name', $name);
+                $ps->bindParam(':cert',  $cert);
             }
             else {
-                print "<h3>(No match.)</h3>\n";
+                $ps = $con->prepare($query1);
             }
+        
+            // Fetch the matching database table rows.
+            $ps->execute();
+            $ps->setFetchMode(PDO::FETCH_CLASS, "Product");
+            
+            // Construct the HTML table row by row.
+            while ($product = $ps->fetch()) {
+                constructTable($product);
+            }
+            
+            print "    </table>\n";
         }
         catch(PDOException $ex) {
             echo 'ERROR: '.$ex->getMessage();
-        }    
-        catch(Exception $ex) {
-            echo 'ERROR: '.$ex->getMessage();
-        }
+        }        
     ?>
 </body>
 </html>
