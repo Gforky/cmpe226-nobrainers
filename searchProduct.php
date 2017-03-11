@@ -2,11 +2,20 @@
 <html lang="en-US">
 <head>
     <meta charset="UTF-8">
-    <title>Assighment 4 by No Brainers</title>
+    <title>Assighment 5 by No Brainers</title>
 </head>
 
 <body>
     <?php
+        class Product
+        {
+            private $certification;
+            private $count;
+
+            public function getCertification() { return $this->certification; }
+            public function getCount()         { return $this->count; }
+        }
+
         function constructTable($data)
         {
             // We're going to construct an HTML table.
@@ -39,12 +48,8 @@
     
         $stats = filter_input(INPUT_GET, "stats");
         
-        try {
-            // if (empty($stats) {
-            //     throw new Exception("Missing stats.");
-            // }
-                
-            print "<h1>Product statistics by certification</h1>\n";
+        try {   
+            print "<h1>Product count by certification</h1>\n";
         
             // Connect to the database.
             $con = new PDO("mysql:host=localhost;dbname=nobrainers",
@@ -52,49 +57,22 @@
             $con->setAttribute(PDO::ATTR_ERRMODE,
                                PDO::ERRMODE_EXCEPTION);
             
-            $query1 = "SELECT product.Certification, COUNT(product.ProductID) AS ProductCount 
+            $query = "SELECT product.Certification, COUNT(product.ProductID) AS ProductCount 
                       FROM product
                       JOIN category
                       ON product.CategoryID = category.CategoryID
                       GROUP BY product.Certification
                       HAVING COUNT(*) > 1";
 
-            $query2 = "SELECT product.Certification, MAX(product.Price) AS MaxPrice 
-                       FROM product
-                       JOIN category
-                       ON product.CategoryID = category.CategoryID
-                       GROUP BY product.Certification
-                       HAVING COUNT(*) > 1";
-
-            $query3 = "SELECT product.Certification, AVG(product.Price) AS AveragePrice 
-                       FROM product
-                       JOIN category
-                       ON product.CategoryID = category.CategoryID
-                       GROUP BY product.Certification
-                       HAVING COUNT(*) > 1";
-
-            $query4 = "SELECT * FROM product";
-            
-            if ($stats == "count") {
-                $ps = $con->prepare($query1);
-            }
-            else if ($stats == "max") {
-                $ps = $con->prepare($query2);
-            }
-            else if ($stats == "average") {
-                $ps = $con->prepare($query3);
-            }
-            else {
-                $ps = $con->prepare($query4);
-            }
+            $ps = $con->prepare($query);
 
             // Fetch the matching row.
-            $ps->execute(array(':stats' => $stats));
-            $data = $ps->fetchAll(PDO::FETCH_ASSOC);
+            $ps->execute();
+            $ps->setFetchMode(PDO::FETCH_CLASS, "Product");
                         
-            // $data is an array.
-            if (count($data) > 0) {
-                constructTable($data);
+            // $ps is an array.
+            if (count($ps) > 0) {
+                constructTable($ps);
             }
             else {
                 print "<h3>(No match.)</h3>\n";
