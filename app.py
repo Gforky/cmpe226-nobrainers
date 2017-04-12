@@ -9,6 +9,8 @@ from models import Base, TrainingImageData, UserData, ImageCategories, Classific
 from werkzeug import secure_filename
 from flask import json
 import os
+import pymysql
+pymysql.install_as_MySQLdb()
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'imgFolders/'
@@ -282,9 +284,9 @@ def getClassifiactionStats():
 def allowed_file_type(filename):
 	return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_FILE_EXTENSIONS
 
-#testing postgresql with sqlalchemy - test ok
+#testing mysql with sqlalchemy - test ok
 db = SQLAlchemy(app)
-engine = create_engine('postgresql://localhost/cmpe295')
+engine = create_engine('mysql://nobrainers:sesame@localhost/nobrainers')
 Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 session = Session()
