@@ -1,0 +1,429 @@
+@import url("https://fonts.googleapis.com/css?family=Source+Code+Pro:400,200,700");
+:root {
+  --blue: #0055A2;
+  --gold: #E5A823;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Source Code Pro', monospace;
+}
+input,
+button,
+select,
+textarea {
+  outline:none
+}
+.header {
+  background-color: var(--blue);
+  background-position: center;
+}
+.header .page-title {
+  font-weight: 200;
+  font-size: 20px;
+  text-align: center;
+  padding: 20px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.button {
+  background-color: #D2D2D2;
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+}
+.button:hover {
+  background-color: var(--blue);
+  color: var(--gold);
+}
+button {
+  background-color: white;
+  color: black;
+  cursor: pointer;
+}
+.nav {
+  background: #000;
+  text-align: center;
+}
+.nav li {
+  display: inline-block;
+}
+.nav button {
+  display: inline-block;
+  padding: 5px;
+  text-decoration: none;
+}
+.nav button:hover {
+  text-decoration: underline;
+}
+.main-content {
+  margin: 50px auto;
+  max-width: 600px;
+}
+.main-content p {
+  line-height: 1.6;
+  margin-bottom: 1.7em;
+}
+.footer {
+  margin: 50px auto;
+  margin-top: 200px;
+  max-width: 600px;
+  border-top: 1px solid #444;
+  padding: 20px 0;
+}
+.footer p {
+  color: #444;
+  font-size: 12px;
+}
+
+.dashboard {
+  width: 100%;
+  height: 100%;
+}
+
+.dataViews {
+  padding:25px;
+  width: 100%;
+}
+
+.sysOps {
+  display: block;
+  padding:25px;
+  width: 100%;
+  height: 600px;
+}
+
+.left-half, 
+.right-half {
+  float:left;
+  width:50%;
+  height:100%;
+}
+
+.left-half-1 {
+  height:30%;
+  margin-bottom: 5px;
+}
+
+.left-half-2 {
+  height:70%;
+}
+
+.upload-files {
+  float:left;
+  width:50%;
+  height:100%;
+  overflow: scroll;
+  padding: 1%;
+}
+
+.realTime-training {
+  float:left;
+  width:50%;
+  height:100%;
+  padding: 1%;
+}
+
+.search,
+.model {
+  height:50%;
+}
+
+.trainingLogView {
+  height: 50%;
+  border: 1px solid var(--blue);
+}
+.detectionLogView {
+  margin-top: 20px;
+  height: 50%;
+  border: 1px solid var(--blue);
+}
+.train,
+.detection {
+  display: block;
+  height:85%;
+  overflow: scroll;
+}
+.logButtons {
+  border-bottom: 1px solid var(--blue);
+  height: 15%;
+}
+
+.AP,
+.datasetSize,
+.detectedObjects,
+.cpuUsage,
+.memLoad,
+.netTraff,
+.cpuTemp,
+.imgStorage,
+.dbIO,
+.dbQuery,
+.imgConf,
+.upImg {
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin: 4px 2px;
+  min-width: 250px;
+  text-decoration: none;
+}
+
+.remainImg {
+  width: 100%;
+  height: 30px;
+  margin-top: 380px;
+  position: absolute;
+}
+.btn-group {
+  width: 100%;
+  height: 30px;
+  margin-top: 400px;
+  position: absolute;
+}
+
+.findSofa,
+.findMattress,
+.findTvMonitor,
+.findFridge,
+.findChair {
+  height: 20px;
+  width: 70px;
+  margin-right: 1%;
+  margin-top: 15px;
+  display: inline-block;
+  text-align: center;
+  float: right;
+  border: 1px solid var(--blue);
+}
+
+.deleteImg {
+  cursor: pointer;
+  padding: 10px 15px;
+  font-size: 15px;
+  border-radius: 15px;
+  float: right;
+  display: inline-block;
+  background-color: var(--blue);
+  color: var(--gold);
+  box-shadow: 0 3px #999;
+}
+.deleteImg span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+.deleteImg span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+.deleteImg:hover span {
+  padding-right: 25px;
+}
+.deleteImg:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+.deleteImg:active {
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.detectLocations {
+  width: 100%;
+  height: 100%;
+  frameborder: 0px;
+  border: 0px;
+  padding-left: 5%;
+}
+
+.todo-list {
+  width: 100%;
+  height: 100%;
+  border: 1px solid var(--blue);
+  padding: 3px;
+  overflow: scroll;
+}
+
+.op-todo-list {
+  margin-left: 30%;
+  margin-right: 30%;
+  height: 80%;
+  border: 1px solid var(--blue);
+  padding: 3px;
+  overflow: scroll;
+}
+
+.sysStat,
+.dbStat,
+.nnStat {
+  border: 1px solid var(--blue);
+  padding: 3px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  min-height: 370px;
+}
+
+.sysStat h2,
+.dbStat h2,
+.nnStat h2 {
+  color: var(--blue);
+}
+
+.sysChart,
+.dbChart,
+.nnChart {
+  overflow-x: auto;
+}
+
+.switchViewButtons {
+  width: 100%;
+  height: 50px;
+  z-index: 1000;
+}
+.switchViewButtons button {
+  display: inline-block;
+  float: left;
+  height: 100%;
+  width: 50%;
+  text-decoration: none;
+}
+.loginSwitchButton {
+  height: 50px;
+  width: 100px;
+}
+.adminLogin,
+.operatorLogin {
+  height: 500px;
+  width: 100%;
+}
+
+.adminTitle,
+.opTitle {
+  color: var(--blue);
+  text-align: center;
+}
+
+.adminInput,
+.opInput {
+  margin-top: 20px;
+  margin-left: 42%;
+  margin-right: 42%;
+  padding: 15px;
+  border: 1px solid var(--blue);
+}
+
+.adminLoginBtn,
+.opLoginBtn {
+  height: 25px;
+  width: 50px;
+  margin-left: 75%;
+  margin-top: 10%;
+  text-decoration: none;
+}
+
+.realTime-trainingTime,
+.realTime-dataset {
+  margin-bottom: 20px;
+}
+
+.arrow {
+  cursor: pointer;
+  display: block;
+  height: 64px;
+  margin-top: -35px;
+  outline: medium none;
+  position: absolute;
+  top: 50%;
+  width: 64px;
+  z-index: 5;
+}
+
+.arrow.prev {
+  background-image: url("../static/images/prev.png");
+  left: 20px;
+  opacity: 0.2;
+  transition: all 0.2s linear 0s;
+}
+
+.arrow.next {
+  background-image: url("../static/images/next.png");
+  opacity: 0.2;
+  right: 20px;
+  transition: all 0.2s linear 0s;
+}
+
+.arrow.prev:hover {
+  opacity: 1;
+}
+
+.arrow.next:hover {
+  opacity: 1;
+}
+
+.chosenColor {
+  background-color: var(--blue);
+  color: var(--gold);
+}
+
+.navPhoto {
+  bottom: -4px;
+  display: block;
+  height: 48px;
+  left: 0;
+  margin: 0 auto;
+  padding: 1em 0 0.8em;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  width: 100%;
+  z-index: 5;
+}
+
+.navPhoto li {
+  border: 5px solid #AAAAAA;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-block;
+  height: 30px;
+  margin: 0 8px;
+  position: relative;
+  width: 50px;
+}
+
+.navPhoto li.active {
+  border: 5px solid #FFFFFF;
+}
+
+.navPhoto li a {
+width: 80%;
+}
+
+.slider {
+  border: 5px solid #FFFFFF;
+  height: 100%;
+  margin: 20px auto;
+  position: relative;
+  width: 100%;
+}
+
+.slide {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
