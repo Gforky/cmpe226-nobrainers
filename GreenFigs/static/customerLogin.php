@@ -19,7 +19,7 @@
     $data = $ps->fetch(PDO::FETCH_ASSOC);
                 
     // $data is an array.
-    if (count($data) > 0) {
+    if ($data) {
         header('Location: http://localhost/GreenFigs/templates/index.html?user='.$data['CustomerID']);
 		exit;
     }
