@@ -15,38 +15,4 @@ $(document).ready(function() {
 	})
 
 	document.getElementsByClassName("adminLogin")[0].style.display = "none";
-
-	$(".adminLoginBtn").click(function() {
-		var farmerID = document.getElementById('farmerID').value
-		var farmerPasswd = document.getElementById('farmerPasswd').value
-		$.ajax({
-	      url: 'farmerLogin.php',
-	      type: 'POST',
-
-	      success: function(response) {
-	        console.log(response)
-	      },
-	      error: function(error) {
-	        console.log(error)
-	      }
-	    })
-		window.location.href = "/GreenFigs/templates/index.html"
-	})
-
-	$(".opLoginBtn").click(function() {
-		var customerID = document.getElementById('customerID').value
-		var customerPasswd = document.getElementById('customerPasswd').value
-		$.ajax({
-	      url: 'customerLogin.php',
-	      type: 'POST',
-
-	      success: function(response) {
-	        console.log(response)
-	      },
-	      error: function(error) {
-	        console.log(error)
-	      }
-	    })
-		window.location.href = "/GreenFigs/templates/index.html	"
-	})
 })

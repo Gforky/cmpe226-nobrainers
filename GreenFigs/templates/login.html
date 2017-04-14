@@ -21,24 +21,24 @@
     <h1 class="page-title">Green Figs Log In or Sign Up</h1>
   </div>
   <div class="switch-primary switch-large loginSwitchButton" toggle-switch="toggle-switch" ng-model="switchStatus"></div>
-  <div class="adminLogin">
+  <form class="adminLogin" action="/GreenFigs/static/farmerLogin.php" method="post">
     <h2 class="adminTitle">Farmer Log In</h2>
     <div class="adminInput">
-      <h4>Account</h4>
-      <input class="adminAccount" id="farmerID"/>
+      <h4>Email</h4>
+      <input class="adminAccount" name="farmerEmail" type="text" />
       <h4>Password</h4>
-      <input class="adminPasswd" id="farmerPasswd"/>
-      <button class="adminLoginBtn">Log In</button>
+      <input class="adminPasswd" name="farmerPasswd" type="text" />
+      <button class="adminLoginBtn" type="submit">Log In</button>
     </div>
-  </div>
-  <div class="operatorLogin">
+  </form>
+  <form class="operatorLogin" action="/GreenFigs/static/customerLogin.php" method="post">   
     <h2 class="opTitle">Customer Log In</h2>
     <div class="opInput">
-      <h4>Account</h4>
-      <input class="opAccount" id="customerID"/>
+      <h4>Email</h4>
+      <input class="opAccount" name="customerEmail" type="text" />
       <h4>Password</h4>
-      <input class="opPasswd" id="customerPasswd"/>
-      <button class="opLoginBtn">Log In</button>
+      <input class="opPasswd" name="customerPasswd" type="text" />
+      <button class="opLoginBtn" type="submit">Log In</button>
     </div>
-  </div>
+  </form>
 </body>
