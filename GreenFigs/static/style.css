@@ -307,7 +307,8 @@ button {
   width: 100px;
 }
 .adminLogin,
-.operatorLogin {
+.operatorLogin,
+.signup {
   height: 500px;
   width: 100%;
 }
@@ -319,7 +320,8 @@ button {
 }
 
 .adminInput,
-.opInput {
+.opInput,
+.signupInput {
   margin-top: 20px;
   margin-left: 42%;
   margin-right: 42%;
@@ -327,13 +329,28 @@ button {
   border: 1px solid var(--blue);
 }
 
+.signupInput {
+  margin-left: 40%;
+  margin-right: 40%;
+}
+
 .adminLoginBtn,
-.opLoginBtn {
+.opLoginBtn,
+.signupBtn {
   height: 25px;
   width: 50px;
   margin-left: 75%;
   margin-top: 10%;
   text-decoration: none;
+}
+
+.signupBtn {
+  margin-left: 70%;
+  width: 60px;
+}
+
+.signupSpan {
+  margin-left: 90%;
 }
 
 .realTime-trainingTime,

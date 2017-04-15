@@ -1,0 +1,41 @@
+<html ng-app="loginApp">
+  <head>
+    <link rel="stylesheet" href="/GreenFigs/static/style.css">
+  </head>
+</html>
+<title>Green Figs</title>
+<body>
+  <div class="header">
+    <h1 class="page-title">Green Figs Sign Up</h1>
+  </div>
+  <form class="signup" action="/GreenFigs/static/signup.php" method="post">
+    <div class="signupInput">
+      <h4>Are you a</h4>
+      <input type="radio" name="role" value="customer" checked>Customer
+      <input type="radio" name="role" value="farmer"> Farmer
+      <h4>Email</h4>
+      <input class="account" name="email" type="text" />
+      <h4>Password</h4>
+      <input class="passwd" name="passwd" type="text" />
+      <h4>First Name</h4>
+      <input class="firstName" name="firstname" type="text" />
+      <h4>Last Name</h4>
+      <input class="lastName" name="lastname" type="text" />
+      <h4>Primary Phone</h4>
+      <input class="phone" name="phone" type="text" />
+      <h4>Street Name</h4>
+      <input class="street" name="street" type="text" />
+      <h4>Apartment Number</h4>
+      <input class="apt" name="apt" type="text" />
+      <h4>City</h4>
+      <input class="city" name="city" type="text" />
+      <h4>State</h4>
+      <input class="state" name="state" type="text" />
+      <h4>Zip Code</h4>
+      <input class="zip" name="zip" type="text" />
+      <h4>Country</h4>
+      <input class="country" name="country" type="text" />
+      <button class="signupBtn" type="submit">Sign Up</button>
+    </div>
+  </form>
+</body>

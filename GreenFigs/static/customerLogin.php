@@ -24,6 +24,8 @@
 		exit;
     }
     else {
-        print "<h3>No User found or Wrong Password</h3>\n";
+        print "<h3>No User found or Wrong Password</h3><br>\n";
+        print "<h3>Try to <a href='/GreenFigs/templates/login.html'>Log In</a> again</h3><br>\n";
+        print "<h3>Or sign up here <a href='/GreenFigs/templates/signup.html'> Sign Up</a>\n";
     }
 ?>
