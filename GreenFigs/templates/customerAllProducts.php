@@ -24,6 +24,20 @@
             window.location = "/GreenFigs/templates/customerAllRecipes.php?user=" + id;
         })
       })
+
+      function buyIt(productID, userID) {
+        $.ajax({
+          type: "POST",
+          url: "/GreenFigs/static/buyProduct.php",
+          data: "productID=" + productID + "&userID=" + userID,
+          success:function(msg) {
+            alert(msg);
+          },
+          error: function(error) {
+            console.log(error)
+          }
+        });
+      }
     </script>
   </head>
   <title>Green Figs</title>
@@ -82,19 +96,21 @@
           }
         }
 
-        function constructTable($ps1)
+        function constructTable($ps1, $id)
         {
           print "<div style='display:inline-block'>";
           while($product = $ps1->fetch()) {
-            print "      <div style='float:left; margin-left:4%; margin-top:10px; margin-bottom:10px; 
-                          border:1px solid; height:250px; width:20%'>\n";
-            print "           <p>" . $product->getProductID() . "</p>\n";
-            print "           <p>" . $product->getPrice() . "</p>\n";
-            print "           <p>" . $product->getName() . "</p>\n";
-            print "           <p>" . $product->getCertification() . "</p>\n";
-            print "           <p>" . $product->getFarmerID() . "</p>\n";
-            print "           <p>" . $product->getDescription() . "</p>\n";
-            print "           <p>" . $product->getCategoryID() . "</p>\n";
+            print "      <div style=\"float:left; margin-left:4%; margin-top:10px; margin-bottom:10px; 
+                          border:1px solid; height:350px; width:20%; background: #0055A2 url('/GreenFigs/static/productImages/product.png') no-repeat right top\">\n";
+            print "         <button style='width:70px;height:35px' type='button' onclick='buyIt(".$product->getProductID().", ".$id.")'>Buy</button>\n";
+            print "         <div style='margin-top:60px'>\n";
+            print "           <b style='font-size:14px;color:#E5A823'>Product ID: </b><p style='font-size:12px;color:white'>" . $product->getProductID() . "</p>\n";
+            print "           <b style='font-size:14px;color:#E5A823'>Name: </b><p style='font-size:12px;color:white'>" . $product->getName() . "</p>\n";
+            print "           <b style='font-size:14px;color:#E5A823'>Price: </b><p style='font-size:12px;color:white'>" . $product->getPrice() . "</p>\n";
+            print "           <b style='font-size:14px;color:#E5A823'>Certification: </b><p style='font-size:12px;color:white'>" . $product->getCertification() . "</p>\n";
+            print "           <b style='font-size:14px;color:#E5A823'>Seller ID: </b><p style='font-size:12px;color:white'>" . $product->getFarmerID() . "</p>\n";
+            print "           <b style='font-size:14px;color:#E5A823'>Description: </b><p style='font-size:12px;color:white'>" . $product->getDescription() . "</p>\n";
+            print "         </div>\n";
             print "      </div>\n";
           }
           print "</div>";
@@ -122,7 +138,7 @@
             // Fetch the matching row.
             $ps1->execute();
             $ps1->setFetchMode(PDO::FETCH_CLASS, "Product");
-            constructTable($ps1);
+            constructTable($ps1, $id);
         }
         catch(PDOException $ex) {
             echo 'ERROR: '.$ex->getMessage();

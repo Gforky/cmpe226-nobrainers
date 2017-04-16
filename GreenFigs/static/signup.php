@@ -93,7 +93,18 @@
     $ps3 = $con->prepare($query3);
 
     $ps3->execute(array(':phone' => $phone));
-                
-    header('Location: http://localhost/GreenFigs/templates/index.html?user='.$id);
-    exit;
+    
+    switch ($role) {
+        case 'customer':
+            header('Location: http://localhost/GreenFigs/templates/customerAllProducts.php?user='.$id);
+            exit;
+            break;
+        case 'farmer':
+            header('Location: http://localhost/GreenFigs/templates/farmerAllProducts.php?user='.$id);
+            exit;
+            break;
+        default:
+            # code...
+            break;
+    }
 ?>
