@@ -21,7 +21,7 @@
                 
     // $data is an array.
     if ($data) {
-        header('Location: http://localhost/GreenFigs/templates/index.html?user='.$data['FarmerID']);
+        header('Location: http://localhost/GreenFigs/templates/farmer.php?user='.$data['FarmerID']);
 		exit;
     }
     else {

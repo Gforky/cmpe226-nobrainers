@@ -20,7 +20,7 @@
                 
     // $data is an array.
     if ($data) {
-        header('Location: http://localhost/GreenFigs/templates/index.html?user='.$data['CustomerID']);
+        header('Location: http://localhost/GreenFigs/templates/customerAllProducts.php?user='.$data['CustomerID']);
 		exit;
     }
     else {

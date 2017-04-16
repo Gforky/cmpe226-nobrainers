@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html ng-app="dashboard">
   <head>
     <link rel="stylesheet" href="/GreenFigs/static/style.css">
@@ -18,27 +17,23 @@
     <script src="/GreenFigs/static/chartGen.js"></script>
     <!-- load dashboard angularjs application-->
     <script src="/GreenFigs/static/dashboard-angular.js"></script>
-    <!-- load js app to change colors of divs and buttons dynamically-->
-    <script src="/GreenFigs/static/changeColors.js"></script>
     <!-- load js app to fix the switchViewButtons at top-->
     <script src="/GreenFigs/static/scrollANDfix.js"></script>
 
-    <!-- js function to dynamically set display parameter of div-->
-    <script>
-      var setVisibility = function(classNames) {
-        document.getElementsByClassName(classNames[0])[0].style.display = "inline-block";
-        $('.' + classNames[0] + "Button").toggleClass('chosenColor', true);
-        for (index = 1; index < classNames.length; ++index) {
-          document.getElementsByClassName(classNames[index])[0].style.display = "none";
-          $('.' + classNames[index] + "Button").toggleClass('chosenColor', false);
-        }
-      }
-      var setChartButtonsVisualbility = function(classNames) {
-        $(classNames[0]).toggleClass('chosenColor', true);
-        for (index = 1; index < classNames.length; ++index) {
-          $(classNames[index]).toggleClass('chosenColor', false);
-        }
-      }
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $('.dataViewsButton').toggleClass('chosenColor');
+        $('.cpuUsage').toggleClass('chosenColor');
+        $('.imgStorage').toggleClass('chosenColor');
+        $('.AP').toggleClass('chosenColor');
+        var id = location.search.split('user=')[1] ? location.search.split('user=')[1] : 1;
+        $(".button.dataViewsButton").click(function() {
+            window.location = "/GreenFigs/templates/customerAllRecipes.php?user=" + id;
+        })
+        $(".button.sysOpsButton").click(function() {
+            window.location = "/GreenFigs/templates/customerAllProducts.php?user=" + id;
+        })
+      })
     </script>
   </head>
   <title>Green Figs</title>
@@ -47,32 +42,10 @@
       <h1 class="page-title">Green Figs Dashboard</h1>
     </div>
     <div class="switchViewButtons">
-      <button onclick="setVisibility([&quot;sysOps&quot;, &quot;dataViews&quot;])" class="button sysOpsButton">System Operations</button>
-      <button onclick="setVisibility([&quot;dataViews&quot;, &quot;sysOps&quot;])" class="button dataViewsButton">Data Visualization</button>
+      <button class="button sysOpsButton">All Products</button>
+      <button class="button dataViewsButton">All Recipes</button>
     </div>
     <div ng-app="dashboard" class="dashboard">
-      <!-- system opertations webpage-->
-      <div class="sysOps">
-        <div class="left-half">
-          <div class="left-half-1">
-              <div class="realTime-dataset"><span style="color:#008CBA">Dataset Size of Current Training Process:</span>
-              <br>
-              Mattress: <span my-current-dataset style="color:#ff4000"></span>
-              <br>
-              Couch: <span my-current-dataset style="color:#ff4000"></span>
-              <br>
-              Fridge: <span my-current-dataset style="color:#ff4000"></span>
-              <br>
-              Chair: <span my-current-dataset style="color:#ff4000"></span>
-              <br>
-              TV-Monitor: <span my-current-dataset style="color:#ff4000"></span></div>
-            </div>
-          </div>
-        </div>
-        <div class="right-half">
-          
-        </div>
-      </div>
       <!-- data visualization webpage-->
       <div class="dataViews">
         <div class="dbStat">
@@ -111,5 +84,7 @@
       </div>
     </div>
     <div class="footer">
-      <p>Copyright © 2016 Wendy Boo, Alan Chen, Luwen Miao, Xiaoming Chuang</p>
+      <p>Copyright © 2017 Wendy Boo, Hanchen Tang, Luwen Miao, Zhenyu Zhong</p>
     </div>
+  </body>
+</html>
