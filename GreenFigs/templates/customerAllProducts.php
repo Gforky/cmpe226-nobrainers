@@ -29,7 +29,7 @@
         $.ajax({
           type: "POST",
           url: "/GreenFigs/static/buyProduct.php",
-          data: "productID=" + productID + "&userID=" + userID,
+          data: "productID=" + productID + "&userID=" + userID + "&amount=" + $("input#buyAmount" + productID).val(),
           success:function(msg) {
             alert(msg);
           },
@@ -103,7 +103,8 @@
             print "      <div style=\"float:left; margin-left:4%; margin-top:10px; margin-bottom:10px; 
                           border:1px solid; height:350px; width:20%; background: #0055A2 url('/GreenFigs/static/productImages/product.png') no-repeat right top\">\n";
             print "         <button style='width:70px;height:35px' type='button' onclick='buyIt(".$product->getProductID().", ".$id.")'>Buy</button>\n";
-            print "         <div style='margin-top:60px'>\n";
+            print "         <p style='margin-top:60px; color:#E5A823'>Quantity (between 1 and 100)</p> <input id='buyAmount".$product->getProductID()."' type='number' min='1' max='100'>\n";
+            print "         <div style='height:180px; width:100%; overflow:scroll'>\n";
             print "           <b style='font-size:14px;color:#E5A823'>Product ID: </b><p style='font-size:12px;color:white'>" . $product->getProductID() . "</p>\n";
             print "           <b style='font-size:14px;color:#E5A823'>Name: </b><p style='font-size:12px;color:white'>" . $product->getName() . "</p>\n";
             print "           <b style='font-size:14px;color:#E5A823'>Price: </b><p style='font-size:12px;color:white'>" . $product->getPrice() . "</p>\n";

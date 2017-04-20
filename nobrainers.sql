@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 05, 2017 at 02:41 AM
+-- Generation Time: Apr 20, 2017 at 10:10 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 5.6.28
 
@@ -80,7 +80,7 @@ INSERT INTO `customer` (`CustomerID`, `FirstName`, `LastName`, `Email`, `Passwor
 (8, 'Quyn', 'Berry', 'ultrices.sit.amet@urnaconvalliserat.ca', 'YFR72QVL9KI', '8096 Nunc Street', '889', 'Toledo', 'Ohio', '13694', 'Bosnia and Herzegovina'),
 (9, 'Kendall', 'Adkins', 'ultrices.iaculis@semperet.ca', 'EGW86QMG7MD', '314-1360 Eu', '', '', '', '', ''),
 (10, 'Leilani', 'Wallace', 'et.rutrum@dictumeueleifend.edu', 'EDJ81KYA5MW', '582-495 Dui Rd.', '898', 'Jefferson City', 'Missouri', '40857', 'Central African Republic'),
-(1016, NULL, NULL, 'luwen.miao@sjsu.edu', '123456', NULL, NULL, NULL, NULL, NULL, NULL);
+(12, 'Luwen', 'Miao', 'luwen.miao@sjsu.edu', '123456', '', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -98,6 +98,7 @@ CREATE TABLE `customerphone` (
 --
 
 INSERT INTO `customerphone` (`Phone`, `CustomerID`) VALUES
+('', 12),
 ('1-152-350-0853', 2),
 ('1-355-581-5317', 8),
 ('1-408-211-5325', 9),
@@ -171,67 +172,68 @@ INSERT INTO `farmerphone` (`Phone`, `FarmerID`) VALUES
 CREATE TABLE `iscontained` (
   `RecipeName` varchar(40) NOT NULL,
   `CustomerID` int(1) NOT NULL,
-  `ProductID` int(2) NOT NULL
+  `ProductID` int(2) NOT NULL,
+  `Amount` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 --
 -- Dumping data for table `iscontained`
 --
 
-INSERT INTO `iscontained` (`RecipeName`, `CustomerID`, `ProductID`) VALUES
-('Alaskan Cod and Shrimp with Fresh Tomato', 0, 20),
-('Alaskan Cod and Shrimp with Fresh Tomato', 0, 37),
-('Alaskan Cod and Shrimp with Fresh Tomato', 0, 38),
-('Alaskan Cod and Shrimp with Fresh Tomato', 1, 20),
-('Alaskan Cod and Shrimp with Fresh Tomato', 1, 37),
-('Alaskan Cod and Shrimp with Fresh Tomato', 1, 38),
-('Cajun Chicken Ragout', 0, 27),
-('Cajun Chicken Ragout', 0, 32),
-('Cajun Chicken Ragout', 0, 36),
-('Cajun Chicken Ragout', 4, 27),
-('Cajun Chicken Ragout', 4, 32),
-('Cajun Chicken Ragout', 4, 36),
-('Cajun Chicken Ragout', 9, 27),
-('Cajun Chicken Ragout', 9, 32),
-('Cajun Chicken Ragout', 9, 36),
-('Fettuccini Carbonara', 0, 19),
-('Fettuccini Carbonara', 0, 21),
-('Fettuccini Carbonara', 0, 32),
-('Fettuccini Carbonara', 0, 43),
-('Fettuccini Carbonara', 7, 19),
-('Fettuccini Carbonara', 7, 21),
-('Fettuccini Carbonara', 7, 32),
-('Fettuccini Carbonara', 7, 43),
-('Filet Mignon with Rich Balsamic Glaze', 0, 3),
-('Filet Mignon with Rich Balsamic Glaze', 0, 6),
-('Filet Mignon with Rich Balsamic Glaze', 0, 14),
-('Filet Mignon with Rich Balsamic Glaze', 0, 18),
-('Filet Mignon with Rich Balsamic Glaze', 1, 3),
-('Filet Mignon with Rich Balsamic Glaze', 1, 6),
-('Filet Mignon with Rich Balsamic Glaze', 1, 14),
-('Filet Mignon with Rich Balsamic Glaze', 1, 18),
-('Filet Mignon with Rich Balsamic Glaze', 3, 3),
-('Filet Mignon with Rich Balsamic Glaze', 3, 6),
-('Filet Mignon with Rich Balsamic Glaze', 3, 14),
-('Filet Mignon with Rich Balsamic Glaze', 3, 18),
-('Fried Cabbage and Egg Noodles', 0, 8),
-('Fried Cabbage and Egg Noodles', 0, 9),
-('Fried Cabbage and Egg Noodles', 0, 21),
-('Fried Cabbage and Egg Noodles', 1, 8),
-('Fried Cabbage and Egg Noodles', 1, 9),
-('Fried Cabbage and Egg Noodles', 1, 21),
-('Fried Cabbage and Egg Noodles', 6, 8),
-('Fried Cabbage and Egg Noodles', 6, 9),
-('Fried Cabbage and Egg Noodles', 6, 21),
-('Fried Cabbage and Egg Noodles', 9, 8),
-('Fried Cabbage and Egg Noodles', 9, 9),
-('Fried Cabbage and Egg Noodles', 9, 21),
-('Fried Pork Chop', 0, 8),
-('Fried Pork Chop', 0, 11),
-('Fried Pork Chop', 0, 13),
-('Fried Pork Chop', 3, 8),
-('Fried Pork Chop', 3, 11),
-('Fried Pork Chop', 3, 13);
+INSERT INTO `iscontained` (`RecipeName`, `CustomerID`, `ProductID`, `Amount`) VALUES
+('Alaskan Cod and Shrimp with Fresh Tomato', 0, 20, 1),
+('Alaskan Cod and Shrimp with Fresh Tomato', 0, 37, 1),
+('Alaskan Cod and Shrimp with Fresh Tomato', 0, 38, 1),
+('Alaskan Cod and Shrimp with Fresh Tomato', 1, 20, 1),
+('Alaskan Cod and Shrimp with Fresh Tomato', 1, 37, 1),
+('Alaskan Cod and Shrimp with Fresh Tomato', 1, 38, 1),
+('Cajun Chicken Ragout', 0, 27, 1),
+('Cajun Chicken Ragout', 0, 32, 1),
+('Cajun Chicken Ragout', 0, 36, 1),
+('Cajun Chicken Ragout', 4, 27, 1),
+('Cajun Chicken Ragout', 4, 32, 1),
+('Cajun Chicken Ragout', 4, 36, 1),
+('Cajun Chicken Ragout', 9, 27, 1),
+('Cajun Chicken Ragout', 9, 32, 1),
+('Cajun Chicken Ragout', 9, 36, 1),
+('Fettuccini Carbonara', 0, 19, 1),
+('Fettuccini Carbonara', 0, 21, 1),
+('Fettuccini Carbonara', 0, 32, 1),
+('Fettuccini Carbonara', 0, 43, 1),
+('Fettuccini Carbonara', 7, 19, 1),
+('Fettuccini Carbonara', 7, 21, 1),
+('Fettuccini Carbonara', 7, 32, 1),
+('Fettuccini Carbonara', 7, 43, 1),
+('Filet Mignon with Rich Balsamic Glaze', 0, 3, 1),
+('Filet Mignon with Rich Balsamic Glaze', 0, 6, 1),
+('Filet Mignon with Rich Balsamic Glaze', 0, 14, 1),
+('Filet Mignon with Rich Balsamic Glaze', 0, 18, 1),
+('Filet Mignon with Rich Balsamic Glaze', 1, 3, 1),
+('Filet Mignon with Rich Balsamic Glaze', 1, 6, 1),
+('Filet Mignon with Rich Balsamic Glaze', 1, 14, 1),
+('Filet Mignon with Rich Balsamic Glaze', 1, 18, 1),
+('Filet Mignon with Rich Balsamic Glaze', 3, 3, 1),
+('Filet Mignon with Rich Balsamic Glaze', 3, 6, 1),
+('Filet Mignon with Rich Balsamic Glaze', 3, 14, 1),
+('Filet Mignon with Rich Balsamic Glaze', 3, 18, 1),
+('Fried Cabbage and Egg Noodles', 0, 8, 1),
+('Fried Cabbage and Egg Noodles', 0, 9, 1),
+('Fried Cabbage and Egg Noodles', 0, 21, 1),
+('Fried Cabbage and Egg Noodles', 1, 8, 1),
+('Fried Cabbage and Egg Noodles', 1, 9, 1),
+('Fried Cabbage and Egg Noodles', 1, 21, 1),
+('Fried Cabbage and Egg Noodles', 6, 8, 1),
+('Fried Cabbage and Egg Noodles', 6, 9, 1),
+('Fried Cabbage and Egg Noodles', 6, 21, 1),
+('Fried Cabbage and Egg Noodles', 9, 8, 1),
+('Fried Cabbage and Egg Noodles', 9, 9, 1),
+('Fried Cabbage and Egg Noodles', 9, 21, 1),
+('Fried Pork Chop', 0, 8, 1),
+('Fried Pork Chop', 0, 11, 1),
+('Fried Pork Chop', 0, 13, 1),
+('Fried Pork Chop', 3, 8, 1),
+('Fried Pork Chop', 3, 11, 1),
+('Fried Pork Chop', 3, 13, 1);
 
 -- --------------------------------------------------------
 
@@ -240,65 +242,71 @@ INSERT INTO `iscontained` (`RecipeName`, `CustomerID`, `ProductID`) VALUES
 --
 
 CREATE TABLE `isincludedproduct` (
-  `OrderID` int(5) NOT NULL,
-  `ProductID` int(2) NOT NULL
+  `OrderID` bigint(63) NOT NULL,
+  `ProductID` int(2) NOT NULL,
+  `Amount` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 --
 -- Dumping data for table `isincludedproduct`
 --
 
-INSERT INTO `isincludedproduct` (`OrderID`, `ProductID`) VALUES
-(11052, 8),
-(11052, 25),
-(11052, 30),
-(11052, 39),
-(11052, 46),
-(16737, 18),
-(19644, 4),
-(19644, 34),
-(19644, 36),
-(19644, 42),
-(19644, 47),
-(20123, 19),
-(20123, 23),
-(20123, 27),
-(20123, 31),
-(22190, 13),
-(23289, 3),
-(33154, 7),
-(47283, 14),
-(67034, 1),
-(67034, 22),
-(67034, 29),
-(67034, 38),
-(67034, 43),
-(67650, 15),
-(69961, 6),
-(71119, 12),
-(73409, 16),
-(79140, 5),
-(79140, 24),
-(79140, 35),
-(79140, 45),
-(84973, 2),
-(85949, 11),
-(85949, 21),
-(85949, 33),
-(85949, 41),
-(85949, 49),
-(88223, 17),
-(94231, 10),
-(94231, 26),
-(94231, 28),
-(94231, 32),
-(94231, 37),
-(94231, 40),
-(94231, 44),
-(94231, 48),
-(94231, 50),
-(95733, 20),
-(96191, 9);
+INSERT INTO `isincludedproduct` (`OrderID`, `ProductID`, `Amount`) VALUES
+(11052, 8, 1),
+(11052, 25, 1),
+(11052, 30, 1),
+(11052, 39, 1),
+(11052, 46, 1),
+(16737, 18, 1),
+(19644, 4, 1),
+(19644, 34, 1),
+(19644, 36, 1),
+(19644, 42, 1),
+(19644, 47, 1),
+(20123, 19, 1),
+(20123, 23, 1),
+(20123, 27, 1),
+(20123, 31, 1),
+(22190, 13, 1),
+(23289, 3, 1),
+(33154, 7, 1),
+(47283, 14, 1),
+(67034, 1, 1),
+(67034, 22, 1),
+(67034, 29, 1),
+(67034, 38, 1),
+(67034, 43, 1),
+(67650, 15, 1),
+(69961, 6, 1),
+(71119, 12, 1),
+(73409, 16, 1),
+(79140, 5, 1),
+(79140, 24, 1),
+(79140, 35, 1),
+(79140, 45, 1),
+(84973, 2, 1),
+(85949, 11, 1),
+(85949, 21, 1),
+(85949, 33, 1),
+(85949, 41, 1),
+(85949, 49, 1),
+(88223, 17, 1),
+(94231, 10, 1),
+(94231, 26, 1),
+(94231, 28, 1),
+(94231, 32, 1),
+(94231, 37, 1),
+(94231, 40, 1),
+(94231, 44, 1),
+(94231, 48, 1),
+(94231, 50, 1),
+(95733, 20, 1),
+(96191, 9, 1),
+(201742010075912, 2, 5),
+(201742010082812, 2, 5),
+(201742010082912, 2, 5),
+(201742010083112, 2, 5),
+(201742010084512, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -309,7 +317,7 @@ INSERT INTO `isincludedproduct` (`OrderID`, `ProductID`) VALUES
 CREATE TABLE `isincludedrecipe` (
   `RecipeName` varchar(40) NOT NULL,
   `CustomerID` int(1) NOT NULL,
-  `OrderId` int(5) NOT NULL
+  `OrderId` bigint(63) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 --
@@ -330,7 +338,7 @@ INSERT INTO `isincludedrecipe` (`RecipeName`, `CustomerID`, `OrderId`) VALUES
 --
 
 CREATE TABLE `order` (
-  `OrderID` int(5) NOT NULL,
+  `OrderID` bigint(63) NOT NULL,
   `CustomerID` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
@@ -358,7 +366,12 @@ INSERT INTO `order` (`OrderID`, `CustomerID`) VALUES
 (23289, 9),
 (67034, 9),
 (20123, 10),
-(67650, 10);
+(67650, 10),
+(201742010075912, 12),
+(201742010082812, 12),
+(201742010082912, 12),
+(201742010083112, 12),
+(201742010084512, 12);
 
 -- --------------------------------------------------------
 
