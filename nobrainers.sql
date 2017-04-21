@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 20, 2017 at 10:10 AM
+-- Generation Time: Apr 21, 2017 at 11:00 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 5.6.28
 
@@ -216,22 +216,19 @@ INSERT INTO `iscontained` (`RecipeName`, `CustomerID`, `ProductID`, `Amount`) VA
 ('Filet Mignon with Rich Balsamic Glaze', 3, 6, 1),
 ('Filet Mignon with Rich Balsamic Glaze', 3, 14, 1),
 ('Filet Mignon with Rich Balsamic Glaze', 3, 18, 1),
-('Fried Cabbage and Egg Noodles', 0, 8, 1),
-('Fried Cabbage and Egg Noodles', 0, 9, 1),
+('French Fries', 9, 8, 2),
+('French Fries', 9, 14, 15),
+('French Fries', 9, 21, 1),
+('Fried Cabbage and Egg Noodles', 0, 8, 2),
 ('Fried Cabbage and Egg Noodles', 0, 21, 1),
-('Fried Cabbage and Egg Noodles', 1, 8, 1),
-('Fried Cabbage and Egg Noodles', 1, 9, 1),
+('Fried Cabbage and Egg Noodles', 1, 8, 2),
 ('Fried Cabbage and Egg Noodles', 1, 21, 1),
-('Fried Cabbage and Egg Noodles', 6, 8, 1),
-('Fried Cabbage and Egg Noodles', 6, 9, 1),
+('Fried Cabbage and Egg Noodles', 6, 8, 2),
 ('Fried Cabbage and Egg Noodles', 6, 21, 1),
-('Fried Cabbage and Egg Noodles', 9, 8, 1),
-('Fried Cabbage and Egg Noodles', 9, 9, 1),
-('Fried Cabbage and Egg Noodles', 9, 21, 1),
-('Fried Pork Chop', 0, 8, 1),
+('Fried Pork Chop', 0, 8, 2),
 ('Fried Pork Chop', 0, 11, 1),
 ('Fried Pork Chop', 0, 13, 1),
-('Fried Pork Chop', 3, 8, 1),
+('Fried Pork Chop', 3, 8, 2),
 ('Fried Pork Chop', 3, 11, 1),
 ('Fried Pork Chop', 3, 13, 1);
 
@@ -455,7 +452,7 @@ CREATE TABLE `recipe` (
   `RecipeName` varchar(40) NOT NULL,
   `CustomerID` int(1) NOT NULL,
   `Type` varchar(8) DEFAULT NULL,
-  `Description` varchar(79) DEFAULT NULL
+  `Description` longtext
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -473,10 +470,10 @@ INSERT INTO `recipe` (`RecipeName`, `CustomerID`, `Type`, `Description`) VALUES
 ('Filet Mignon with Rich Balsamic Glaze', 0, 'Chef', 'magna eros. Proin ultrices.'),
 ('Filet Mignon with Rich Balsamic Glaze', 1, 'Customer', 'sit amet metus. Aliquam erat volutpat. Nulla facilisis. Suspendisse commodo'),
 ('Filet Mignon with Rich Balsamic Glaze', 3, 'Customer', 'scelerisque neque. Nullam nisl. Maecenas malesuada'),
+('French Fries', 9, 'Customer', '    1. Slice potatoes into French fries, and place into cold water so they won''t turn brown while you prepare the oil.\r\n    2. Heat oil in a large skillet over medium-high heat. While the oil is heating, sift the flour, garlic salt, onion salt, (regular) salt, and paprika into a large bowl. Gradually stir in enough water so that the mixture can be drizzled from a spoon.\r\n    3. Dip potato slices into the batter one at a time, and place in the hot oil so they are not touching at first. The fries must be placed into the skillet one at a time, or they will clump together. Fry until golden brown and crispy. Remove and drain on paper towels.\r\n'),
 ('Fried Cabbage and Egg Noodles', 0, 'Chef', 'metus. Aenean sed pede nec ante blandit viverra. Donec tempus'),
 ('Fried Cabbage and Egg Noodles', 1, 'Customer', 'dolor elit'),
 ('Fried Cabbage and Egg Noodles', 6, 'Customer', 'Aliquam ornare'),
-('Fried Cabbage and Egg Noodles', 9, 'Customer', 'Nulla dignissim. Maecenas ornare egestas ligula. Nullam feugiat placerat velit.'),
 ('Fried Pork Chop', 0, 'Chef', 'sapien. Aenean massa. Integer vitae'),
 ('Fried Pork Chop', 3, 'Customer', 'Duis sit amet diam eu dolor egestas rhoncus. Proin');
 

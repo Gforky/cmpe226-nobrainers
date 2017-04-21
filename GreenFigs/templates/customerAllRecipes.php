@@ -22,16 +22,19 @@
 
     <script type="text/javascript">
       $(document).ready(function() {
-        $('.dataViewsButton').toggleClass('chosenColor');
+        $('.allRecipesBtn').toggleClass('chosenColor');
         $('.cpuUsage').toggleClass('chosenColor');
         $('.imgStorage').toggleClass('chosenColor');
         $('.AP').toggleClass('chosenColor');
         var id = location.search.split('user=')[1] ? location.search.split('user=')[1] : 1;
-        $(".button.dataViewsButton").click(function() {
+        $(".button.allProductsBtn").click(function() {
+            window.location = "/GreenFigs/templates/customerAllProducts.php?user=" + id;
+        })
+        $(".button.allRecipesBtn").click(function() {
             window.location = "/GreenFigs/templates/customerAllRecipes.php?user=" + id;
         })
-        $(".button.sysOpsButton").click(function() {
-            window.location = "/GreenFigs/templates/customerAllProducts.php?user=" + id;
+        $(".button.myRecipesBtn").click(function() {
+            window.location = "/GreenFigs/templates/customerSelfRecipes.php?user=" + id;
         })
       })
     </script>
@@ -42,8 +45,9 @@
       <h1 class="page-title">Green Figs Dashboard</h1>
     </div>
     <div class="switchViewButtons">
-      <button class="button sysOpsButton">All Products</button>
-      <button class="button dataViewsButton">All Recipes</button>
+      <button class="button allProductsBtn">All Products</button>
+      <button class="button allRecipesBtn">All Recipes</button>
+      <button class="button myRecipesBtn">My Recipes</button>
     </div>
     <div ng-app="dashboard" class="dashboard">
       <!-- data visualization webpage-->

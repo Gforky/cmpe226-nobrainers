@@ -15,7 +15,7 @@
 
     <script type="text/javascript">
       $(document).ready(function() {
-        $('.allProductsBtn').toggleClass('chosenColor');
+        $('.myRecipesBtn').toggleClass('chosenColor');
         var id = location.search.split('user=')[1] ? location.search.split('user=')[1] : 1;
         $(".button.allProductsBtn").click(function() {
             window.location = "/GreenFigs/templates/customerAllProducts.php?user=" + id;
@@ -28,18 +28,8 @@
         })
       })
 
-      function buyIt(productID, userID) {
-        $.ajax({
-          type: "POST",
-          url: "/GreenFigs/static/buyProduct.php",
-          data: "productID=" + productID + "&userID=" + userID + "&amount=" + $("input#buyAmount" + productID).val(),
-          success:function(msg) {
-            alert(msg);
-          },
-          error: function(error) {
-            console.log(error)
-          }
-        });
+      function editRecipe(name, id) {
+        window.location = "/GreenFigs/templates/editRecipe.php?user=" + id + "&recipeName=" + name;
       }
     </script>
   </head>
@@ -68,53 +58,82 @@
           TV-Monitor: <span my-current-dataset style="color:#ff4000"></span></div>
         </div>-->
       <?php
-        class Product {
-          private $ProductID;
-          private $Price;
-          private $Name;
-          private $Certification;
-          private $FarmerID;
+        class Recipe {
+          private $RecipeName;
+          private $CustomerID;
+          private $Type;
           private $Description;
-          private $CategoryID;
 
-          public function getProductID() {
-            return $this->ProductID;
+          public function getRecipeName() {
+            return $this->RecipeName;
           }
-          public function getPrice() {
-            return $this->Price;
+          public function getCustomerID() {
+            return $this->CustomerID;
           }
-          public function getName() {
-            return $this->Name;
-          }
-          public function getCertification() {
-            return $this->Certification;
-          }
-          public function getFarmerID() {
-            return $this->FarmerID;
+          public function getType() {
+            return $this->Type;
           }
           public function getDescription() {
             return $this->Description;
           }
-          public function getCategoryID() {
-            return $this->CategoryID;
+        }
+
+        class Ingredient {
+          private $RecipeName;
+          private $CustomerID;
+          private $ProductID;
+          private $Amount;
+
+          public function getRecipeName() {
+            return $this->RecipeName;
+          }
+          public function getCustomerID() {
+            return $this->CustomerID;
+          }
+          public function getProductID() {
+            return $this->ProductID;
+          }
+          public function getAmount() {
+            return $this->Amount;
           }
         }
 
-        function constructTable($ps1, $id)
+        function constructTable($ps1, $con, $id)
         {
           print "<div style='display:inline-block'>";
-          while($product = $ps1->fetch()) {
+          while($recipe = $ps1->fetch()) {
+            $query2 = "SELECT * 
+                       FROM iscontained
+                       WHERE CustomerID = :id
+                       AND RecipeName = :name";
+
+            $ps2 = $con->prepare($query2);
+
+            $ps2->execute(array(":id" => $id, ":name" => $recipe->getRecipeName()));
+            $ps2->setFetchMode(PDO::FETCH_CLASS, "Ingredient");
+
             print "      <div style=\"float:left; margin-left:4%; margin-top:10px; margin-bottom:10px; 
                           border:1px solid; height:350px; width:20%; background: #0055A2 url('/GreenFigs/static/productImages/product.png') no-repeat right top\">\n";
-            print "         <button style='width:70px;height:35px' type='button' onclick='buyIt(".$product->getProductID().", ".$id.")'>Buy</button>\n";
-            print "         <p style='margin-top:60px; color:#E5A823'>Quantity (between 1 and 100)</p> <input id='buyAmount".$product->getProductID()."' type='number' min='1' max='100'>\n";
-            print "         <div style='height:180px; width:100%; overflow:scroll'>\n";
-            print "           <b style='font-size:14px;color:#E5A823'>Product ID: </b><p style='font-size:12px;color:white'>" . $product->getProductID() . "</p>\n";
-            print "           <b style='font-size:14px;color:#E5A823'>Name: </b><p style='font-size:12px;color:white'>" . $product->getName() . "</p>\n";
-            print "           <b style='font-size:14px;color:#E5A823'>Price: </b><p style='font-size:12px;color:white'>" . $product->getPrice() . "</p>\n";
-            print "           <b style='font-size:14px;color:#E5A823'>Certification: </b><p style='font-size:12px;color:white'>" . $product->getCertification() . "</p>\n";
-            print "           <b style='font-size:14px;color:#E5A823'>Seller ID: </b><p style='font-size:12px;color:white'>" . $product->getFarmerID() . "</p>\n";
-            print "           <b style='font-size:14px;color:#E5A823'>Description: </b><p style='font-size:12px;color:white'>" . $product->getDescription() . "</p>\n";
+            print "         <button style='width:70px;height:35px' type='button' onclick='editRecipe(\"".$recipe->getRecipeName()."\", ".$id.")'>Edit</button>\n";
+            print "         <div style='margin-top:60px; height:240px; width:100%; overflow:scroll'>\n";
+            print "           <b style='font-size:14px;color:#E5A823'>Recipe Name: </b><p style='font-size:12px;color:white'>" . $recipe->getRecipeName() . "</p>\n";
+            print "           <b style='font-size:14px;color:#E5A823'>Shared By User: </b><p style='font-size:12px;color:white'>" . $recipe->getCustomerID() . "</p>\n";
+            print "           <b style='font-size:14px;color:#E5A823'>User Type: </b><p style='font-size:12px;color:white'>" . $recipe->getType() . "</p>\n";
+            print "           <b style='font-size:14px;color:#E5A823'>Description: </b><p style='font-size:12px;color:white'>" . $recipe->getDescription() . "</p>\n";
+            print "           <b style='font-size:14px;color:#E5A823'>Ingredients: </b>\n";
+            while($ingredient = $ps2->fetch()) {
+            $query = "SELECT Name
+                      FROM product
+                      WHERE ProductID = :productID";
+
+            $ps = $con->prepare($query);
+
+            $ps->execute(array(":productID" => $ingredient->getProductID()));
+
+            $productName = $ps->fetch();
+
+            print "<div style='border-top:1px solid'><p style='font-size:12px;color:white'>Product ID: ".$ingredient->getProductID()."; Product Name: ".$productName['Name']."; Product Amount: ".$ingredient->getAmount()."</p></div>\n";
+          }
             print "         </div>\n";
             print "      </div>\n";
           }
@@ -136,14 +155,15 @@
                                PDO::ERRMODE_EXCEPTION);
             
             $query1 = "SELECT * 
-                       FROM product";
+                       FROM recipe
+                       WHERE CustomerID = :id";
                                                            
             $ps1 = $con->prepare($query1);
 
             // Fetch the matching row.
-            $ps1->execute();
-            $ps1->setFetchMode(PDO::FETCH_CLASS, "Product");
-            constructTable($ps1, $id);
+            $ps1->execute(array(":id" => $id));
+            $ps1->setFetchMode(PDO::FETCH_CLASS, "Recipe");
+            constructTable($ps1, $con, $id);
         }
         catch(PDOException $ex) {
             echo 'ERROR: '.$ex->getMessage();

@@ -140,7 +140,7 @@ button {
   display: inline-block;
   float: left;
   height: 100%;
-  width: 50%;
+  width: 33.33%;
   text-decoration: none;
 }
 .loginSwitchButton {
@@ -197,4 +197,12 @@ button {
 .chosenColor {
   background-color: var(--blue);
   color: var(--gold);
+}
+
+.updateRecipeArea {
+  margin-top: 20px;
+  margin-left: 28%;
+  margin-right: 28%;
+  padding: 15px;
+  border: 1px solid var(--blue);
 }
