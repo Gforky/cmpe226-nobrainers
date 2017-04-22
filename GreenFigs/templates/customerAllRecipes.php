@@ -1,8 +1,6 @@
 <html ng-app="dashboard">
   <head>
     <link rel="stylesheet" href="/GreenFigs/static/style.css">
-    <!-- load c3.css-->
-    <link rel="stylesheet" href="/GreenFigs/static/c3.css">
     <!-- load angular js-->
     <!--script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js')-->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
@@ -10,11 +8,6 @@
     <script type="text/javascript" src="https://code.angularjs.org/1.5.8/angular-touch.min.js"></script>
     <!-- load jquery-->
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <!-- load c3.js and d3.js-->
-    <script src="/GreenFigs/static/d3.js" charset="utf-8"></script>
-    <script src="/GreenFigs/static/c3.js"></script>
-    <!-- external js to generate charts-->
-    <script src="/GreenFigs/static/chartGen.js"></script>
     <!-- load dashboard angularjs application-->
     <script src="/GreenFigs/static/dashboard-angular.js"></script>
     <!-- load js app to fix the switchViewButtons at top-->
@@ -23,9 +16,6 @@
     <script type="text/javascript">
       $(document).ready(function() {
         $('.allRecipesBtn').toggleClass('chosenColor');
-        $('.cpuUsage').toggleClass('chosenColor');
-        $('.imgStorage').toggleClass('chosenColor');
-        $('.AP').toggleClass('chosenColor');
         var id = location.search.split('user=')[1] ? location.search.split('user=')[1] : 1;
         $(".button.allProductsBtn").click(function() {
             window.location = "/GreenFigs/templates/customerAllProducts.php?user=" + id;
@@ -37,6 +27,20 @@
             window.location = "/GreenFigs/templates/customerSelfRecipes.php?user=" + id;
         })
       })
+
+      function buyRecipe(recipeName, userID) {
+        $.ajax({
+          type: "POST",
+          url: "/GreenFigs/static/buyRecipe.php",
+          data: "recipeName=" + recipeName + "&userID=" + userID,
+          success:function(msg) {
+            alert(msg);
+          },
+          error: function(error) {
+            console.log(error)
+          }
+        });
+      }
     </script>
   </head>
   <title>Green Figs</title>
@@ -50,44 +54,135 @@
       <button class="button myRecipesBtn">My Recipes</button>
     </div>
     <div ng-app="dashboard" class="dashboard">
-      <!-- data visualization webpage-->
-      <div class="dataViews">
-        <div class="dbStat">
-          <h2>Database Status</h2>
-          <div class="chartButtons">
-            <button onclick="setChartButtonsVisualbility([&quot;.imgStorage&quot;, &quot;.dbIO&quot;, &quot;.datasetSize&quot;, &quot;.dbQuery&quot;, &quot;.imgConf&quot;, &quot;.upImg&quot;])" class="button imgStorage">Total Images in Database</button>
-            <button onclick="setChartButtonsVisualbility([&quot;.datasetSize&quot;, &quot;.imgStorage&quot;, &quot;.dbIO&quot;, &quot;.dbQuery&quot;, &quot;.imgConf&quot;, &quot;.upImg&quot;])" class="button datasetSize">Images automatically<br>rejected by the algorithm</button>
-            <button onclick="setChartButtonsVisualbility([&quot;.imgConf&quot;, &quot;.upImg&quot;, &quot;.imgStorage&quot;, &quot;.dbIO&quot;, &quot;.datasetSize&quot;, &quot;.dbQuery&quot;])" class="button imgConf">Images Confirmed by Administrators</button>
-            <button onclick="setChartButtonsVisualbility([&quot;.upImg&quot;, &quot;.imgConf&quot;, &quot;.imgStorage&quot;, &quot;.dbIO&quot;, &quot;.datasetSize&quot;, &quot;.dbQuery&quot;])" class="button upImg">Uploaded Images</button>
-            <button onclick="setChartButtonsVisualbility([&quot;.dbIO&quot;, &quot;.datasetSize&quot;, &quot;.imgStorage&quot;, &quot;.dbQuery&quot;, &quot;.imgConf&quot;, &quot;.upImg&quot;])" class="button dbIO">I/O Traffic</button>
-            <button onclick="setChartButtonsVisualbility([&quot;.dbQuery&quot;, &quot;.datasetSize&quot;, &quot;.dbIO&quot;, &quot;.imgStorage&quot;, &quot;.imgConf&quot;, &quot;.upImg&quot;])" class="button dbQuery">Database Queries</button>
-          </div>
-          <div ng-controller="chartCtrl" class="dbChart"></div>
-        </div>
+      <!-- system opertations webpage-->
+        <!--<div class="realTime-dataset"><span style="color:#008CBA">Dataset Size of Current Training Process:</span>
+          <br>
+          Mattress: <span my-current-dataset style="color:#ff4000"></span>
+          <br>
+          Couch: <span my-current-dataset style="color:#ff4000"></span>
+          <br>
+          Fridge: <span my-current-dataset style="color:#ff4000"></span>
+          <br>
+          Chair: <span my-current-dataset style="color:#ff4000"></span>
+          <br>
+          TV-Monitor: <span my-current-dataset style="color:#ff4000"></span></div>
+        </div>-->
+      <?php
+        class Recipe {
+          private $RecipeName;
+          private $CustomerID;
+          private $Type;
+          private $Description;
+
+          public function getRecipeName() {
+            return $this->RecipeName;
+          }
+          public function getCustomerID() {
+            return $this->CustomerID;
+          }
+          public function getType() {
+            return $this->Type;
+          }
+          public function getDescription() {
+            return $this->Description;
+          }
+        }
+
+        class Ingredient {
+          private $RecipeName;
+          private $CustomerID;
+          private $ProductID;
+          private $Amount;
+
+          public function getRecipeName() {
+            return $this->RecipeName;
+          }
+          public function getCustomerID() {
+            return $this->CustomerID;
+          }
+          public function getProductID() {
+            return $this->ProductID;
+          }
+          public function getAmount() {
+            return $this->Amount;
+          }
+        }
+
+        function constructTable($ps1, $con, $id)
+        {
+          print "<div style='display:inline-block'>";
+          while($recipe = $ps1->fetch()) {
+            $query2 = "SELECT * 
+                       FROM iscontained
+                       WHERE CustomerID = :id
+                       AND RecipeName = :name";
+
+            $ps2 = $con->prepare($query2);
+
+            $ps2->execute(array(":id" => $id, ":name" => $recipe->getRecipeName()));
+            $ps2->setFetchMode(PDO::FETCH_CLASS, "Ingredient");
+
+            print "      <div style=\"float:left; margin-left:4%; margin-top:10px; margin-bottom:10px; 
+                          border:1px solid; height:350px; width:20%; background: #0055A2 url('/GreenFigs/static/productImages/product.png') no-repeat right top\">\n";
+            print "         <button style='width:70px;height:35px' type='button' onclick='buyRecipe(\"".$recipe->getRecipeName()."\", ".$id.")'>Buy</button>\n";
+            print "         <div style='margin-top:60px; height:240px; width:100%; overflow:scroll'>\n";
+            print "           <b style='font-size:14px;color:#E5A823'>Recipe Name: </b><p style='font-size:12px;color:white'>" . $recipe->getRecipeName() . "</p>\n";
+            print "           <b style='font-size:14px;color:#E5A823'>Shared By User: </b><p style='font-size:12px;color:white'>" . $recipe->getCustomerID() . "</p>\n";
+            print "           <b style='font-size:14px;color:#E5A823'>User Type: </b><p style='font-size:12px;color:white'>" . $recipe->getType() . "</p>\n";
+            print "           <b style='font-size:14px;color:#E5A823'>Description: </b><p style='font-size:12px;color:white'>" . $recipe->getDescription() . "</p>\n";
+            print "           <b style='font-size:14px;color:#E5A823'>Ingredients: </b>\n";
+            while($ingredient = $ps2->fetch()) {
+            $query = "SELECT Name
+                      FROM product
+                      WHERE ProductID = :productID";
+
+            $ps = $con->prepare($query);
+
+            $ps->execute(array(":productID" => $ingredient->getProductID()));
+
+            $productName = $ps->fetch();
+
+            print "<div style='border-top:1px solid'><p style='font-size:12px;color:white'>Product ID: ".$ingredient->getProductID()."; Product Name: ".$productName['Name']."; Product Amount: ".$ingredient->getAmount()."</p></div>\n";
+          }
+            print "         </div>\n";
+            print "      </div>\n";
+          }
+          print "</div>";
+        }
         
-        <div class="sysStat">
-          <h2>System Status</h2>
-          <div class="chartButtons">
-            <button onclick="setChartButtonsVisualbility([&quot;.cpuUsage&quot;, &quot;.memLoad&quot;, &quot;.netTraff&quot;, &quot;.cpuTemp&quot;])" class="button cpuUsage">CPU Usage</button>
-            <button onclick="setChartButtonsVisualbility([&quot;.memLoad&quot;, &quot;.cpuUsage&quot;, &quot;.netTraff&quot;, &quot;.cpuTemp&quot;])" class="button memLoad">Memory Load</button>
-            <button onclick="setChartButtonsVisualbility([&quot;.netTraff&quot;, &quot;.memLoad&quot;, &quot;.cpuUsage&quot;, &quot;.cpuTemp&quot;])" class="button netTraff">Network Traffic</button>
-            <button onclick="setChartButtonsVisualbility([&quot;.cpuTemp&quot;, &quot;.memLoad&quot;, &quot;.netTraff&quot;, &quot;.cpuUsage&quot;])" class="button cpuTemp">CPU Temprature</button>
-          </div>
-          <div ng-controller="chartCtrl" class="sysChart"></div>
-        </div>
+        $id = filter_input(INPUT_GET, 'user');
+
+        try {
+            if (!(filter_var($id, FILTER_VALIDATE_INT) === 0 || !filter_var($id, FILTER_VALIDATE_INT) === false)) { 
+            // fix bug: conflict with zero and FILTER_VALIDATE_INT
+                throw new Exception("Missing User ID.");
+            }
         
-        <div class="nnStat">
-          <h2>Neural Network Status</h2>
-          <div class="chartButtons">
-            <button onclick="setChartButtonsVisualbility([&quot;.AP&quot;, &quot;.detectedObjects&quot;])" class="button AP">Mean Accuracy</button>
-            <button onclick="setChartButtonsVisualbility([&quot;.detectedObjects&quot;, &quot;.AP&quot;])" class="button detectedObjects">Detected Objects</button>
-          </div>
-          <div ng-controller="chartCtrl" class="nnChart"></div>
-        </div>
-        <!--<iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyB-denz3OyVbLzOvKpehCzSLJzNohqAebo &amp;q=Space+Needle,Seattle+WA" allowfullscreen class="detectLocations">       </iframe>-->
-      </div>
+            // Connect to the database.
+            $con = new PDO("mysql:host=localhost;dbname=nobrainers",
+                           "nobrainers", "sesame");
+            $con->setAttribute(PDO::ATTR_ERRMODE,
+                               PDO::ERRMODE_EXCEPTION);
+            
+            $query1 = "SELECT * 
+                       FROM recipe";
+                                                           
+            $ps1 = $con->prepare($query1);
+
+            // Fetch the matching row.
+            $ps1->execute(array(":id" => $id));
+            $ps1->setFetchMode(PDO::FETCH_CLASS, "Recipe");
+            constructTable($ps1, $con, $id);
+        }
+        catch(PDOException $ex) {
+            echo 'ERROR: '.$ex->getMessage();
+        }    
+        catch(Exception $ex) {
+            echo 'ERROR: '.$ex->getMessage();
+        }
+      ?>
     </div>
-    <div class="footer">
+    <div class='footer'>
       <p>Copyright © 2017 Wendy Boo, Hanchen Tang, Luwen Miao, Zhenyu Zhong</p>
     </div>
   </body>

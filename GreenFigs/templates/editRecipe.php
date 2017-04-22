@@ -10,24 +10,6 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
     <!-- load dashboard angularjs application-->
     <script src="/GreenFigs/static/dashboard-angular.js"></script>
-
-    <script type="text/javascript">
-      function updateRecipe(original_name, new_name, id, description, current_ingredients) {
-        var more_ingredients = JSON.stringify($("textarea[name='more_ingredients']").val());
-
-        $.ajax({
-          type: "POST",
-          url: "/GreenFigs/static/updateRecipe.php",
-          data: "original_name=" + original_name + "&new_name=" + new_name + "&user=" + id + "&description=" + description + "&current_ingredients=" + current_ingredients + "&more_ingredients=" + more_ingredients,
-          success:function(msg) {
-            alert(msg);
-          },
-          error: function(error) {
-            console.log(error);
-          }
-        });
-      }
-    </script>
   </head>
   <title>Green Figs</title>
   <body>

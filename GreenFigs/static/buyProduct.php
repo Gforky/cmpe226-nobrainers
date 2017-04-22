@@ -14,14 +14,14 @@
             $con->setAttribute(PDO::ATTR_ERRMODE,
                                PDO::ERRMODE_EXCEPTION);
 
-            $orderID = (int)(date("YnjGis").$userID);
+            $orderID = (int)(date("YmdHis").$userID);
 
             // order is a keyword in SQL, use backticks around column names to avoid the conflicts
             $query1 = "INSERT INTO `order`
                     VALUES ($orderID, $userID)";
             $query2 = "INSERT INTO isincludedproduct
                     VALUES ($orderID, $productID, $amount)";
-            $query3 = "SELECT Name
+            $query3 = "SELECT Name, Price
                        FROM product
                        WHERE ProductID = :productID";
 
@@ -35,7 +35,8 @@
 
             $data = $ps3->fetch(PDO::FETCH_ASSOC);
 
-            echo "User ".$userID." purchased ".$data['Name']." successfully!";
+            echo "User ".$userID." successfully purchased ".$amount." ".$data['Name']."\n";
+            echo "Total Price is ".$data["Price"]*$amount;
         }
         catch(PDOException $ex) {
             echo 'ERROR: '.$ex->getMessage();

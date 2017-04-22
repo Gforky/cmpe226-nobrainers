@@ -31,6 +31,10 @@
       function editRecipe(name, id) {
         window.location = "/GreenFigs/templates/editRecipe.php?user=" + id + "&recipeName=" + name;
       }
+
+      function addRecipe(id) {
+        window.location = "/GreenFigs/templates/addRecipe.php?user=" + id;
+      }
     </script>
   </head>
   <title>Green Figs</title>
@@ -100,6 +104,7 @@
 
         function constructTable($ps1, $con, $id)
         {
+          print "<button style='text-decoration:none; float:right; width:70px;height:35px; margin:20px 50px 20px' type='button' onclick='addRecipe(".$id.")'>Add Recipe</button>\n";
           print "<div style='display:inline-block'>";
           while($recipe = $ps1->fetch()) {
             $query2 = "SELECT * 
