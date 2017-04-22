@@ -28,11 +28,11 @@
         })
       })
 
-      function buyRecipe(recipeName, userID) {
+      function buyRecipe(recipeName, recipeUserID, userID) {
         $.ajax({
           type: "POST",
           url: "/GreenFigs/static/buyRecipe.php",
-          data: "recipeName=" + recipeName + "&userID=" + userID,
+          data: "recipeName=" + recipeName + "&recipeUserID=" + recipeUserID + "&userID=" + userID,
           success:function(msg) {
             alert(msg);
           },
@@ -119,12 +119,12 @@
 
             $ps2 = $con->prepare($query2);
 
-            $ps2->execute(array(":id" => $id, ":name" => $recipe->getRecipeName()));
+            $ps2->execute(array(":id" => $recipe->getCustomerID(), ":name" => $recipe->getRecipeName()));
             $ps2->setFetchMode(PDO::FETCH_CLASS, "Ingredient");
 
             print "      <div style=\"float:left; margin-left:4%; margin-top:10px; margin-bottom:10px; 
                           border:1px solid; height:350px; width:20%; background: #0055A2 url('/GreenFigs/static/productImages/product.png') no-repeat right top\">\n";
-            print "         <button style='width:70px;height:35px' type='button' onclick='buyRecipe(\"".$recipe->getRecipeName()."\", ".$id.")'>Buy</button>\n";
+            print "         <button style='width:70px;height:35px' type='button' onclick='buyRecipe(\"".$recipe->getRecipeName()."\", ".$recipe->getCustomerID().", ".$id.")'>Buy</button>\n";
             print "         <div style='margin-top:60px; height:240px; width:100%; overflow:scroll'>\n";
             print "           <b style='font-size:14px;color:#E5A823'>Recipe Name: </b><p style='font-size:12px;color:white'>" . $recipe->getRecipeName() . "</p>\n";
             print "           <b style='font-size:14px;color:#E5A823'>Shared By User: </b><p style='font-size:12px;color:white'>" . $recipe->getCustomerID() . "</p>\n";

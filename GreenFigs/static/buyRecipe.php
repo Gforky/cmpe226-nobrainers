@@ -1,5 +1,6 @@
 <?php
     $userID = filter_input(INPUT_POST, "userID");
+    $recipeUserID = filter_input(INPUT_POST, "recipeUserID");
     $recipeName = filter_input(INPUT_POST, "recipeName");
 
     try {
@@ -14,7 +15,7 @@
                                PDO::ERRMODE_EXCEPTION);
 
             $orderID = (int)(date("YmdHis").$userID);
-            $msg = "User ".$userID." successfully purchased recipe ".$recipeName."\nThe recipe includes products:\n";
+            $msg = "User ".$userID." successfully purchased recipe \"".$recipeName."\"\nThe recipe contains products:\n";
             $totalPrice = 0;
 
             // order is a keyword in SQL, use backticks around column names to avoid the conflicts
@@ -32,8 +33,8 @@
             $ps3 = $con->prepare($query3);
 
             $ps1->execute(array(":orderID"=>$orderID, ":userID"=>$userID));
-            $ps2->execute(array(":orderID"=>$orderID, ":userID"=>$userID, ":recipeName"=>$recipeName));
-            $ps3->execute(array(':recipeName'=>$recipeName, ":userID"=>$userID));
+            $ps2->execute(array(":orderID"=>$orderID, ":userID"=>$recipeUserID, ":recipeName"=>$recipeName));
+            $ps3->execute(array(':recipeName'=>$recipeName, ":userID"=>$recipeUserID));
 
             while($product = $ps3->fetch(PDO::FETCH_ASSOC)) {
                 $productID = $product["ProductID"];
@@ -49,7 +50,7 @@
                 $ps4->execute(array(":orderID"=>$orderID, ":productID"=>$productID, ":amount"=>$amount));
                 $ps5->execute(array(":productID"=>$productID));
                 $data = $ps5->fetch(PDO::FETCH_ASSOC);
-                $msg = $msg."Product Name: ".$data["Name"]."; Product ID: ".$productID."; Amount: ".$amount."\n";
+                $msg = $msg."Product Name: ".$data["Name"]."; Product ID: ".$productID."; Price: ".$data["Price"]."; Amount: ".$amount."\n";
                 $totalPrice = $totalPrice + $data["Price"];
             }
 
