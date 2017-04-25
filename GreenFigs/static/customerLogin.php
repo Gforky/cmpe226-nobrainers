@@ -20,7 +20,7 @@
                 
     // $data is an array.
     if ($data) {
-        header('Location: http://localhost/GreenFigs/templates/customerAllProducts.php?user='.$data['CustomerID']);
+        header('Location: http://localhost/GreenFigs/templates/customerAllProducts.php?user='.$data['CustomerID']."&glutenFree=true&nonGmo=true&organic=true&vegetables=true&fruit=true&meat=true&seafood=true&pasta=true&condiment=true&dairy=true");
 		exit;
     }
     else {

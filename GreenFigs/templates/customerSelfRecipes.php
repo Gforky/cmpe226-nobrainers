@@ -105,7 +105,7 @@
         function constructTable($ps1, $con, $id)
         {
           print "<button style='text-decoration:none; float:right; width:70px;height:35px; margin:20px 50px 20px' type='button' onclick='addRecipe(".$id.")'>Add Recipe</button>\n";
-          print "<div style='display:inline-block'>";
+          print "<div style='display:inline-block; margin-top:60px; margin-left:50px'>";
           while($recipe = $ps1->fetch()) {
             $query2 = "SELECT * 
                        FROM iscontained
@@ -117,8 +117,8 @@
             $ps2->execute(array(":id" => $id, ":name" => $recipe->getRecipeName()));
             $ps2->setFetchMode(PDO::FETCH_CLASS, "Ingredient");
 
-            print "      <div style=\"float:left; margin-left:4%; margin-top:10px; margin-bottom:10px; 
-                          border:1px solid; height:350px; width:20%; background: #0055A2 url('/GreenFigs/static/productImages/product.png') no-repeat right top\">\n";
+            print "      <div style=\"float:left; margin-left:20px; margin-top:10px; margin-bottom:10px; 
+                          border:1px solid; height:350px; width:250px; background: #0055A2 url('/GreenFigs/static/productImages/product.png') no-repeat right top\">\n";
             print "         <button style='width:70px;height:35px' type='button' onclick='editRecipe(\"".$recipe->getRecipeName()."\", ".$id.")'>Edit</button>\n";
             print "         <div style='margin-top:60px; height:240px; width:100%; overflow:scroll'>\n";
             print "           <b style='font-size:14px;color:#E5A823'>Recipe Name: </b><p style='font-size:12px;color:white'>" . $recipe->getRecipeName() . "</p>\n";
