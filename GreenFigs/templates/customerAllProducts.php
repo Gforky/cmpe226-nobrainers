@@ -221,6 +221,9 @@
             if((!$glutenFree && !$nonGmo && !$organic) || (!$vegetables && !$fruit && !$meat && !$seafood && !$pasta && !$condiment && !$dairy)) {
               $query1 = "";
             } else {
+
+              $query1 = $query1." (";
+
               if($glutenFree) {
                 $query1 = $query1." Certification=\"gluten-free\" OR";
               }
@@ -233,7 +236,7 @@
                 $query1 = $query1." Certification=\"organic\" OR";
               }
 
-              $query1 = substr($query1, 0, -2)."AND (";
+              $query1 = substr($query1, 0, -2)." ) AND (";
 
               if($vegetables) {
                 $query1 = $query1." CategoryID=1 OR";
