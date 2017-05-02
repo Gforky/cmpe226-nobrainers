@@ -13,6 +13,14 @@
     <script>
       var app = angular.module('loginApp', ['toggle-switch'])    
     </script>
+
+    <script type="text/javascript">
+	  function ETL(){
+        window.location = "/GreenFigs/templates/ETL.php";
+	  }
+    </script>
+
+
   </head>
 <title>Green Figs</title>
 <body ng-app="loginApp">
@@ -21,6 +29,9 @@
   </div>
   <span class="switch-primary switch-large loginSwitchButton" toggle-switch="toggle-switch" ng-model="switchStatus"></span>
   <span class="signupSpan"><a href="/GreenFigs/templates/signup.html" style="text-decoration:none">Sign Up</a></span>
+
+      <button type='button' style='width:70px;height:35px' onclick='ETL()'>ETL</button>
+
   <form class="adminLogin" action="/GreenFigs/static/farmerLogin.php" method="post">
     <h2 class="adminTitle">Farmer Log In</h2>
     <div class="adminInput">

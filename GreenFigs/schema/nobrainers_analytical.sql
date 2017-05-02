@@ -98,8 +98,8 @@ CREATE TABLE `farmer` (
 --
 
 CREATE TABLE `product` (
-  `productkey` int(2) NOT NULL,
-  `productid` varchar(3) DEFAULT NULL,
+  `productkey` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `productid` varchar(3) DEFAULT NULL UNIQUE,
   `productname` varchar(13) DEFAULT NULL,
   `productprice` decimal(3,2) DEFAULT NULL,
   `productcategory` varchar(9) DEFAULT NULL,
@@ -171,12 +171,6 @@ ALTER TABLE `customer`
 --
 ALTER TABLE `farmer`
   ADD PRIMARY KEY (`farmerkey`);
-
---
--- Indexes for table `product`
---
-ALTER TABLE `product`
-  ADD PRIMARY KEY (`productkey`);
 
 --
 -- Indexes for table `recipe`
