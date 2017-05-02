@@ -37,7 +37,7 @@
 					<option value='organic'>Organic</option>
 				  </select>\n";
           print " <br>\n";
-          print " <b style='font-size:14px;color:#E5A823'>Certification:</b><br>\n";  
+          print " <b style='font-size:14px;color:#E5A823'>Category:</b><br>\n";  
           print " <select type='text' style='width:500px; font-size:14px' name='catagory' required>
 					<option value='1'>Vegetables</option>
 					<option value='2'>Fruit</option>

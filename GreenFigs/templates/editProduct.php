@@ -17,137 +17,71 @@
       <h1 class="page-title">Green Figs Dashboard</h1>
     </div>
     <div ng-app="dashboard" class="dashboard">
-      <!-- system opertations webpage-->
-        <!--<div class="realTime-dataset"><span style="color:#008CBA">Dataset Size of Current Training Process:</span>
-          <br>
-          Mattress: <span my-current-dataset style="color:#ff4000"></span>
-          <br>
-          Couch: <span my-current-dataset style="color:#ff4000"></span>
-          <br>
-          Fridge: <span my-current-dataset style="color:#ff4000"></span>
-          <br>
-          Chair: <span my-current-dataset style="color:#ff4000"></span>
-          <br>
-          TV-Monitor: <span my-current-dataset style="color:#ff4000"></span></div>
-        </div>-->
+ 
       <?php
-        class Recipe {
-          private $RecipeName;
-          private $CustomerID;
-          private $Type;
-          private $Description;
-
-          public function getRecipeName() {
-            return $this->RecipeName;
-          }
-          public function getCustomerID() {
-            return $this->CustomerID;
-          }
-          public function getType() {
-            return $this->Type;
-          }
-          public function getDescription() {
-            return $this->Description;
-          }
-        }
-
-        class Ingredient {
-          private $RecipeName;
-          private $CustomerID;
-          private $ProductID;
-          private $Amount;
-
-          public function getRecipeName() {
-            return $this->RecipeName;
-          }
-          public function getCustomerID() {
-            return $this->CustomerID;
-          }
-          public function getProductID() {
-            return $this->ProductID;
-          }
-          public function getAmount() {
-            return $this->Amount;
-          }
-        }
-
-        function constructTable($recipe, $id, $name, $ps2, $con)
+        function constructTable($id, $name, $price, $certification,$farmerID,$description,$category)
         {
-          print "<form action='/GreenFigs/static/updateRecipe.php?user=".$id."&original_name=".$name."' method='post' class='updateRecipeArea'>\n";
-          print " <b style='font-size:14px;color:#E5A823'>Recipe Name:</b><br>\n";  
-          print " <input type='text' style='width:500px; font-size:14px' name='recipeName' value='".$recipe->getRecipeName()."'>\n";  
+          print "<form action='/GreenFigs/static/updateProduct.php?farmerID=".$farmerID."&productID=".$id."' method='post' class='updateRecipeArea'>\n";
+          print " <b style='font-size:14px;color:#E5A823'>Farmer ID:</b><br>\n";  
+          print " <input type='text' style='width:500px; font-size:14px' name='farmerID' value=".$farmerID." required disabled>\n";  
+          print " <br>\n"; 
+          print " <b style='font-size:14px;color:#E5A823'>Product ID:</b><br>\n";  
+          print " <input type='text' style='width:500px; font-size:14px' name='productID' value=".$id." disabled required>\n";  
+          print " <br>\n"; 
+          print " <b style='font-size:14px;color:#E5A823'>Product Name:</b><br>\n";  
+          print " <input type='text' style='width:500px; font-size:14px' name='productName' value=".$name." required>\n";  
           print " <br>\n"; 
           print " <b style='font-size:14px;color:#E5A823'>Description:</b><br>\n";
-          print " <textarea style='width:500px; font-size:14px' cols='40' rows='10' name='description'>".$recipe->getDescription()."</textarea>\n";
-          print " <b style='font-size:14px;color:#E5A823'>Change Products Amount Of Current Ingredients (Please Only Change The Values Of Product Amount):</b><br>\n";
-          $ingredients = array(array(), array(), array());
-          array_push($ingredients[0], "Product ID");
-          array_push($ingredients[1], "Product Name");
-          array_push($ingredients[2], "Product Amount");
-          while($ingredient = $ps2->fetch()) {
-            $query = "SELECT Name
-                      FROM product
-                      WHERE ProductID = :productID";
-
-            $ps = $con->prepare($query);
-
-            $ps->execute(array(":productID" => $ingredient->getProductID()));
-
-            $productName = $ps->fetch();
-
-            array_push($ingredients[0], $ingredient->getProductID());
-            array_push($ingredients[1], $productName['Name']);
-            array_push($ingredients[2], $ingredient->getAmount());
-          }
-          print " <textarea style='width:500px; font-size:14px' cols='40' rows='10' name='current_ingredients'>".json_encode($ingredients)."</textarea>\n";
+          print " <textarea style='width:500px; font-size:14px' cols='40' rows='10' name='productDesc' required>".$description."</textarea>\n";
           print " <br>\n";
-          print " <b style='font-size:14px;color:#E5A823'>Add More Ingredients (Please Follow The Data Format Above):</b><br>\n"; 
-          print " <textarea style='width:500px; font-size:14px' cols='40' rows='10' name='more_ingredients'></textarea>\n"; 
+          print " <b style='font-size:14px;color:#E5A823'>Price:</b><br>\n";  
+          print " <input type='text' style='width:500px; font-size:14px' name='price' value=".$price." required>\n";  
+          print " <br>\n";
+          print " <b style='font-size:14px;color:#E5A823'>Certification:</b><br>\n";  
+          print " <select type='text' style='width:500px; font-size:14px' name='certification' required>
+					<option value=".$certification." hidden>".$certification."</option>
+					<option value='non-gmo'>non-gmo</option>
+					<option value='gluten-free'>gluten-free</option>
+					<option value='organic'>organic</option>
+				  </select>\n";
+          print " <br>\n";
+          print " <b style='font-size:14px;color:#E5A823'>Category:</b><br>\n";  
+          print " <select type='text' style='width:500px; font-size:14px' name='category' required>
+					<option value=".$category." hidden>".$category."</option>
+					<option value='1'>Vegetables</option>
+					<option value='2'>Fruit</option>
+					<option value='3'>Meat</option>
+					<option value='4'>Seafood</option>
+					<option value='5'>Pasta</option>
+					<option value='6'>Condiment</option>
+					<option value='7'>Dairy</option>
+				  </select>\n";
           print " <br><br>\n"; 
           print " <input style='width:70px;height:35px' type='submit' value='Update'>\n";  
           print "</form>\n";
         }
         
-        $id = filter_input(INPUT_GET, 'productID');
+        $id = filter_input(INPUT_GET, 'id');
         $name = filter_input(INPUT_GET, 'name');
         $price = filter_input(INPUT_GET, 'price');
         $certification = filter_input(INPUT_GET, 'certification');
         $farmerID = filter_input(INPUT_GET, 'farmerID');
         $description = filter_input(INPUT_GET, 'description');
         $category = filter_input(INPUT_GET, 'category');
+print $id;
 print $name;
-
+print $price;
+print $certification;
+print $farmerID;
+print $description;
+print $category;
         try {
             if (!(filter_var($id, FILTER_VALIDATE_INT) === 0 || !filter_var($id, FILTER_VALIDATE_INT) === false)) { 
             // fix bug: conflict with zero and FILTER_VALIDATE_INT
                 throw new Exception("Missing User ID.");
             }
             
-            // Connect to the database.
-            $con = new PDO("mysql:host=localhost;dbname=nobrainers",
-                       "nobrainers", "sesame");
-            $con->setAttribute(PDO::ATTR_ERRMODE,
-                           PDO::ERRMODE_EXCEPTION);
-
-            $query1 = "SELECT * 
-                       FROM recipe
-                       WHERE CustomerID = :id
-                       AND RecipeName = :name";
-            $query2 = "SELECT * 
-                       FROM iscontained
-                       WHERE CustomerID = :id
-                       AND RecipeName = :name";
-                                                           
-            $ps1 = $con->prepare($query1);
-            $ps2 = $con->prepare($query2);
-
-            // Fetch the matching row.
-            $ps1->execute(array(":id" => $id, ":name" => $name));
-            $ps1->setFetchMode(PDO::FETCH_CLASS, "Recipe");
-            $recipe = $ps1->fetch();
-            $ps2->execute(array(":id" => $id, ":name" => $name));
-            $ps2->setFetchMode(PDO::FETCH_CLASS, "Ingredient");
-            constructTable($recipe, $id, $name, $ps2, $con);
+            constructTable($id, $name, $price, $certification,$farmerID,$description,$category);
         }
         catch(PDOException $ex) {
             echo 'ERROR: '.$ex->getMessage();
