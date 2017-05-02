@@ -100,7 +100,7 @@
             exit;
             break;
         case 'farmer':
-            header('Location: http://localhost/GreenFigs/templates/farmerAllProducts.php?user='.$id);
+            header('Location: http://localhost/GreenFigs/templates/login.html');
             exit;
             break;
         default:

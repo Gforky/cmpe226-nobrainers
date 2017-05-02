@@ -397,7 +397,7 @@ INSERT INTO `order` (`OrderID`, `CustomerID`) VALUES
 --
 
 CREATE TABLE `product` (
-  `ProductID` int(2) NOT NULL,
+  `ProductID` int PRIMARY KEY AUTO_INCREMENT,
   `Price` decimal(6,2) NOT NULL,
   `Name` varchar(13) NOT NULL,
   `Description` varchar(74) DEFAULT NULL,
@@ -570,7 +570,6 @@ ALTER TABLE `order`
 -- Indexes for table `product`
 --
 ALTER TABLE `product`
-  ADD PRIMARY KEY (`ProductID`),
   ADD KEY `CategoryID` (`CategoryID`),
   ADD KEY `FarmerID` (`FarmerID`);
 

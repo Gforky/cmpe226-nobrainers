@@ -21,7 +21,7 @@
                 
     // $data is an array.
     if ($data) {
-        header('Location: http://localhost/GreenFigs/templates/farmer.php?user='.$data['FarmerID']);
+        header('Location: http://localhost/GreenFigs/templates/farmerAllProducts.php?user='.$data['FarmerID']."&glutenFree=true&nonGmo=true&organic=true&vegetables=true&fruit=true&meat=true&seafood=true&pasta=true&condiment=true&dairy=true");
 		exit;
     }
     else {
