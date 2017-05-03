@@ -42,7 +42,7 @@ $ps->execute();
 
 print "customer loaded<br>";
 
-$query = "drop procedure if exists nobrainers_analytical.LoadCalendar";
+$query = "drop procedure if exists nobrainers_analytical.fillDates";
 $ps = $con->prepare($query);
 $ps->execute();
 
