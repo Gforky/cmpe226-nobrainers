@@ -33,3 +33,11 @@ $ps->execute();
 print "farmer loaded<br>";
 
 
+$query = "insert into nobrainers_analytical.customer(customerkey,customerid,customerfirstname,customerlastname,customeremail,customerpassword,customerstreet,customeraptnum,customercity,customerstate,customerzip,customercountry)
+		  select null,CustomerID,FirstName,LastName,Email,Password,StreetName,AptNum,City,State,Zip,Country from nobrainers.customer
+		  on duplicate key UPDATE customerfirstname=FirstName,customerlastname=LastName,customeremail=Email,customerpassword=Password,customeraptnum=AptNum,customerstreet=StreetName,customercity=City,customerstate=State,customercountry=Country,customerzip=Zip";
+
+$ps = $con->prepare($query);
+$ps->execute();
+
+print "customer loaded<br>";

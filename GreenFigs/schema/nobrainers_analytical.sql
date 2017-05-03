@@ -47,8 +47,8 @@ CREATE TABLE `calendar` (
 --
 
 CREATE TABLE `customer` (
-  `customerkey` int(2) NOT NULL,
-  `customerid` varchar(7) DEFAULT NULL,
+  `customerkey` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `customerid` int DEFAULT NULL UNIQUE,
   `customerfirstname` varchar(10) DEFAULT NULL,
   `customerlastname` varchar(7) DEFAULT NULL,
   `customeremail` varchar(43) DEFAULT NULL,
@@ -58,9 +58,7 @@ CREATE TABLE `customer` (
   `customercity` varchar(14) DEFAULT NULL,
   `customerstate` varchar(10) DEFAULT NULL,
   `customercountry` varchar(24) DEFAULT NULL,
-  `customerzip` int(5) DEFAULT NULL,
-  `customerphone` varchar(14) DEFAULT NULL,
-  `numberofrecipes` int(2) DEFAULT NULL
+  `customerzip` int(5) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 --
@@ -119,8 +117,7 @@ CREATE TABLE `recipe` (
   `calendarkey` int(1) DEFAULT NULL,
   `customerkey` int(1) DEFAULT NULL,
   `rtid` varchar(4) NOT NULL,
-  `timeofday` varchar(10) DEFAULT NULL,
-  `numberofrecipes` int(1) DEFAULT NULL
+  `timeofday` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 --
@@ -159,12 +156,6 @@ CREATE TABLE `sales` (
 ALTER TABLE `calendar`
   ADD PRIMARY KEY (`calendarkey`);
 
---
--- Indexes for table `customer`
---
-ALTER TABLE `customer`
-  ADD PRIMARY KEY (`customerkey`);
---
 -- Indexes for table `recipe`
 --
 ALTER TABLE `recipe`
