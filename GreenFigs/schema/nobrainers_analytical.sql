@@ -27,13 +27,12 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `calendar` (
-  `calendarkey` int(1) NOT NULL,
-  `fulldate` varchar(6) DEFAULT NULL,
-  `dayofweek` varchar(9) DEFAULT NULL,
-  `dayofmonth` int(1) DEFAULT NULL,
-  `month` varchar(7) DEFAULT NULL,
-  `quarter` varchar(2) DEFAULT NULL,
-  `year` int(4) DEFAULT NULL
+  `calendarkey` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `date` varchar(10) DEFAULT NULL,
+  `month` varchar(10) DEFAULT NULL,
+  `quarter` varchar(10) DEFAULT NULL,
+  `dayofweek` varchar(10) DEFAULT NULL,
+  `year` varchar(4) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -149,13 +148,6 @@ CREATE TABLE `sales` (
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `calendar`
---
-ALTER TABLE `calendar`
-  ADD PRIMARY KEY (`calendarkey`);
-
 -- Indexes for table `recipe`
 --
 ALTER TABLE `recipe`

@@ -41,3 +41,28 @@ $ps = $con->prepare($query);
 $ps->execute();
 
 print "customer loaded<br>";
+
+$query = "drop procedure if exists nobrainers_analytical.LoadCalendar";
+$ps = $con->prepare($query);
+$ps->execute();
+
+$query = "create procedure nobrainers_analytical.fillDates(dateStart DATE, dateEnd DATE)
+  begin
+    while dateStart <= dateEnd do
+      insert ignore into nobrainers_analytical.calendar (calendarkey, date, month, quarter, dayofweek, year)
+      values (null, dateStart, month(dateStart), quarter(dateStart), dayofweek(dateStart), year(dateStart));
+      set dateStart = date_add(dateStart, interval 1 day);
+    end while;
+  end;";
+$ps = $con->prepare($query);
+$ps->execute();
+
+
+$now = new DateTime();
+$today = $now->format('Y-m-d');
+$query = "call nobrainers_analytical.fillDates('2015-01-01','$today')";
+$ps = $con->prepare($query);
+$ps->execute();
+
+
+print "calendar loaded<br>";
