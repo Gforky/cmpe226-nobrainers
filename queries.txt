@@ -12,8 +12,8 @@ WHERE c.calendarkey = s.calendarkey
 GROUP BY c.month
 
 # get number of recipes per customer
-SELECT c.customerid, c.customerfirstname, c.customerlastname, SUM(c.numberofrecipes)
-FROM `recipe` r, `customer` c
-WHERE r.customerkey = c.customerkey
-GROUP BY c.customerid
-HAVING COUNT(c.numberofrecipes) >= 1
+SELECT rtid AS ID, customerfirstname AS FName, customerlastname AS LName, COUNT(*) AS Sum
+FROM nobrainers_analytical.recipe, nobrainers_analytical.customer
+WHERE nobrainers_analytical.recipe.customerkey =nobrainers_analytical.customer.customerkey
+GROUP BY nobrainers_analytical.recipe.calendarkey
+HAVING COUNT(*) >= 1
