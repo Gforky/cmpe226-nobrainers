@@ -135,12 +135,12 @@ CREATE TABLE `farmer` (
 --
 
 INSERT INTO `farmer` (`FarmerID`, `FirstName`, `LastName`, `Email`, `Password`, `StreetName`, `AptNum`, `City`, `State`, `Zip`, `Country`) VALUES
-(1, 'Kylan', 'Reed', 'kylan.reed@gmail.com', 'BHS09YXL4QF', '7276 Tempor St.', 841, 'Akron', 'Ohio', '185571', 'Antigua and Barbuda'),
-(2, 'Jocelyn', 'Gould', 'jocelyn.gould@gmail.com', 'GVQ91NQP1NF', '167-448 Ipsum Ave', 889, 'Houston', 'TX', '87-641', 'Turks and Caicos Islands'),
-(3, 'Andrew', 'Valencia', 'andrew.valencia@gmail.com', 'ITI67QKY6HS', '481-6931 Arcu. Rd.', 657, 'Des Moines', 'Iowa', '4809', 'Congo (Brazzaville)'),
-(4, 'Erich', 'Beck', 'erich.beck@gmail.com', 'IEY27GIE7OZ', '2497 Quam Av.', 739, 'Cedar Rapids', 'Iowa', '489778', 'Afghanistan'),
-(5, 'Veda', 'Hurst', 'veda.hurst@gmail.com', 'PYE81AZO5LM', '971-9721 Vel, Road', 702, 'Bloomington', 'MN', '43950', 'Guyana'),
-(6, 'testfir', 'test', 'aaa@gmail.com', 'aaa', 'a', 0, 'a', 'a', 'a', 'a');
+(1, 'Kylan', 'Reed', 'kylan.reed@gmail.com', 'BHS09YXL4QF', '7276 Tempor St.', 841, 'Akron', 'OH', '18571', 'United States'),
+(2, 'Jocelyn', 'Gould', 'jocelyn.gould@gmail.com', 'GVQ91NQP1NF', '167-448 Ipsum Ave', 889, 'Houston', 'TX', '87641', 'United States'),
+(3, 'Andrew', 'Valencia', 'andrew.valencia@gmail.com', 'ITI67QKY6HS', '481-6931 Arcu. Rd.', 657, 'Des Moines', 'IO', '48209', 'United States'),
+(4, 'Erich', 'Beck', 'erich.beck@gmail.com', 'IEY27GIE7OZ', '2497 Quam Av.', 739, 'Cedar Rapids', 'IO', '48978', 'United States'),
+(5, 'Veda', 'Hurst', 'veda.hurst@gmail.com', 'PYE81AZO5LM', '971-9721 Vel, Road', 702, 'Bloomington', 'MN', '43950', 'United States'),
+(6, 'testa', 'testa', 'aaa@gmail.com', 'aaa', 'One St', 1, 'Sunnyvale', 'CA', '95134', 'United States');
 
 -- --------------------------------------------------------
 

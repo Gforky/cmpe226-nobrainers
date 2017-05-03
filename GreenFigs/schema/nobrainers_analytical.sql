@@ -73,19 +73,18 @@ CREATE TABLE `customer` (
 --
 
 CREATE TABLE `farmer` (
-  `farmerkey` int(1) NOT NULL,
-  `farmerid` varchar(2) DEFAULT NULL,
+  `farmerkey` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `farmerid` int DEFAULT NULL UNIQUE,
   `farmerfirstname` varchar(7) DEFAULT NULL,
   `farmerlastname` varchar(8) DEFAULT NULL,
   `farmeremail` varchar(25) DEFAULT NULL,
   `farmerpassword` varchar(11) DEFAULT NULL,
-  `farmeraptnum` int(3) DEFAULT NULL,
+  `farmeraptnum` int DEFAULT NULL,
   `farmerstreet` varchar(18) DEFAULT NULL,
   `farmercity` varchar(12) DEFAULT NULL,
   `farmerstate` varchar(4) DEFAULT NULL,
   `farmercountry` varchar(24) DEFAULT NULL,
-  `farmerzip` int(5) DEFAULT NULL,
-  `farmerphone` varchar(14) DEFAULT NULL
+  `farmerzip` int(5) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 --
@@ -101,7 +100,7 @@ CREATE TABLE `product` (
   `productkey` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `productid` varchar(3) DEFAULT NULL UNIQUE,
   `productname` varchar(13) DEFAULT NULL,
-  `productprice` decimal(3,2) DEFAULT NULL,
+  `productprice` decimal(10,2) DEFAULT NULL,
   `productcategory` varchar(9) DEFAULT NULL,
   `productcertification` varchar(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
@@ -165,13 +164,6 @@ ALTER TABLE `calendar`
 --
 ALTER TABLE `customer`
   ADD PRIMARY KEY (`customerkey`);
-
---
--- Indexes for table `farmer`
---
-ALTER TABLE `farmer`
-  ADD PRIMARY KEY (`farmerkey`);
-
 --
 -- Indexes for table `recipe`
 --
