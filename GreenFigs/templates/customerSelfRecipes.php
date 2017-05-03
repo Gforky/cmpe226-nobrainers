@@ -35,12 +35,17 @@
       function addRecipe(id) {
         window.location = "/GreenFigs/templates/addRecipe.php?user=" + id;
       }
+
+      function logout(){
+        window.location = "/GreenFigs/templates/login.html";
+      }
     </script>
   </head>
   <title>Green Figs</title>
   <body>
     <div class="header">
       <h1 class="page-title">Green Figs Dashboard</h1>
+      <button type='button' style='width:70px;height:35px' onclick='logout()'>Logout</button>
     </div>
     <div class="switchViewButtons">
       <button class="button allProductsBtn">All Products</button>

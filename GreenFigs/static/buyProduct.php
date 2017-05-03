@@ -14,11 +14,18 @@
             $con->setAttribute(PDO::ATTR_ERRMODE,
                                PDO::ERRMODE_EXCEPTION);
 
-            $orderID = (int)(date("YmdHis").$userID);
+            $purchaseTime = date("YmdHis");
+            $tempTime = strtotime($purchaseTime);
+            $year = (int)date("Y", $tempTime);
+            $month = (int)date("m", $tempTime);
+            $day = (int)date("d", $tempTime);
+            $dayTime = (int)date("His", $tempTime);
+
+            $orderID = (int)($purchaseTime.$userID);
 
             // order is a keyword in SQL, use backticks around column names to avoid the conflicts
             $query1 = "INSERT INTO `order`
-                    VALUES ($orderID, $userID)";
+                    VALUES ($orderID, $userID, $year, $month, $day, $dayTime)";
             $query2 = "INSERT INTO isincludedproduct
                     VALUES ($orderID, $productID, $amount)";
             $query3 = "SELECT Name, Price
