@@ -140,7 +140,7 @@ button {
   display: inline-block;
   float: left;
   height: 100%;
-  width: 33.33%;
+  width: 25%;
   text-decoration: none;
 }
 .loginSwitchButton {
@@ -205,4 +205,15 @@ button {
   margin-right: 28%;
   padding: 15px;
   border: 1px solid var(--blue);
+}
+
+.chartButtons {
+  float: right;
+}
+.chartButtons button {
+  width: 100px;
+  height: 50px;
+}
+.recipeChart {
+  margin-top: 60px;
 }

@@ -26,6 +26,9 @@
         $(".button.myRecipesBtn").click(function() {
             window.location = "/GreenFigs/templates/customerSelfRecipes.php?user=" + id;
         })
+        $(".button.recipeDataBtn").click(function() {
+            window.location = "/GreenFigs/templates/customerRecipesData.php?user=" + id;
+        })
       })
 
       function buyIt(productID, userID) {
@@ -57,6 +60,7 @@
       <button class="button allProductsBtn">All Products</button>
       <button class="button allRecipesBtn">All Recipes</button>
       <button class="button myRecipesBtn">My Recipes</button>
+      <button class="button recipeDataBtn">Recipe Data Visualization</button>
     </div>
     <div ng-app="dashboard" class="dashboard">
       <!-- system opertations webpage-->

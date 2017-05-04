@@ -14,20 +14,16 @@
             $con->setAttribute(PDO::ATTR_ERRMODE,
                                PDO::ERRMODE_EXCEPTION);
 
-            $orderID = (int)(date("YmdHis").$userID);
+            $date = date("YmdHis");
+            $orderID = (int)($date.$userID);
             $msg = "User ".$userID." successfully purchased recipe \"".$recipeName."\"\nThe recipe contains products:\n";
             $totalPrice = 0;
 
-            $purchaseTime = date("YmdHis");
-            $tempTime = strtotime($purchaseTime);
-            $year = (int)date("Y", $tempTime);
-            $month = (int)date("m", $tempTime);
-            $day = (int)date("d", $tempTime);
-            $dayTime = (int)date("His", $tempTime);
+            $purchaseTime = (int)date("His", $date);
 
             // order is a keyword in SQL, use backticks around column names to avoid the conflicts
             $query1 = "INSERT INTO `order`
-                       VALUES (:orderID, :userID, $year, $month, $day, $dayTime)";
+                       VALUES (:orderID, :userID, $purchaseTime, DATE_FORMAT(NOW(),'%Y-%m-%d'))";
             $query2 = "INSERT INTO isincludedrecipe
                        VALUES (:recipeName, :userID, :orderID)";
             $query3 = "SELECT ProductID, Amount

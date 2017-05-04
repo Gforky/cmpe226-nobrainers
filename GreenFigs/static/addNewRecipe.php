@@ -23,15 +23,10 @@
                 $type = "Customer";
             }
 
-            $purchaseTime = date("YmdHis");
-            $tempTime = strtotime($purchaseTime);
-            $year = (int)date("Y", $tempTime);
-            $month = (int)date("m", $tempTime);
-            $day = (int)date("d", $tempTime);
-            $dayTime = (int)date("His", $tempTime);
+            $purchaseTime = (int)date("His");
 
             $query1 = "INSERT INTO recipe
-                       VALUES (:RecipeName, :CustomerID, :Type, :Description, $year, $month, $day, $dayTime)";
+                       VALUES (:RecipeName, :CustomerID, :Type, :Description, $purchaseTime, DATE_FORMAT(NOW(),'%Y-%m-%d'))";
 
             $ps1 = $con->prepare($query1);
 

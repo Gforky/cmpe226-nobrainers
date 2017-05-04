@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 03, 2017 at 10:27 PM
+-- Generation Time: May 04, 2017 at 04:42 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 5.6.28
 
@@ -51,7 +51,7 @@ INSERT INTO `category` (`CategoryID`, `CategoryName`) VALUES
 --
 
 CREATE TABLE `customer` (
-  `CustomerID` int(2) NOT NULL,
+  `CustomerID` int(10) NOT NULL,
   `FirstName` varchar(10) DEFAULT NULL,
   `LastName` varchar(7) DEFAULT NULL,
   `Email` varchar(43) NOT NULL,
@@ -237,7 +237,9 @@ INSERT INTO `iscontained` (`RecipeName`, `CustomerID`, `ProductID`, `Amount`) VA
 ('Fried Pork Chop', 0, 13, 1),
 ('Fried Pork Chop', 3, 8, 2),
 ('Fried Pork Chop', 3, 11, 1),
-('Fried Pork Chop', 3, 13, 1);
+('Fried Pork Chop', 3, 13, 1),
+('Orange Chicken', 12, 19, 1),
+('Orange Chicken', 12, 21, 1);
 
 -- --------------------------------------------------------
 
@@ -256,21 +258,37 @@ CREATE TABLE `isincludedproduct` (
 --
 
 INSERT INTO `isincludedproduct` (`OrderID`, `ProductID`, `Amount`) VALUES
-(201704220016540, 2, 2),
-(201704220017000, 3, 15),
-(201704220017070, 4, 5),
-(201704220017110, 2, 2),
-(201704220419160, 20, 1),
-(201704220419160, 37, 1),
-(201704220419160, 38, 1),
-(201704220459290, 2, 5),
-(201705032223441, 2, 2),
-(201705032224131, 20, 1),
-(201705032224131, 37, 1),
-(201705032224131, 38, 1),
-(2017050205043812, 20, 1),
-(2017050205043812, 37, 1),
-(2017050205043812, 38, 1);
+(201705040429571, 2, 2),
+(201705040437261, 3, 3),
+(201705040437331, 4, 45),
+(201705040437361, 7, 1),
+(201705040437462, 6, 13),
+(201705040437502, 6, 2),
+(201705040437532, 5, 1),
+(201705040437572, 5, 1),
+(201705040438052, 12, 34),
+(201705040438112, 3, 1),
+(201705040438112, 6, 1),
+(201705040438112, 14, 1),
+(201705040438112, 18, 1),
+(201705040438132, 3, 1),
+(201705040438132, 6, 1),
+(201705040438132, 14, 1),
+(201705040438132, 18, 1),
+(201705040438162, 27, 1),
+(201705040438162, 32, 1),
+(201705040438162, 36, 1),
+(2017050404382712, 20, 1),
+(2017050404382712, 37, 1),
+(2017050404382712, 38, 1),
+(2017050404383012, 8, 2),
+(2017050404383012, 14, 1),
+(2017050404383012, 21, 1),
+(2017050404383412, 8, 2),
+(2017050404383412, 21, 1),
+(2017050404385212, 6, 3),
+(2017050404385712, 9, 15),
+(2017050404390212, 39, 6);
 
 -- --------------------------------------------------------
 
@@ -289,9 +307,12 @@ CREATE TABLE `isincludedrecipe` (
 --
 
 INSERT INTO `isincludedrecipe` (`RecipeName`, `CustomerID`, `OrderId`) VALUES
-('Alaskan Cod and Shrimp with Fresh Tomato', 0, 201704220419160),
-('Alaskan Cod and Shrimp with Fresh Tomato', 1, 201705032224131),
-('Alaskan Cod and Shrimp with Fresh Tomato', 1, 2017050205043812);
+('Alaskan Cod and Shrimp with Fresh Tomato', 1, 2017050404382712),
+('Cajun Chicken Ragout', 0, 201705040438162),
+('Filet Mignon with Rich Balsamic Glaze', 0, 201705040438132),
+('Filet Mignon with Rich Balsamic Glaze', 3, 201705040438112),
+('French Fries', 9, 2017050404383012),
+('Fried Cabbage and Egg Noodles', 1, 2017050404383412);
 
 -- --------------------------------------------------------
 
@@ -302,26 +323,33 @@ INSERT INTO `isincludedrecipe` (`RecipeName`, `CustomerID`, `OrderId`) VALUES
 CREATE TABLE `order` (
   `OrderID` bigint(63) NOT NULL,
   `CustomerID` int(2) NOT NULL,
-  `Year` int(10) NOT NULL,
-  `Month` int(2) NOT NULL,
-  `Day` int(2) NOT NULL,
-  `DayTime` int(10) NOT NULL
+  `DayTime` int(10) NOT NULL,
+  `Date` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 --
 -- Dumping data for table `order`
 --
 
-INSERT INTO `order` (`OrderID`, `CustomerID`, `Year`, `Month`, `Day`, `DayTime`) VALUES
-(201704220016540, 0, 2017, 4, 22, 1654),
-(201704220017000, 0, 2017, 4, 22, 1700),
-(201704220017070, 0, 2017, 4, 22, 1707),
-(201704220017110, 0, 2017, 4, 22, 1711),
-(201704220419160, 0, 2017, 4, 22, 41916),
-(201704220459290, 0, 2017, 4, 22, 45929),
-(201705032223441, 1, 2017, 5, 3, 222344),
-(201705032224131, 1, 2017, 5, 3, 222413),
-(2017050205043812, 12, 2017, 5, 2, 50438);
+INSERT INTO `order` (`OrderID`, `CustomerID`, `DayTime`, `Date`) VALUES
+(201705040429571, 1, 224237, '2017-05-03'),
+(201705040437261, 1, 225526, '2017-05-03'),
+(201705040437331, 1, 225533, '2017-05-03'),
+(201705040437361, 1, 225536, '2017-05-03'),
+(201705040437462, 2, 225546, '2017-05-03'),
+(201705040437502, 2, 225550, '2017-05-03'),
+(201705040437532, 2, 225553, '2017-05-03'),
+(201705040437572, 2, 225557, '2017-05-03'),
+(201705040438052, 2, 225645, '2017-05-03'),
+(201705040438112, 2, 225651, '2017-05-03'),
+(201705040438132, 2, 225653, '2017-05-03'),
+(201705040438162, 2, 225656, '2017-05-03'),
+(2017050404382712, 12, 225707, '2017-05-03'),
+(2017050404383012, 12, 225710, '2017-05-03'),
+(2017050404383412, 12, 225714, '2017-05-03'),
+(2017050404385212, 12, 225732, '2017-05-03'),
+(2017050404385712, 12, 225737, '2017-05-03'),
+(2017050404390212, 12, 225822, '2017-05-03');
 
 -- --------------------------------------------------------
 
@@ -408,35 +436,34 @@ CREATE TABLE `recipe` (
   `CustomerID` int(1) NOT NULL,
   `Type` varchar(8) DEFAULT NULL,
   `Description` longtext,
-  `Year` int(10) NOT NULL,
-  `Month` int(2) NOT NULL,
-  `Day` int(2) NOT NULL,
-  `DayTime` int(10) NOT NULL
+  `DayTime` int(10) NOT NULL,
+  `Date` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `recipe`
 --
 
-INSERT INTO `recipe` (`RecipeName`, `CustomerID`, `Type`, `Description`, `Year`, `Month`, `Day`, `DayTime`) VALUES
-('Alaskan Cod and Shrimp with Fresh Tomato', 0, 'Chef', 'nascetur ridiculus mus. Proin vel', 2017, 1, 2, 223517),
-('Alaskan Cod and Shrimp with Fresh Tomato', 1, 'Customer', 'neque. Morbi', 2017, 3, 9, 223517),
-('Cajun Chicken Ragout', 0, 'Chef', 'neque tellus', 2017, 4, 28, 223517),
-('Cajun Chicken Ragout', 4, 'Customer', 'adipiscing elit. Aliquam', 2017, 2, 4, 223517),
-('Cajun Chicken Ragout', 9, 'Customer', 'tortor at risus. Nunc ac sem ut', 2017, 5, 2, 223517),
-('Fettuccini Carbonara', 0, 'Chef', 'enim diam vel arcu. Curabitur', 2017, 7, 6, 223517),
-('Fettuccini Carbonara', 7, 'Customer', 'Suspendisse', 2017, 2, 13, 223517),
-('Filet Mignon', 0, 'Chef', ' Preheat the oven to 500 degrees F.\r\n\r\nPlace the beef on a baking sheet and pat the outside dry with a paper towel. Spread the butter on with your hands. Sprinkle evenly with the salt and pepper. Roast in the oven for exactly 22 minutes for rare and 25 minutes for medium-rare.\r\n\r\nRemove the beef from the oven, cover it tightly with aluminum foil, and allow it to rest at room temperature for 20 minutes. Remove the strings and slice the filet thickly. ', 2017, 5, 6, 223517),
-('Filet Mignon with Rich Balsamic Glaze', 0, 'Chef', 'magna eros. Proin ultrices.', 2017, 4, 23, 223517),
-('Filet Mignon with Rich Balsamic Glaze', 1, 'Customer', 'sit amet metus. Aliquam erat volutpat. Nulla facilisis. Suspendisse commodo, it''s delicious', 2017, 5, 2, 223517),
-('Filet Mignon with Rich Balsamic Glaze', 3, 'Customer', 'scelerisque neque. Nullam nisl. Maecenas malesuada', 2017, 6, 30, 223517),
-('French Fries', 9, 'Customer', '    1. Slice potatoes into French fries, and place into cold water so they won''t turn brown while you prepare the oil.\r\n    2. Heat oil in a large skillet over medium-high heat. While the oil is heating, sift the flour, garlic salt, onion salt, (regular) salt, and paprika into a large bowl. Gradually stir in enough water so that the mixture can be drizzled from a spoon.\r\n    3. Dip potato slices into the batter one at a time, and place in the hot oil so they are not touching at first. The fries must be placed into the skillet one at a time, or they will clump together. Fry until golden brown and crispy. Remove and drain on paper towels.\r\n', 2017, 7, 1, 223517),
-('Fried Cabbage and Egg Noodles', 0, 'Chef', 'metus. Aenean sed pede nec ante blandit viverra. Donec tempus', 2017, 8, 9, 223517),
-('Fried Cabbage and Egg Noodles', 1, 'Customer', 'dolor elit', 2017, 5, 2, 223517),
-('Fried Cabbage and Egg Noodles', 6, 'Customer', 'Aliquam ornare', 2017, 3, 26, 223517),
-('Fried Chicken', 1, 'Customer', 'Fry chicken using oil', 2017, 5, 3, 222538),
-('Fried Pork Chop', 0, 'Chef', 'sapien. Aenean massa. Integer vitae', 2017, 1, 26, 223517),
-('Fried Pork Chop', 3, 'Customer', 'Duis sit amet diam eu dolor egestas rhoncus. Proin', 2017, 9, 2, 223517);
+INSERT INTO `recipe` (`RecipeName`, `CustomerID`, `Type`, `Description`, `DayTime`, `Date`) VALUES
+('Alaskan Cod and Shrimp with Fresh Tomato', 0, 'Chef', 'nascetur ridiculus mus. Proin vel', 223517, '2017-01-02'),
+('Alaskan Cod and Shrimp with Fresh Tomato', 1, 'Customer', 'neque. Morbi', 223517, '2017-03-09'),
+('Cajun Chicken Ragout', 0, 'Chef', 'neque tellus', 223517, '2017-04-28'),
+('Cajun Chicken Ragout', 4, 'Customer', 'adipiscing elit. Aliquam', 223517, '2017-02-04'),
+('Cajun Chicken Ragout', 9, 'Customer', 'tortor at risus. Nunc ac sem ut', 223517, '2017-05-02'),
+('Fettuccini Carbonara', 0, 'Chef', 'enim diam vel arcu. Curabitur', 223517, '2017-07-06'),
+('Fettuccini Carbonara', 7, 'Customer', 'Suspendisse', 223517, '2017-02-13'),
+('Filet Mignon', 0, 'Chef', ' Preheat the oven to 500 degrees F.\r\n\r\nPlace the beef on a baking sheet and pat the outside dry with a paper towel. Spread the butter on with your hands. Sprinkle evenly with the salt and pepper. Roast in the oven for exactly 22 minutes for rare and 25 minutes for medium-rare.\r\n\r\nRemove the beef from the oven, cover it tightly with aluminum foil, and allow it to rest at room temperature for 20 minutes. Remove the strings and slice the filet thickly. ', 223517, '2017-05-06'),
+('Filet Mignon with Rich Balsamic Glaze', 0, 'Chef', 'magna eros. Proin ultrices.', 223517, '2017-04-23'),
+('Filet Mignon with Rich Balsamic Glaze', 1, 'Customer', 'sit amet metus. Aliquam erat volutpat. Nulla facilisis. Suspendisse commodo, it''s delicious', 223517, '2017-05-02'),
+('Filet Mignon with Rich Balsamic Glaze', 3, 'Customer', 'scelerisque neque. Nullam nisl. Maecenas malesuada', 223517, '2017-06-30'),
+('French Fries', 9, 'Customer', '    1. Slice potatoes into French fries, and place into cold water so they won''t turn brown while you prepare the oil.\r\n    2. Heat oil in a large skillet over medium-high heat. While the oil is heating, sift the flour, garlic salt, onion salt, (regular) salt, and paprika into a large bowl. Gradually stir in enough water so that the mixture can be drizzled from a spoon.\r\n    3. Dip potato slices into the batter one at a time, and place in the hot oil so they are not touching at first. The fries must be placed into the skillet one at a time, or they will clump together. Fry until golden brown and crispy. Remove and drain on paper towels.\r\n', 223517, '2017-07-01'),
+('Fried Cabbage and Egg Noodles', 0, 'Chef', 'metus. Aenean sed pede nec ante blandit viverra. Donec tempus', 223517, '2017-08-09'),
+('Fried Cabbage and Egg Noodles', 1, 'Customer', 'dolor elit', 223517, '2017-05-02'),
+('Fried Cabbage and Egg Noodles', 6, 'Customer', 'Aliquam ornare', 223517, '2017-03-26'),
+('Fried Chicken', 1, 'Customer', 'Fry chicken using oil', 222538, '2017-05-03'),
+('Fried Pork Chop', 0, 'Chef', 'sapien. Aenean massa. Integer vitae', 223517, '2017-01-26'),
+('Fried Pork Chop', 3, 'Customer', 'Duis sit amet diam eu dolor egestas rhoncus. Proin', 223517, '2017-09-02'),
+('Orange Chicken', 12, 'Customer', 'Fry chicken with orange jucy', 44026, '2017-05-03');
 
 --
 -- Indexes for dumped tables
@@ -525,6 +552,16 @@ ALTER TABLE `recipe`
 -- AUTO_INCREMENT for dumped tables
 --
 
+--
+-- AUTO_INCREMENT for table `customer`
+--
+ALTER TABLE `customer`
+  MODIFY `CustomerID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+--
+-- AUTO_INCREMENT for table `order`
+--
+ALTER TABLE `order`
+  MODIFY `OrderID` bigint(63) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2017050404390213;
 --
 -- AUTO_INCREMENT for table `product`
 --

@@ -14,20 +14,15 @@
             $con->setAttribute(PDO::ATTR_ERRMODE,
                                PDO::ERRMODE_EXCEPTION);
 
-            $purchaseTime = date("YmdHis");
-            $tempTime = strtotime($purchaseTime);
-            $year = (int)date("Y", $tempTime);
-            $month = (int)date("m", $tempTime);
-            $day = (int)date("d", $tempTime);
-            $dayTime = (int)date("His", $tempTime);
-
-            $orderID = (int)($purchaseTime.$userID);
+            $date = date("YmdHis");
+            $orderID = (int)($date.$userID);
+            $purchaseTime = (int)date("His", $date);
 
             // order is a keyword in SQL, use backticks around column names to avoid the conflicts
             $query1 = "INSERT INTO `order`
-                    VALUES ($orderID, $userID, $year, $month, $day, $dayTime)";
+                       VALUES (:orderID, :userID, $purchaseTime, DATE_FORMAT(NOW(),'%Y-%m-%d'))";
             $query2 = "INSERT INTO isincludedproduct
-                    VALUES ($orderID, $productID, $amount)";
+                       VALUES (:orderID, $productID, $amount)";
             $query3 = "SELECT Name, Price
                        FROM product
                        WHERE ProductID = :productID";
@@ -36,8 +31,8 @@
             $ps2 = $con->prepare($query2);
             $ps3 = $con->prepare($query3);
 
-            $ps1->execute();
-            $ps2->execute();
+            $ps1->execute(array(":orderID"=>$orderID, ":userID"=>$userID));
+            $ps2->execute(array(":orderID"=>$orderID));
             $ps3->execute(array(':productID' => $productID));
 
             $data = $ps3->fetch(PDO::FETCH_ASSOC);
