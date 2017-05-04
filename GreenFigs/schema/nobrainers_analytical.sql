@@ -48,16 +48,16 @@ CREATE TABLE `calendar` (
 CREATE TABLE `customer` (
   `customerkey` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `customerid` int DEFAULT NULL UNIQUE,
-  `customerfirstname` varchar(10) DEFAULT NULL,
-  `customerlastname` varchar(7) DEFAULT NULL,
-  `customeremail` varchar(43) DEFAULT NULL,
-  `customerpassword` varchar(16) DEFAULT NULL,
-  `customeraptnum` int(3) DEFAULT NULL,
-  `customerstreet` varchar(19) DEFAULT NULL,
-  `customercity` varchar(14) DEFAULT NULL,
+  `customerfirstname` varchar(20) DEFAULT NULL,
+  `customerlastname` varchar(20) DEFAULT NULL,
+  `customeremail` varchar(100) DEFAULT NULL,
+  `customerpassword` varchar(100) DEFAULT NULL,
+  `customeraptnum` int DEFAULT NULL,
+  `customerstreet` varchar(100) DEFAULT NULL,
+  `customercity` varchar(20) DEFAULT NULL,
   `customerstate` varchar(10) DEFAULT NULL,
-  `customercountry` varchar(24) DEFAULT NULL,
-  `customerzip` int(5) DEFAULT NULL
+  `customercountry` varchar(20) DEFAULT NULL,
+  `customerzip` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 --
@@ -72,16 +72,16 @@ CREATE TABLE `customer` (
 CREATE TABLE `farmer` (
   `farmerkey` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `farmerid` int DEFAULT NULL UNIQUE,
-  `farmerfirstname` varchar(7) DEFAULT NULL,
-  `farmerlastname` varchar(8) DEFAULT NULL,
-  `farmeremail` varchar(25) DEFAULT NULL,
-  `farmerpassword` varchar(11) DEFAULT NULL,
+  `farmerfirstname` varchar(20) DEFAULT NULL,
+  `farmerlastname` varchar(20) DEFAULT NULL,
+  `farmeremail` varchar(50) DEFAULT NULL,
+  `farmerpassword` varchar(50) DEFAULT NULL,
   `farmeraptnum` int DEFAULT NULL,
-  `farmerstreet` varchar(18) DEFAULT NULL,
-  `farmercity` varchar(12) DEFAULT NULL,
-  `farmerstate` varchar(4) DEFAULT NULL,
-  `farmercountry` varchar(24) DEFAULT NULL,
-  `farmerzip` int(5) DEFAULT NULL
+  `farmerstreet` varchar(50) DEFAULT NULL,
+  `farmercity` varchar(20) DEFAULT NULL,
+  `farmerstate` varchar(20) DEFAULT NULL,
+  `farmercountry` varchar(20) DEFAULT NULL,
+  `farmerzip` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 --
@@ -95,11 +95,11 @@ CREATE TABLE `farmer` (
 
 CREATE TABLE `product` (
   `productkey` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `productid` varchar(3) DEFAULT NULL UNIQUE,
-  `productname` varchar(13) DEFAULT NULL,
+  `productid` varchar(10) DEFAULT NULL UNIQUE,
+  `productname` varchar(20) DEFAULT NULL,
   `productprice` decimal(10,2) DEFAULT NULL,
-  `productcategory` varchar(9) DEFAULT NULL,
-  `productcertification` varchar(11) DEFAULT NULL
+  `productcategory` varchar(20) DEFAULT NULL,
+  `productcertification` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 --
@@ -113,9 +113,9 @@ CREATE TABLE `product` (
 --
 
 CREATE TABLE `recipe` (
-  `calendarkey` int(1) DEFAULT NULL,
-  `customerkey` int(1) DEFAULT NULL,
-  `rtid` varchar(4) NOT NULL,
+  `calendarkey` int DEFAULT NULL,
+  `customerkey` int DEFAULT NULL,
+  `rtid` varchar(100) NOT NULL,
   `timeofday` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
@@ -131,14 +131,14 @@ CREATE TABLE `recipe` (
 --
 
 CREATE TABLE `sales` (
-  `calendarkey` int(1) DEFAULT NULL,
-  `farmerkey` int(1) DEFAULT NULL,
-  `customerkey` int(2) DEFAULT NULL,
-  `productkey` int(2) NOT NULL,
-  `tid` varchar(4) NOT NULL,
+  `calendarkey` int DEFAULT NULL,
+  `farmerkey` int DEFAULT NULL,
+  `customerkey` int DEFAULT NULL,
+  `productkey` int NOT NULL,
+  `tid` varchar(100) NOT NULL,
   `timeofday` varchar(11) DEFAULT NULL,
-  `revenue` varchar(6) DEFAULT NULL,
-  `unitssold` int(1) DEFAULT NULL
+  `revenue` varchar(10) DEFAULT NULL,
+  `unitssold` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 --

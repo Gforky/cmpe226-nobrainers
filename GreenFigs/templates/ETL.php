@@ -1,3 +1,10 @@
+<html>
+
+    <script type="text/javascript">
+	  function done(){
+        window.location = "/GreenFigs/templates/login.html";
+	  }
+    </script>
 <?php
 
 print "ETL Staring<br>";
@@ -66,3 +73,52 @@ $ps->execute();
 
 
 print "calendar loaded<br>";
+
+$query = "
+INSERT into nobrainers_analytical.sales (tid,timeofday,unitssold,revenue,calendarkey,farmerkey,productkey,customerkey)
+SELECT nobrainers.order.OrderID,
+       nobrainers.order.DayTime,
+	   nobrainers.isincludedproduct.Amount, 
+       nobrainers.product.Price * nobrainers.isincludedproduct.Amount AS revenue,
+       nobrainers_analytical.calendar.calendarkey,
+       nobrainers_analytical.farmer.farmerkey,
+       nobrainers_analytical.product.productkey,
+       nobrainers_analytical.customer.customerkey
+FROM nobrainers.order 
+join nobrainers.isincludedproduct on nobrainers.order.OrderID = nobrainers.isincludedproduct.OrderID
+join nobrainers.product on nobrainers.product.productID = nobrainers.isincludedproduct.productID
+join nobrainers_analytical.calendar on nobrainers_analytical.calendar.date = nobrainers.order.Date
+join nobrainers_analytical.farmer on nobrainers_analytical.farmer.farmerid = nobrainers.product.FarmerID
+join nobrainers_analytical.product on nobrainers_analytical.product.productid = nobrainers.product.productID
+join nobrainers_analytical.customer on nobrainers_analytical.customer.customerid = nobrainers.order.CustomerID
+on duplicate key UPDATE
+nobrainers_analytical.sales.unitssold = nobrainers.isincludedproduct.Amount,
+nobrainers_analytical.sales.revenue = nobrainers.product.Price * nobrainers.isincludedproduct.Amount 
+";
+
+$ps = $con->prepare($query);
+$ps->execute();
+
+print "sales loaded<br>";
+
+$query = "
+INSERT into nobrainers_analytical.recipe (rtid,timeofday,calendarkey,customerkey)
+SELECT CONCAT(nobrainers.recipe.Recipename ,':', nobrainers.recipe.CustomerID),
+	   nobrainers.recipe.DayTime, 
+       nobrainers_analytical.calendar.calendarkey,
+       nobrainers_analytical.customer.customerkey
+FROM nobrainers.recipe 
+join nobrainers_analytical.calendar on nobrainers_analytical.calendar.date = nobrainers.recipe.Date
+join nobrainers_analytical.customer on nobrainers_analytical.customer.customerid = nobrainers.recipe.CustomerID
+on duplicate key UPDATE
+nobrainers_analytical.recipe.timeofday = nobrainers.recipe.DayTime
+";
+
+$ps = $con->prepare($query);
+$ps->execute();
+
+print "recipe loaded<br>";
+
+
+print "         <button style='width:70px;height:35px' type='button' onclick='done()'>Done</button>\n";
+
