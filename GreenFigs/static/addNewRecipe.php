@@ -23,10 +23,15 @@
                 $type = "Customer";
             }
 
-            $purchaseTime = (int)date("His");
+            date_default_timezone_set('America/New_York');
+            $time = date("His");
+            $orderID = (int)(date("Ymd").$time.$userID);
+            $purchaseTime = (int)$time;
+
+            $con->exec("SET time_zone = '-04:00'");
 
             $query1 = "INSERT INTO recipe
-                       VALUES (:RecipeName, :CustomerID, :Type, :Description, $purchaseTime, DATE_FORMAT(NOW(),'%Y-%m-%d'))";
+                       VALUES (:RecipeName, :CustomerID, :Type, :Description, $purchaseTime, DATE_FORMAT(NOW(), '%Y-%m-%d'))";
 
             $ps1 = $con->prepare($query1);
 

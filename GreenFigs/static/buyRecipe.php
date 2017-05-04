@@ -14,16 +14,17 @@
             $con->setAttribute(PDO::ATTR_ERRMODE,
                                PDO::ERRMODE_EXCEPTION);
 
-            $date = date("YmdHis");
-            $orderID = (int)($date.$userID);
+            date_default_timezone_set('America/New_York');
+            $time = date("His");
+            $orderID = (int)(date("Ymd").$time.$userID);
+            $purchaseTime = (int)$time;
+            $con->exec("SET time_zone = '-04:00'");
             $msg = "User ".$userID." successfully purchased recipe \"".$recipeName."\"\nThe recipe contains products:\n";
             $totalPrice = 0;
 
-            $purchaseTime = (int)date("His", $date);
-
             // order is a keyword in SQL, use backticks around column names to avoid the conflicts
             $query1 = "INSERT INTO `order`
-                       VALUES (:orderID, :userID, $purchaseTime, DATE_FORMAT(NOW(),'%Y-%m-%d'))";
+                       VALUES (:orderID, :userID, $purchaseTime, DATE_FORMAT(NOW(), '%Y-%m-%d'))";
             $query2 = "INSERT INTO isincludedrecipe
                        VALUES (:recipeName, :userID, :orderID)";
             $query3 = "SELECT ProductID, Amount
