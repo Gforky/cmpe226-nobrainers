@@ -18,7 +18,7 @@
         $('.allProductsBtn').toggleClass('chosenColor');
         var id = location.search.split('user=')[1] ? location.search.split('user=')[1] : 1;
         $(".button.allProductsBtn").click(function() {
-            window.location = "/GreenFigs/templates/customerAllProducts.php?user=" + id;
+            window.location = "/GreenFigs/templates/customerAllProducts.php?user=" + id + "&glutenFree=true&nonGmo=true&organic=true&vegetables=true&fruit=true&meat=true&seafood=true&pasta=true&condiment=true&dairy=true";
         })
         $(".button.allRecipesBtn").click(function() {
             window.location = "/GreenFigs/templates/customerAllRecipes.php?user=" + id;

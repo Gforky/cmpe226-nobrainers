@@ -214,6 +214,11 @@ button {
   width: 100px;
   height: 50px;
 }
-.recipeChart {
+.recipeChart,
+.revenueChart {
   margin-top: 60px;
+}
+
+.c3 .tick {
+    display:none;
 }

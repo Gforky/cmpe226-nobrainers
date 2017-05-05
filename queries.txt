@@ -6,10 +6,25 @@ GROUP BY p.productid
 HAVING COUNT(*) < 10
 
 # get sales revenue per month
-SELECT c.month, s.revenue
-FROM `calendar` c, `sales` s
+SELECT c.date AS `Date`, SUM(s.revenue) AS Revenue
+FROM nobrainers_analytical.calendar AS c, nobrainers_analytical.sales AS s
 WHERE c.calendarkey = s.calendarkey
-GROUP BY c.month
+AND s.farmerkey = :id
+GROUP BY c.year, c.month
+
+# get sales revenue per year
+SELECT c.date AS `Date`, SUM(s.revenue) AS Revenue
+FROM nobrainers_analytical.calendar AS c, nobrainers_analytical.sales AS s
+WHERE c.calendarkey = s.calendarkey
+AND s.farmerkey = :id
+GROUP BY c.year
+
+# get sales revenue per day
+SELECT c.date AS `Date`, SUM(s.revenue) AS Revenue
+FROM nobrainers_analytical.calendar AS c, nobrainers_analytical.sales AS s
+WHERE c.calendarkey = s.calendarkey
+AND s.farmerkey = :id
+GROUP BY c.date
 
 # get number of recipes per customer
 SELECT rtid AS ID, customerfirstname AS FName, customerlastname AS LName, COUNT(*) AS Sum

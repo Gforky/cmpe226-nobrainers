@@ -2,42 +2,7 @@ $(document).ready(function() {
   var blue = "#0055A2", gold = "#E5A823", white = "#ffffff";
   var id = location.search.split('user=')[1] ? location.search.split('user=')[1] : 1;
 
-// chart of database status
-  var dbChartConfig = {
-    bindto: '.dbChart',
-    data: {
-      x : 'x',
-      columns: [['x', 0], ['mattress', 298], ['couch', 276], ['tv-monitor', 198]],
-      type : 'pie'
-    },
-    pie: {
-      label: {
-        format: function (value, ratio, id) {
-          return d3.format('')(value);
-        }
-      }
-    },
-    axis: {
-      x: {
-        type: 'timeseries',
-        tick: {
-            format: '%Y-%m-%d'
-        }
-      },
-      y: {
-        label: { // ADD
-          position: 'outer-middle'
-        },
-        tick: {
-          // ADD
-        }
-      }
-    }
-  }
-
-  var dbChart = c3.generate(dbChartConfig)
-
-  // chart of neural network status
+  // chart of recipe data
   var recipeChart
   var recipeChartConfig
 
@@ -84,135 +49,165 @@ $(document).ready(function() {
 
   generateRecipeChart()
 
-  // button clicks of Database Status Chart
-  $(".imgStorage").click(function() {
-    //chart.axis.ticks{x : {format: '%Y-%m-%d'}, y : {format: d3.format(",%")}}
-    //dbChart.axis.labels({y : 'Image Storage'})
-    $.ajax({
-      url: '/getImgStorage',
-      type: 'POST',
-      success: function(response) {
-        console.log(response)
-        // convert JSON object into javascript array
-        //sysChart.transform('bar');
-        dbChart.transform('pie')
-        dbChart.load({
-          columns: $.parseJSON(response), 
-          type: 'pie'})
-        dbChart.unload({ids: ['Database I/O Traffic', 'Database Queries']})
-      },
-      error: function(error) {
-        console.log(error)
-      }
-    })
-  })
+  // chart of revenue per month
+  var revenueMonthChart
+  var revenueMonthChartConfig
 
-  $(".datasetSize").click(function() {
-    //chart.axis.ticks{x : {format: '%Y-%m-%d'}, y : {format: d3.format(",%")}}
+  var generateRevenueMonthChart = function() {
     $.ajax({
-      url: '/getDatasetSize',
+      url: '/GreenFigs/static/updateRevenueMonthChart.php',
       type: 'POST',
+      data: 'userID=' + id,
       success: function(response) {
-        console.log(response)
+        var data = $.parseJSON(response)
         // convert JSON object into javascript array
-        //sysChart.transform('bar');
-        dbChartConfig.axis.y.tick = { format : function (d) { return d + ""; } }
-        dbChartConfig.data = {
-          x : 'x',
-          columns: $.parseJSON(response),
-          groups: [['mattress', 'couch', 'tv-monitor']],
-          type: 'bar'
+        revenueMonthChartConfig = {
+          bindto: '.revenueChart',
+          data: {
+            x : 'x',
+            columns: data,
+            groups: []
+          },
+          axis: {
+            x: {
+              type: 'timeseries',
+              tick: {
+                  format: '%Y-%m'
+              }
+            },
+            y: {
+              label: { // ADD
+                text: 'Revenue in US Dollars',
+                position: 'outer-middle'
+              },
+              tick: {
+                format: d3.format("$,") // ADD
+              }
+            }
+          }
         }
-        dbChart = c3.generate(dbChartConfig)
-        //recipeChart.transform('bar')
-        dbChart.axis.labels({ y : 'Dataset Size'})
+        revenueMonthChart = c3.generate(revenueMonthChartConfig)
       },
       error: function(error) {
         console.log(error)
       }
     })
-  })
+  }
 
-  $(".imgConf").click(function() {
-    //chart.axis.ticks{x : {format: '%Y-%m-%d'}, y : {format: d3.format(",%")}}
+  // chart of revenue per year
+  var revenueYearChart
+  var revenueYearChartConfig
+
+  var generateRevenueYearChart = function() {
     $.ajax({
-      url: '/getImgConf',
+      url: '/GreenFigs/static/updateRevenueYearChart.php',
       type: 'POST',
+      data: 'userID=' + id,
       success: function(response) {
-        console.log(response)
+        var data = $.parseJSON(response)
         // convert JSON object into javascript array
-        //sysChart.transform('bar');
-        dbChartConfig.axis.y.tick = { format : function (d) { return d + ""; } }
-        dbChartConfig.data = {
-          x : 'x',
-          columns: $.parseJSON(response),
-          groups: [['mattress', 'couch', 'tv-monitor']],
-          type: 'bar'
+        revenueYearChartConfig = {
+          bindto: '.revenueChart',
+          data: {
+            x : 'x',
+            columns: data,
+            groups: []
+          },
+          axis: {
+            x: {
+              type: 'timeseries',
+              tick: {
+                  format: '%Y'
+              }
+            },
+            y: {
+              label: { // ADD
+                text: 'Revenue in US Dollars',
+                position: 'outer-middle'
+              },
+              tick: {
+                format: d3.format("$,") // ADD
+              }
+            }
+          }
         }
-        dbChart = c3.generate(dbChartConfig)
-        //recipeChart.transform('bar')
-        dbChart.axis.labels({ y : 'Images Confirmed'})
+        revenueYearChart = c3.generate(revenueYearChartConfig)
       },
       error: function(error) {
         console.log(error)
       }
     })
-  })
+  }
 
-  $(".upImg").click(function() {
-    //chart.axis.ticks{x : {format: '%Y-%m-%d'}, y : {format: d3.format(",%")}}
+  // chart of revenue per month
+  var revenueDayChart
+  var revenueDayChartConfig
+
+  var generateRevenueDayChart = function() {
     $.ajax({
-      url: '/getUpImg',
+      url: '/GreenFigs/static/updateRevenueDayChart.php',
       type: 'POST',
+      data: 'userID=' + id,
       success: function(response) {
-        console.log(response)
+        var data = $.parseJSON(response)
         // convert JSON object into javascript array
-        //sysChart.transform('bar');
-        dbChartConfig.axis.y.tick = { format : function (d) { return d + ""; } }
-        dbChartConfig.data = {
-          x : 'x',
-          columns: $.parseJSON(response),
-          groups: [['mattress', 'couch', 'tv-monitor']],
-          type: 'bar'
+        revenueDayChartConfig = {
+          bindto: '.revenueChart',
+          data: {
+            x : 'x',
+            columns: data,
+            groups: []
+          },
+          axis: {
+            x: {
+              type: 'timeseries',
+              tick: {
+                  format: '%Y-%m-%d'
+              }
+            },
+            y: {
+              label: { // ADD
+                text: 'Revenue in US Dollars',
+                position: 'outer-middle'
+              },
+              tick: {
+                format: d3.format("$,") // ADD
+              }
+            }
+          }
         }
-        dbChart = c3.generate(dbChartConfig)
-        //recipeChart.transform('bar')
-        dbChart.axis.labels({ y : 'Images Uploaded'})
+        revenueDayChart = c3.generate(revenueDayChartConfig)
       },
       error: function(error) {
         console.log(error)
       }
     })
-  })
+  }
 
-  // button clicks of Neural Network Status Chart
+  generateRevenueMonthChart()
+
   $(".recipeChartBtn").click(function() {
     generateRecipeChart()
   })
 
-  $(".detectedObjects").click(function() {
-    //chart.axis.ticks{x : {format: '%Y-%m-%d'}, y : {format: d3.format(",%")}}
-    $.ajax({
-      url: '/getDetectedObj',
-      type: 'POST',
-      success: function(response) {
-        console.log(response)
-        // convert JSON object into javascript array
-        //sysChart.transform('bar');
-        recipeChartConfig.axis.y.tick = { format : function (d) { return d + ""; } }
-        recipeChartConfig.data = {
-          x : 'x',
-          columns: $.parseJSON(response),
-          groups: [['mattress', 'couch', 'tv-monitor']],
-          type: 'bar'
-        }
-        recipeChart = c3.generate(recipeChartConfig)
-        //recipeChart.transform('bar')
-        recipeChart.axis.labels({ y : 'Detected Objects'})
-      },
-      error: function(error) {
-        console.log(error)
-      }
-    })
+  $(".revenueMonthChartBtn").click(function() {
+    $('.revenueMonthChartBtn').toggleClass('chosenColor', true);
+    $('.revenueYearChartBtn').toggleClass('chosenColor', false);
+    $('.revenueDayChartBtn').toggleClass('chosenColor', false);
+    generateRevenueMonthChart()
+  })
+
+  $(".revenueYearChartBtn").click(function() {
+    $('.revenueMonthChartBtn').toggleClass('chosenColor', false);
+    $('.revenueYearChartBtn').toggleClass('chosenColor', true);
+    $('.revenueDayChartBtn').toggleClass('chosenColor', false);
+    generateRevenueYearChart()
+  })
+
+  $(".revenueDayChartBtn").click(function() {
+    $('.revenueMonthChartBtn').toggleClass('chosenColor', false);
+    $('.revenueYearChartBtn').toggleClass('chosenColor', false);
+    $('.revenueDayChartBtn').toggleClass('chosenColor', true);
+    generateRevenueDayChart()
   })
 })

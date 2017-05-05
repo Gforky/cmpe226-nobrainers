@@ -20,13 +20,18 @@
         $('.allProductsBtn').toggleClass('chosenColor');
         var id = location.search.split('user=')[1] ? location.search.split('user=')[1] : 1;
         $(".button.allProductsBtn").click(function() {
-            window.location = "/GreenFigs/templates/farmerAllProducts.php?user=" + id;
+            window.location = "/GreenFigs/templates/farmerAllProducts.php?user=" + id + "&glutenFree=true&nonGmo=true&organic=true&vegetables=true&fruit=true&meat=true&seafood=true&pasta=true&condiment=true&dairy=true";
         })
+<<<<<<< Updated upstream
         $(".button.productrevenue").click(function() {
             window.location = "/GreenFigs/templates/farmerProductRevenue.php?user=" + id;
+=======
+        $(".button.allRecipesBtn").click(function() {
+            window.location = "/GreenFigs/templates/farmerRevenuePerDate.php?user=" + id;
+>>>>>>> Stashed changes
         })
         $(".button.myRecipesBtn").click(function() {
-            window.location = "/GreenFigs/templates/.php?user=" + id;
+            window.location = "/GreenFigs/templates/farmerRevenuePerProduct.php?user=" + id;
         })
       })
       function addProduct(id) {
@@ -48,8 +53,13 @@
     </div>
     <div class="switchViewButtons">
       <button class="button allProductsBtn">My Products</button>
+<<<<<<< Updated upstream
       <button class="button productrevenue">Product Revenue</button>
       <button class="button myRecipesBtn">N/A</button>
+=======
+      <button class="button allRecipesBtn">Revenue Per Date</button>
+      <button class="button myRecipesBtn">Revenue Per Product</button>
+>>>>>>> Stashed changes
     </div>
 
     <div ng-app="dashboard" class="dashboard">
