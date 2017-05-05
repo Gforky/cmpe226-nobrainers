@@ -17,7 +17,7 @@
 
     <script type="text/javascript">
       $(document).ready(function() {
-        $('.allProductsBtn').toggleClass('chosenColor');
+        $('.productrevenue').toggleClass('chosenColor');
         var id = location.search.split('user=')[1] ? location.search.split('user=')[1] : 1;
         $(".button.allProductsBtn").click(function() {
             window.location = "/GreenFigs/templates/farmerAllProducts.php?user=" + id;
@@ -115,9 +115,26 @@
 		 	return $this->CategoryID; 
 		  }
 		}	
+		function convertCategory($category){
+            if( $category == 1){
+				return "vegetables";
+            }else if($category == 2){
+				return "fruit";
+			}else if($category == 3){
+				return "meat";
+			}else if($category == 4){
+				return "seafood";
+			}else if($category == 5){
+				return "pasta";
+			}else if($category == 6){
+				return "condiment";
+			}else if($category == 7){
+				return "dairy";
+			}
+		}
         function constructTable($con, $query1, $id, $glutenFree, $nonGmo, $organic, $vegetables, $fruit, $meat, $seafood, $pasta, $condiment, $dairy)
         {
-          print "<form action='/GreenFigs/templates/farmerAllProducts.php' method='get' style='margin:50px auto 50px 100px'>\n";
+          print "<form action='/GreenFigs/templates/farmerProductRevenue.php' method='get' style='margin:50px auto 50px 100px'>\n";
           print " <input type='hidden' name='user' value=".$id.">\n";
           print " <b style='font-size:14px;color:#E5A823'>Certifications:</b><br>\n"; 
           if($glutenFree) {
@@ -173,7 +190,6 @@
             print " Dairy<input type='checkbox' name='dairy' value='true'>\n";
           }
           print "<br><br> <input type='submit' style='width:70px;height:35px' value='Filter'>\n";
-          print "<br><br><button type='button' style='width:70px;height:35px' onclick='addProduct(".$id.")'>Add Product</button>\n";
 			
           print "<br></form>\n";
           if($query1 != "") {
@@ -181,20 +197,19 @@
 
             // Fetch the matching row.
             $ps1->execute();
-            $ps1->setFetchMode(PDO::FETCH_CLASS, "Product");
+            #$ps1->setFetchMode(PDO::FETCH_CLASS, "Product");
             print "<div style='display:inline-block; margin-left:50px'>\n";
-            while($product = $ps1->fetch()) {
+            while($row = $ps1->fetch(PDO::FETCH_ASSOC)) {
               print "      <div style=\"float:left; margin-left:20px; margin-top:10px; margin-bottom:10px; 
                             border:1px solid; height:350px; width:250px; background: #0055A2 url('/GreenFigs/static/productImages/product.png') no-repeat right top\">\n";
-              print "         <button style='width:70px;height:35px' type='button' onclick='update(".$product->getProductID().", \"".$product->getName()."\",".$product->getPrice().",\"".$product->getCertification()."\",".$product->getFarmerID().",\"".$product->getDescription()."\",".$product->getCategoryID().")'>Update</button>\n";
               print "         <div style='height:300px; width:100%; overflow:scroll'>\n";
-              print "           <b style='font-size:14px;color:#E5A823'>Product ID: </b><p style='font-size:12px;color:white'>" . $product->getProductID() . "</p>\n";
-              print "           <b style='font-size:14px;color:#E5A823'>Name: </b><p style='font-size:12px;color:white'>" . $product->getName() . "</p>\n";
-              print "           <b style='font-size:14px;color:#E5A823'>Price: </b><p style='font-size:12px;color:white'>" . $product->getPrice() . "</p>\n";
-              print "           <b style='font-size:14px;color:#E5A823'>Certification: </b><p style='font-size:12px;color:white'>" . $product->getCertification() . "</p>\n";
-              print "           <b style='font-size:14px;color:#E5A823'>Seller ID: </b><p style='font-size:12px;color:white'>" . $product->getFarmerID() . "</p>\n";
-              print "           <b style='font-size:14px;color:#E5A823'>Description: </b><p style='font-size:12px;color:white'>" . $product->getDescription() . "</p>\n";
-              print "           <b style='font-size:14px;color:#E5A823'>Category: </b><p style='font-size:12px;color:white'>" . $product->getCategory() . "</p>\n";
+              print "           <b style='font-size:14px;color:#E5A823'>Product ID: </b><p style='font-size:12px;color:white'>" . $row["productid"] . "</p>\n";
+              print "           <b style='font-size:14px;color:#E5A823'>Name: </b><p style='font-size:12px;color:white'>" . $row["productname"] . "</p>\n";
+              print "           <b style='font-size:14px;color:#E5A823'>Unit Price: </b><p style='font-size:12px;color:white'>" . $row["productprice"] . "</p>\n";
+              print "           <b style='font-size:14px;color:#E5A823'>Total Units Sold: </b><p style='font-size:12px;color:white'>" . $row["unitssold"] . "</p>\n";
+              print "           <b style='font-size:14px;color:#E5A823'>Total Revenue: </b><p style='font-size:12px;color:white'>" . $row["revenue"] . "</p>\n";
+              print "           <b style='font-size:14px;color:#E5A823'>Certification: </b><p style='font-size:12px;color:white'>" . $row["productcertification"] . "</p>\n";
+              print "           <b style='font-size:14px;color:#E5A823'>Category: </b><p style='font-size:12px;color:white'>" . convertCategory($row["productcategory"]) . "</p>\n";
               print "         </div>\n";
               print "      </div>\n";
             }
@@ -223,14 +238,16 @@
             }
         
             // Connect to the database.
-            $con = new PDO("mysql:host=localhost;dbname=nobrainers",
+            $con = new PDO("mysql:host=localhost;dbname=nobrainers_analytical",
                            "nobrainers", "sesame");
             $con->setAttribute(PDO::ATTR_ERRMODE,
                                PDO::ERRMODE_EXCEPTION);
             
-            $query1 = "SELECT * 
-                       FROM product
-					   WHERE FarmerID = ".$id;
+            $query1 = "SELECT product.productid,product.productname,product.productprice,SUM(unitssold) AS unitssold,SUM(revenue) AS revenue, product.productcertification, product.productcategory
+                       FROM sales
+					   join farmer on sales.farmerkey = farmer.farmerkey
+					   join product on sales.productkey = product.productkey
+					   WHERE farmer.farmerid = ".$id;
 
             if($glutenFree || $nonGmo || $organic || $vegetables || $fruit || $meat || $seafood || $pasta || $condiment || $dairy) {
               $query1 = $query1." AND";
@@ -243,50 +260,50 @@
               $query1 = $query1." ((";
 
               if($glutenFree) {
-                $query1 = $query1." Certification=\"gluten-free\" OR";
+                $query1 = $query1." product.productcertification=\"gluten-free\" OR";
               }
               
               if($nonGmo) {
-                $query1 = $query1." Certification=\"non-gmo\" OR";
+                $query1 = $query1." product.productcertification=\"non-gmo\" OR";
               }
 
               if($organic) {
-                $query1 = $query1." Certification=\"organic\" OR";
+                $query1 = $query1." product.productcertification=\"organic\" OR";
               }
 
               $query1 = substr($query1, 0, -2)." ) AND (";
 
               if($vegetables) {
-                $query1 = $query1." CategoryID=1 OR";
+                $query1 = $query1." product.productcategory=1 OR";
               }
 
               if($fruit) {
-                $query1 = $query1." CategoryID=2 OR";
+                $query1 = $query1." product.productcategory=2 OR";
               }
 
               if($meat) {
-                $query1 = $query1." CategoryID=3 OR";
+                $query1 = $query1." product.productcategory=3 OR";
               }
 
               if($seafood) {
-                $query1 = $query1." CategoryID=4 OR";
+                $query1 = $query1." product.productcategory=4 OR";
               }
 
               if($pasta) {
-                $query1 = $query1." CategoryID=5 OR";
+                $query1 = $query1." product.productcategory=5 OR";
               }
 
               if($condiment) {
-                $query1 = $query1." CategoryID=6 OR";
+                $query1 = $query1." product.productcategory=6 OR";
               }
 
               if($dairy) {
-                $query1 = $query1." CategoryID=7 OR";
+                $query1 = $query1." product.productcategory=7 OR";
               }
 
               $query1 = substr($query1, 0, -3)."))";
             }
-
+			$query1 = $query1." GROUP BY sales.productkey";
             constructTable($con, $query1, $id, $glutenFree, $nonGmo, $organic, $vegetables, $fruit, $meat, $seafood, $pasta, $condiment, $dairy);
         }
         catch(PDOException $ex) {
