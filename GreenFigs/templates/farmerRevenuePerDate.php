@@ -21,17 +21,17 @@
 
     <script type="text/javascript">
       $(document).ready(function() {
-        $('.allRecipesBtn').toggleClass('chosenColor');
+        $('.revenueDateBtn').toggleClass('chosenColor');
         $('.revenueMonthChartBtn').toggleClass('chosenColor');
         var id = location.search.split('user=')[1] ? location.search.split('user=')[1] : 1;
         $(".button.allProductsBtn").click(function() {
             window.location = "/GreenFigs/templates/farmerAllProducts.php?user=" + id + "&glutenFree=true&nonGmo=true&organic=true&vegetables=true&fruit=true&meat=true&seafood=true&pasta=true&condiment=true&dairy=true";
         })
-        $(".button.allRecipesBtn").click(function() {
-            window.location = "/GreenFigs/templates/farmerRevenuePerDate.php?user=" + id;
+        $(".button.productrevenue").click(function() {
+            window.location = "/GreenFigs/templates/farmerProductRevenue.php?user=" + id;
         })
-        $(".button.myRecipesBtn").click(function() {
-            window.location = "/GreenFigs/templates/farmerRevenuePerProduct.php?user=" + id;
+        $(".button.revenueDateBtn").click(function() {
+            window.location = "/GreenFigs/templates/farmerRevenuePerDate.php?user=" + id;
         })
       })
       function addProduct(id) {
@@ -53,8 +53,8 @@
     </div>
     <div class="switchViewButtons">
       <button class="button allProductsBtn">My Products</button>
-      <button class="button allRecipesBtn">Revenue Per Date</button>
-      <button class="button myRecipesBtn">Revenue Per Product</button>
+      <button class="button productrevenue">Product Revenue</button>
+      <button class="button revenueDateBtn">Revenue Per Date</button>
     </div>
 
     <div ng-app="dashboard" class="dashboard">

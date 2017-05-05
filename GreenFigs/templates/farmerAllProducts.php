@@ -22,16 +22,11 @@
         $(".button.allProductsBtn").click(function() {
             window.location = "/GreenFigs/templates/farmerAllProducts.php?user=" + id + "&glutenFree=true&nonGmo=true&organic=true&vegetables=true&fruit=true&meat=true&seafood=true&pasta=true&condiment=true&dairy=true";
         })
-<<<<<<< Updated upstream
         $(".button.productrevenue").click(function() {
             window.location = "/GreenFigs/templates/farmerProductRevenue.php?user=" + id;
-=======
-        $(".button.allRecipesBtn").click(function() {
-            window.location = "/GreenFigs/templates/farmerRevenuePerDate.php?user=" + id;
->>>>>>> Stashed changes
         })
-        $(".button.myRecipesBtn").click(function() {
-            window.location = "/GreenFigs/templates/farmerRevenuePerProduct.php?user=" + id;
+        $(".button.revenueDateBtn").click(function() {
+            window.location = "/GreenFigs/templates/farmerRevenuePerDate.php?user=" + id;
         })
       })
       function addProduct(id) {
@@ -53,13 +48,8 @@
     </div>
     <div class="switchViewButtons">
       <button class="button allProductsBtn">My Products</button>
-<<<<<<< Updated upstream
       <button class="button productrevenue">Product Revenue</button>
-      <button class="button myRecipesBtn">N/A</button>
-=======
-      <button class="button allRecipesBtn">Revenue Per Date</button>
-      <button class="button myRecipesBtn">Revenue Per Product</button>
->>>>>>> Stashed changes
+      <button class="button revenueDateBtn">Revenue Per Date</button>
     </div>
 
     <div ng-app="dashboard" class="dashboard">
