@@ -1,5 +1,5 @@
 <?php
-  $id = filter_input(INPUT_POST, 'userID');
+  $id = filter_input(INPUT_POST, 'userID') + 1;
 
   try{
     $con = new PDO("mysql:host=localhost;dbname=nobrainers","nobrainers", "sesame");
