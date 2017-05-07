@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 04, 2017 at 04:42 AM
+-- Generation Time: May 07, 2017 at 02:22 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 5.6.28
 
@@ -183,12 +183,14 @@ CREATE TABLE `iscontained` (
 --
 
 INSERT INTO `iscontained` (`RecipeName`, `CustomerID`, `ProductID`, `Amount`) VALUES
+('20 No-Guilt Diabetic Banana Bread ', 1, 29, 6),
 ('Alaskan Cod and Shrimp with Fresh Tomato', 0, 20, 1),
 ('Alaskan Cod and Shrimp with Fresh Tomato', 0, 37, 1),
 ('Alaskan Cod and Shrimp with Fresh Tomato', 0, 38, 1),
 ('Alaskan Cod and Shrimp with Fresh Tomato', 1, 20, 1),
 ('Alaskan Cod and Shrimp with Fresh Tomato', 1, 37, 1),
 ('Alaskan Cod and Shrimp with Fresh Tomato', 1, 38, 1),
+('Apricot-Mustard Chicken Sandwiches', 1, 14, 2),
 ('Cajun Chicken Ragout', 0, 27, 1),
 ('Cajun Chicken Ragout', 0, 32, 1),
 ('Cajun Chicken Ragout', 0, 36, 1),
@@ -198,6 +200,7 @@ INSERT INTO `iscontained` (`RecipeName`, `CustomerID`, `ProductID`, `Amount`) VA
 ('Cajun Chicken Ragout', 9, 27, 1),
 ('Cajun Chicken Ragout', 9, 32, 1),
 ('Cajun Chicken Ragout', 9, 36, 1),
+('Chicken with Sourdough-Mushroom Stuffing', 1, 2, 1),
 ('Fettuccini Carbonara', 0, 19, 1),
 ('Fettuccini Carbonara', 0, 21, 1),
 ('Fettuccini Carbonara', 0, 32, 1),
@@ -238,8 +241,18 @@ INSERT INTO `iscontained` (`RecipeName`, `CustomerID`, `ProductID`, `Amount`) VA
 ('Fried Pork Chop', 3, 8, 2),
 ('Fried Pork Chop', 3, 11, 1),
 ('Fried Pork Chop', 3, 13, 1),
+('In-Your-Sleep Chili', 1, 14, 3),
+('Maryland Fried Chicken with Creamy Gravy', 1, 29, 11),
+('Orange Chicken', 5, 19, 1),
+('Orange Chicken', 5, 21, 1),
 ('Orange Chicken', 12, 19, 1),
-('Orange Chicken', 12, 21, 1);
+('Orange Chicken', 12, 21, 1),
+('Original Hot Brown', 1, 2, 3),
+('Rich and Creamy Beef Stroganoff', 1, 19, 3),
+('Skinny Slow Cooker Recipes ', 1, 14, 5),
+('test', 12, 19, 1),
+('test', 12, 21, 1),
+('World''s Best Honey Garlic Pork Chops', 1, 19, 7);
 
 -- --------------------------------------------------------
 
@@ -258,37 +271,53 @@ CREATE TABLE `isincludedproduct` (
 --
 
 INSERT INTO `isincludedproduct` (`OrderID`, `ProductID`, `Amount`) VALUES
-(201705040429571, 2, 2),
-(201705040437261, 3, 3),
-(201705040437331, 4, 45),
-(201705040437361, 7, 1),
-(201705040437462, 6, 13),
-(201705040437502, 6, 2),
-(201705040437532, 5, 1),
-(201705040437572, 5, 1),
-(201705040438052, 12, 34),
-(201705040438112, 3, 1),
-(201705040438112, 6, 1),
-(201705040438112, 14, 1),
-(201705040438112, 18, 1),
-(201705040438132, 3, 1),
-(201705040438132, 6, 1),
-(201705040438132, 14, 1),
-(201705040438132, 18, 1),
-(201705040438162, 27, 1),
-(201705040438162, 32, 1),
-(201705040438162, 36, 1),
-(2017050404382712, 20, 1),
-(2017050404382712, 37, 1),
-(2017050404382712, 38, 1),
-(2017050404383012, 8, 2),
-(2017050404383012, 14, 1),
-(2017050404383012, 21, 1),
-(2017050404383412, 8, 2),
-(2017050404383412, 21, 1),
-(2017050404385212, 6, 3),
-(2017050404385712, 9, 15),
-(2017050404390212, 39, 6);
+(20150708223456, 2, 2),
+(20150709223456, 2, 3),
+(20150710223456, 2, 15),
+(20150805223456, 14, 5),
+(20150806223456, 19, 1),
+(20150807223456, 19, 29),
+(20150901223456, 2, 6),
+(20150902223456, 29, 2),
+(20150903223456, 14, 10),
+(20160210223456, 14, 3),
+(20160211223456, 19, 17),
+(20160212223456, 14, 2),
+(20160322223456, 2, 1),
+(20160323223456, 19, 4),
+(20160324223456, 29, 6),
+(20160404223456, 2, 1),
+(20160405223456, 29, 3),
+(20160406223456, 19, 5),
+(20171002223456, 14, 19),
+(20171003223456, 14, 21),
+(20171004223456, 29, 35),
+(20171113223456, 2, 5),
+(20171114223456, 14, 1),
+(20171115223456, 14, 2),
+(20171219223456, 29, 35),
+(20171220223456, 19, 23),
+(20171221223456, 14, 3),
+(201705040551401, 2, 2),
+(201705040551471, 3, 3),
+(201705040551501, 7, 12),
+(201705040552015, 6, 3),
+(201705040552095, 7, 1),
+(201705040552135, 8, 3),
+(201705040552175, 11, 22),
+(201705040552215, 20, 1),
+(201705040552215, 37, 1),
+(201705040552215, 38, 1),
+(201705040552255, 27, 1),
+(201705040552255, 32, 1),
+(201705040552255, 36, 1),
+(201705041453261, 103, 2),
+(201705050257121, 2, 3),
+(201705050257181, 27, 1),
+(201705050257181, 32, 1),
+(201705050257181, 36, 1),
+(2017050405545712, 3, 3),
+(2017050405550412, 6, 2);
 
 -- --------------------------------------------------------
 
@@ -307,12 +336,9 @@ CREATE TABLE `isincludedrecipe` (
 --
 
 INSERT INTO `isincludedrecipe` (`RecipeName`, `CustomerID`, `OrderId`) VALUES
-('Alaskan Cod and Shrimp with Fresh Tomato', 1, 2017050404382712),
-('Cajun Chicken Ragout', 0, 201705040438162),
-('Filet Mignon with Rich Balsamic Glaze', 0, 201705040438132),
-('Filet Mignon with Rich Balsamic Glaze', 3, 201705040438112),
-('French Fries', 9, 2017050404383012),
-('Fried Cabbage and Egg Noodles', 1, 2017050404383412);
+('Alaskan Cod and Shrimp with Fresh Tomato', 1, 201705040552215),
+('Cajun Chicken Ragout', 4, 201705040552255),
+('Cajun Chicken Ragout', 9, 201705050257181);
 
 -- --------------------------------------------------------
 
@@ -324,7 +350,7 @@ CREATE TABLE `order` (
   `OrderID` bigint(63) NOT NULL,
   `CustomerID` int(2) NOT NULL,
   `DayTime` int(10) NOT NULL,
-  `Date` varchar(20) NOT NULL
+  `Date` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 --
@@ -332,24 +358,47 @@ CREATE TABLE `order` (
 --
 
 INSERT INTO `order` (`OrderID`, `CustomerID`, `DayTime`, `Date`) VALUES
-(201705040429571, 1, 224237, '2017-05-03'),
-(201705040437261, 1, 225526, '2017-05-03'),
-(201705040437331, 1, 225533, '2017-05-03'),
-(201705040437361, 1, 225536, '2017-05-03'),
-(201705040437462, 2, 225546, '2017-05-03'),
-(201705040437502, 2, 225550, '2017-05-03'),
-(201705040437532, 2, 225553, '2017-05-03'),
-(201705040437572, 2, 225557, '2017-05-03'),
-(201705040438052, 2, 225645, '2017-05-03'),
-(201705040438112, 2, 225651, '2017-05-03'),
-(201705040438132, 2, 225653, '2017-05-03'),
-(201705040438162, 2, 225656, '2017-05-03'),
-(2017050404382712, 12, 225707, '2017-05-03'),
-(2017050404383012, 12, 225710, '2017-05-03'),
-(2017050404383412, 12, 225714, '2017-05-03'),
-(2017050404385212, 12, 225732, '2017-05-03'),
-(2017050404385712, 12, 225737, '2017-05-03'),
-(2017050404390212, 12, 225822, '2017-05-03');
+(20150708223456, 1, 223456, '2015-07-08'),
+(20150709223456, 1, 223456, '2015-07-09'),
+(20150710223456, 1, 223456, '2015-07-10'),
+(20150805223456, 1, 223456, '2015-08-05'),
+(20150806223456, 1, 223456, '2015-08-06'),
+(20150807223456, 1, 223456, '2015-08-07'),
+(20150901223456, 1, 223456, '2015-09-01'),
+(20150902223456, 1, 223456, '2015-09-02'),
+(20150903223456, 1, 223456, '2015-09-03'),
+(20160210223456, 1, 223456, '2016-02-10'),
+(20160211223456, 1, 223456, '2016-02-11'),
+(20160212223456, 1, 223456, '2016-02-12'),
+(20160322223456, 1, 223456, '2016-03-22'),
+(20160323223456, 1, 223456, '2016-03-23'),
+(20160324223456, 1, 223456, '2016-03-24'),
+(20160404223456, 1, 223456, '2016-04-04'),
+(20160405223456, 1, 223456, '2016-04-05'),
+(20160406223456, 1, 223456, '2016-04-06'),
+(20171002223456, 1, 223456, '2017-10-02'),
+(20171003223456, 1, 223456, '2017-10-03'),
+(20171004223456, 1, 223456, '2017-10-04'),
+(20171113223456, 1, 223456, '2017-11-13'),
+(20171114223456, 1, 223456, '2017-11-14'),
+(20171115223456, 1, 223456, '2017-11-15'),
+(20171219223456, 1, 223456, '2017-12-19'),
+(20171220223456, 1, 223456, '2017-12-20'),
+(20171221223456, 1, 223456, '2017-12-21'),
+(201705040551401, 1, 55140, '2017-05-04'),
+(201705040551471, 1, 55147, '2017-05-04'),
+(201705040551501, 1, 55150, '2017-05-04'),
+(201705040552015, 5, 55201, '2017-05-04'),
+(201705040552095, 5, 55209, '2017-05-04'),
+(201705040552135, 5, 55213, '2017-05-04'),
+(201705040552175, 5, 55217, '2017-05-04'),
+(201705040552215, 5, 55221, '2017-05-04'),
+(201705040552255, 5, 55225, '2017-05-04'),
+(201705041453261, 1, 145326, '2017-05-04'),
+(201705050257121, 1, 25712, '2017-05-05'),
+(201705050257181, 1, 25718, '2017-05-05'),
+(2017050405545712, 12, 55457, '2017-05-04'),
+(2017050405550412, 12, 55504, '2017-05-04');
 
 -- --------------------------------------------------------
 
@@ -445,11 +494,14 @@ CREATE TABLE `recipe` (
 --
 
 INSERT INTO `recipe` (`RecipeName`, `CustomerID`, `Type`, `Description`, `DayTime`, `Date`) VALUES
+('20 No-Guilt Diabetic Banana Bread ', 1, 'Customer', ' Preheat oven to 350 degrees F. Grease the bottom and 1/2 inch up the sides of an 8x4x2-inch loaf pan or line with parchment paper; set aside.\r\n In a large bowl stir together all-purpose flour, whole wheat flour, baking powder, pumpkin pie spice, baking soda, and salt. Make a well in the center of the flour mixture; set aside.\r\n In a medium bowl combine mashed bananas, brown sugar, coconut milk, egg, and oil. Add banana mixture all at once to flour mixture; stir just until moistened (batter should be lumpy). Spoon batter into prepared loaf pan. Sprinkle with macadamia nuts and coconut.\r\n Bake for 45 to 50 minutes or until a toothpick inserted near center comes out clean, covering loaf loosely with foil for the last 20 minutes of baking to prevent overbrowning. Cool in pan on a wire rack for 10 minutes. Remove from pan. Cool completely on wire rack. Wrap and store overnight before slicing. Makes 12 (1 slice each) servings', 223456, '2017-12-20'),
 ('Alaskan Cod and Shrimp with Fresh Tomato', 0, 'Chef', 'nascetur ridiculus mus. Proin vel', 223517, '2017-01-02'),
 ('Alaskan Cod and Shrimp with Fresh Tomato', 1, 'Customer', 'neque. Morbi', 223517, '2017-03-09'),
+('Apricot-Mustard Chicken Sandwiches', 1, 'Customer', 'In a large skillet, cook onion and garlic in hot oil over medium heat about 4 minutes or until tender. Stir in shredded chicken, mustard, apricot preserves, vinegar, bourbon, and cayenne pepper. Heat through. If necessary, simmer, uncovered, about 5 minutes or until desired consistency.\r\n Spoon about 1/2 cup chicken mixture on each bun bottom. Top with red onion if desired. Add bun tops.', 223456, '2017-12-19'),
 ('Cajun Chicken Ragout', 0, 'Chef', 'neque tellus', 223517, '2017-04-28'),
 ('Cajun Chicken Ragout', 4, 'Customer', 'adipiscing elit. Aliquam', 223517, '2017-02-04'),
 ('Cajun Chicken Ragout', 9, 'Customer', 'tortor at risus. Nunc ac sem ut', 223517, '2017-05-02'),
+('Chicken with Sourdough-Mushroom Stuffing', 1, 'Customer', 'Line a 5-1/2- to 6-quart slow cooker with a disposable cooker liner. Lightly coat liner with cooking spray; set aside. Reserve 1 teaspoon of the lemon peel. In a small bowl combine remaining lemon peel, sage, seasoned salt and pepper. Remove 3/4 of the mixture and rub onto chicken legs. Place chicken in slow cooker.\r\nMeanwhile, melt butter in a skillet; add mushrooms and garlic. Cook and stir 3 to 5 minutes or until just tender. Stir in remaining sage mixture. Transfer mushroom mixture to a large bowl. Add bread cubes, and shredded carrot. Drizzle with chicken broth, tossing gently.\r\nLightly pack stuffing on top of chicken. Cover and cook on high-heat setting for 4 to 5 hours.\r\nTransfer stuffing and chicken to a platter.\r\nIn a bowl combine reserved lemon peel, walnuts, and parsley; sprinkle over chicken. Makes 8 servings.', 223456, '2016-02-10'),
 ('Fettuccini Carbonara', 0, 'Chef', 'enim diam vel arcu. Curabitur', 223517, '2017-07-06'),
 ('Fettuccini Carbonara', 7, 'Customer', 'Suspendisse', 223517, '2017-02-13'),
 ('Filet Mignon', 0, 'Chef', ' Preheat the oven to 500 degrees F.\r\n\r\nPlace the beef on a baking sheet and pat the outside dry with a paper towel. Spread the butter on with your hands. Sprinkle evenly with the salt and pepper. Roast in the oven for exactly 22 minutes for rare and 25 minutes for medium-rare.\r\n\r\nRemove the beef from the oven, cover it tightly with aluminum foil, and allow it to rest at room temperature for 20 minutes. Remove the strings and slice the filet thickly. ', 223517, '2017-05-06'),
@@ -463,7 +515,15 @@ INSERT INTO `recipe` (`RecipeName`, `CustomerID`, `Type`, `Description`, `DayTim
 ('Fried Chicken', 1, 'Customer', 'Fry chicken using oil', 222538, '2017-05-03'),
 ('Fried Pork Chop', 0, 'Chef', 'sapien. Aenean massa. Integer vitae', 223517, '2017-01-26'),
 ('Fried Pork Chop', 3, 'Customer', 'Duis sit amet diam eu dolor egestas rhoncus. Proin', 223517, '2017-09-02'),
-('Orange Chicken', 12, 'Customer', 'Fry chicken with orange jucy', 44026, '2017-05-03');
+('In-Your-Sleep Chili', 1, 'Customer', 'In a large skillet, cook ground beef and onion until meat is brown; drain off fat.\r\nIn a 3 1/2- to 4-quart slow cooker, combine ground beef mixture, beans, undrained tomatoes and green chiles, and vegetable juice.\r\nCover; cook on low-heat setting for 4 to 6 hours on on high-heat setting for 2 to 3 hours. If desired, top each serving with green onions, sour cream, and/or cheddar cheese.', 223456, '2016-02-12'),
+('Maryland Fried Chicken with Creamy Gravy', 1, 'Customer', 'In a small bowl combine the egg and the 3 tablespoons milk. In a shallow bowl combine crushed crackers, thyme, paprika, and pepper. Dip chicken pieces, 1 at a time, in egg mixture; roll in cracker mixture.\r\nIn a large skillet brown chicken in hot oil over medium heat for 10 to 15 minutes, turning occasionally. Drain well.\r\nAdd the 1 cup milk to skillet. Heat just to boiling. Reduce heat to medium-low; cover tightly. Cook for 35 minutes. Uncover; cook about 10 minutes more or until chicken is no longer pink (170 degrees F for breasts; 180 degrees F for thighs and drumsticks). Transfer chicken to a serving platter, reserving drippings for gravy. Cover chicken and keep warm. Prepare Creamy Gravy. Makes 6 servings.', 223456, '2015-08-07'),
+('Orange Chicken', 5, 'Customer', 'Fry chicken with orange juice', 55251, '2017-05-04'),
+('Orange Chicken', 12, 'Customer', 'Fry chicken with orange jucy', 44026, '2017-05-03'),
+('Original Hot Brown', 1, 'Customer', 'Melt the butter in a saucepan over medium heat. Stir in flour with a whisk or fork, and continue to cook and stir until it begins to brown slightly. Gradually whisk in the milk so that no lumps form, then bring to a boil, stirring constantly. Mix in 6 tablespoons of Parmesan cheese and then stir in the beaten egg to thicken. Do not allow the sauce to boil once the egg has been mixed in. Remove from the heat and stir in the cream.\r\nPreheat the oven''s broiler. For each hot brown, place two slices of toast into the bottom of an individual sized casserole dish. Cover with a liberal amount of roasted turkey and tomato slices. Spoon sauce over the top of each one and sprinkle with some of the remaining Parmesan cheese.\r\nPlace the dishes under the broiler and cook until the top is speckled brown, about 5 minutes. Remove from the broiler and arrange two slices of bacon in a cross shape on top of each sandwich. Serve immediately.', 223456, '2015-08-09'),
+('Rich and Creamy Beef Stroganoff', 1, 'Customer', 'Place the beef into a large bowl. Stir in the red wine, salt, and black pepper. Marinate for 10 minutes, then remove the beef and pat dry with a paper towel. Reserve the remaining marinade.\r\nHeat the olive oil in a large skillet over medium heat. Stir in the beef; cook and stir until browned, then transfer to a plate, 5 to 7 minutes. Drain any remaining grease from the skillet. Melt 2 tablespoons butter over medium heat. Stir in the onion, garlic, and a pinch of salt. Cook and stir until the onion is soft and translucent. Transfer the onion mixture to the plate with the prepared beef; set aside.\r\nMelt another 2 tablespoons butter in the same skillet over medium heat, and stir in the mushrooms. Cook and stir until the mushrooms are tender, about 10 minutes. Place the cooked mushrooms in a bowl and set aside. Melt 1/4 cup of butter in the skillet. Whisk in the flour, cook and stir until the flour no longer tastes raw, about 4 minutes. Slowly whisk in the beef stock. Bring to a boil, stirring constantly, then reduce heat to medium low. Pour in the reserved red wine marinade, Worcestershire sauce, prepared mustard, and red pepper flakes, then add the beef and onion mixture. Cover and simmer until the meat is tender, about 1 hour. Season with salt and black pepper.\r\nStir in the mushrooms, sour cream, and cream cheese about 5 minutes before serving.', 223456, '2016-02-11'),
+('Skinny Slow Cooker Recipes ', 1, 'Customer', ' Coat a medium nonstick skillet with cooking spray. Heat over medium-high heat; add chicken. Cook and stir about 3 minutes or until light brown. Drain off fat\r\n In a 3 1/2- or 4-quart slow cooker layer carrots, chicken, onions, garlic, and ginger.\r\n In a medium bowl whisk together broth, coconut milk, curry powder, and salt. Pour over the mixture in cooker.\r\n Cover and cook on low-heat setting for 6 to 8 hours or on high-heat setting for 3 to 4 hours.\r\n To serve, stir in cilantro and lemon juice.', 223456, '2017-12-21'),
+('test', 12, 'Customer', 'test', 144616, '2017-05-04'),
+('World''s Best Honey Garlic Pork Chops', 1, 'Customer', 'Preheat grill for medium heat and lightly oil the grate.\r\nWhisk ketchup, honey, soy sauce, and garlic together in a bowl to make a glaze.\r\nSear the pork chops on both sides on the preheated grill. Lightly brush glaze onto each side of the chops as they cook; grill until no longer pink in the center, about 7 to 9 minutes per side. An instant-read thermometer inserted into the center should read 145 degrees F (63 degrees C).', 223456, '2015-08-06');
 
 --
 -- Indexes for dumped tables
@@ -561,7 +621,7 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `OrderID` bigint(63) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2017050404390213;
+  MODIFY `OrderID` bigint(63) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2017050405550413;
 --
 -- AUTO_INCREMENT for table `product`
 --
